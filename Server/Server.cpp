@@ -1,20 +1,14 @@
-// Client.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Server.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-
 #include <iostream>
-#include <string>
 #include "..\Communication\Communication.h"
-#include "Client.h"
-
-
+#include "Server.h"
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-    std::cout << "The HELLO value is " << Communication::HELLO << std::endl;
+    std::cout << "Hello World!\n";
 }
-
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
@@ -27,7 +21,7 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
-int Client::getFOO()
+int Server::getFOO()
 {
-    return Client::EXPECTED_FOO;
+    return Server::EXPECTED_FOO;
 }

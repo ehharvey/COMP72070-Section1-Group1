@@ -1,0 +1,40 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "MsBuild All",
+			"command": "msbuild.exe",
+			"args": [
+				"${workspaceFolder}"
+			],
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: msbuild.exe"
+		},
+		{
+			"type": "cppbuild",
+			"label": "MsBuild Current Project",
+			"command": "msbuild.exe",
+			"args": [
+				"${fileBasenameNoExtension}.vcxproj"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: msbuild.exe"
+		}
+	]
+}
