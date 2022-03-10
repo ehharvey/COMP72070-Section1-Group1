@@ -23,5 +23,5 @@ int main()
 
 int Server::getFOO()
 {
-    return Server::EXPECTED_FOO;
+    return 0;
 }

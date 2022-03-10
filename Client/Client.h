@@ -1,5 +1,6 @@
 #pragma once
-
+#include <string>
+#include "../Communication/Communication.h"
 
 namespace Client {
 	const int EXPECTED_FOO = 3;
@@ -8,11 +9,10 @@ namespace Client {
 
 	class Client {
 	private:
-		/*
-		* Variables:
-		* - IP address
-		* - ClientRequest 
-		*/
-		Communication::ClientRequest ClientRequest;
+		Communication::ICommunicator& Communicator;
+
+	public:
+		Client(Communication::ICommunicator& Communicator);
+		Communication::ServerResponse SendCommand(Communication::ClientRequest ClientRequest);
 	};
 }

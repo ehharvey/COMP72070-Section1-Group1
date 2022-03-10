@@ -29,5 +29,5 @@ int main()
 
 int Client::getFOO()
 {
-    return Client::EXPECTED_FOO;
+    return 0;
 }
