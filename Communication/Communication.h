@@ -8,12 +8,38 @@
 #include "gmock/gmock.h"
 
 namespace Communication {
-	// --------------------------------------------------------------------------------
+	// Interfaces -------------------------------------------------------------------
 	__interface IData
 	{
 		const uint8_t* getPayload();
 		size_t getSize();
 	};
+
+	__interface ICommunicator
+	{
+		void Initialize();
+		void Send(IData&);
+		IData& Receive();
+		void Close();
+	};
+
+	__interface IClientRequest
+	{
+		uint8_t getAuthByte();
+		Tamagotchi::Command getCommand();
+	};
+
+	__interface IServerResponse
+	{
+		bool AuthSuccess();
+		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
+		std::optional<Tamagotchi::TamagotchiStatus> getTamagotchiStatus();
+		std::optional<Animation> getAnimation();
+	};
+
+	// ---------------------------------------------------------------
+	// ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
 	class Data : public IData {
 		uint8_t* payload;
@@ -28,14 +54,6 @@ namespace Communication {
 	typedef struct ipv4_address {
 		uint8_t octet[3];
 	} IPV4Address;
-
-	__interface ICommunicator
-	{
-		void Initialize();
-		void Send(IData);
-		IData& Receive();
-		void Close();
-	};
 
 	class ITcpCommunicator : public ICommunicator
 	{
@@ -52,17 +70,10 @@ namespace Communication {
 
 		void AddRemote(IPV4Address);
 	};
-	// -----------------------------------------------------------------------------
 
 	const int HELLO = 1;
 
-	__interface IClientRequest
-	{
-		uint8_t getAuthByte();
-		Tamagotchi::Command getCommand();
-	};
-
-	class ClientRequest {
+	class ClientRequest : public IClientRequest {
 	private:
 		struct _Payload {
 			uint8_t AuthByte;
@@ -78,15 +89,7 @@ namespace Communication {
 		std::queue<uint8_t> frames;
 	};
 
-	__interface IServerResponse
-	{
-		bool AuthSuccess();
-		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
-		std::optional<Tamagotchi::TamagotchiStatus> getTamagotchiStatus();
-		std::optional<Animation> getAnimation();
-	};
-
-	class ServerResponse : IServerResponse {
+	class ServerResponse : public IServerResponse {
 	private:
 		struct _Payload {
 			uint8_t ResultByte;
@@ -132,7 +135,7 @@ namespace Communication {
 	{
 	public:
 		void Initialize();
-		void Send(IData);
+		void Send( IData&);
 		IData& Receive();
 		void Close();
 	};
