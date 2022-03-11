@@ -33,7 +33,7 @@ namespace Communication {
 	{
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
-		std::optional<Tamagotchi::TamagotchiStatus> getTamagotchiStatus();
+		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
 	};
 
@@ -93,13 +93,13 @@ namespace Communication {
 	private:
 		struct _Payload {
 			uint8_t ResultByte;
-			std::optional<Tamagotchi::TamagotchiStatus> Status;
+			std::optional<Tamagotchi::Status> Status;
 			std::optional<Animation> Animation;
 		} Payload;
 	public:
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
-		std::optional<Tamagotchi::TamagotchiStatus> getTamagotchiStatus();
+		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
 	};
 
@@ -165,7 +165,7 @@ namespace CommunicationMocks {
 	class MockServerRequest : public Communication::IServerResponse {
 		MOCK_METHOD(bool, AuthSuccess, ());
 		MOCK_METHOD(std::optional<Tamagotchi::Command>, getCurrentTamagotchiCommand, ());
-		MOCK_METHOD(std::optional<Tamagotchi::TamagotchiStatus>, getTamagotchiStatus, ());
+		MOCK_METHOD(std::optional<Tamagotchi::Status>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Communication::Animation>, getAnimation, ());
 	};
 }
