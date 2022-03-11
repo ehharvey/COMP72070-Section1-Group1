@@ -5,16 +5,24 @@
 #include "../Tamagotchi/Tamagotchi.h"
 #include <optional>
 #include <queue>
+#include "gmock/gmock.h"
 
 namespace Communication {
 	// --------------------------------------------------------------------------------
-	class Data {
+	__interface IData
+	{
+		const uint8_t* getPayload();
+		size_t getSize();
+	};
+
+	class Data : public IData {
 		uint8_t* payload;
 		size_t size;
 
 	public:
 		Data(uint8_t* payload, size_t size);
 		const uint8_t* getPayload();
+		size_t getSize();
 	};
 
 	typedef struct ipv4_address {
@@ -24,8 +32,8 @@ namespace Communication {
 	__interface ICommunicator
 	{
 		void Initialize();
-		void Send(Data);
-		Data Receive();
+		void Send(IData);
+		IData& Receive();
 		void Close();
 	};
 
@@ -39,9 +47,7 @@ namespace Communication {
 
 		void Initialize();
 		void Send(Data);
-		// Send_Async()? Might be needed for GUI or multiple tamagotchis
-		Data Receive();
-		// Receive_Async()? Might be needed for GUI or multiple tamagotchis
+		IData& Receive();
 		void Close();
 
 		void AddRemote(IPV4Address);
@@ -49,6 +55,12 @@ namespace Communication {
 	// -----------------------------------------------------------------------------
 
 	const int HELLO = 1;
+
+	__interface IClientRequest
+	{
+		uint8_t getAuthByte();
+		Tamagotchi::Command getCommand();
+	};
 
 	class ClientRequest {
 	private:
@@ -66,7 +78,15 @@ namespace Communication {
 		std::queue<uint8_t> frames;
 	};
 
-	class ServerResponse {
+	__interface IServerResponse
+	{
+		bool AuthSuccess();
+		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
+		std::optional<Tamagotchi::TamagotchiStatus> getTamagotchiStatus();
+		std::optional<Animation> getAnimation();
+	};
+
+	class ServerResponse : IServerResponse {
 	private:
 		struct _Payload {
 			uint8_t ResultByte;
@@ -112,8 +132,37 @@ namespace Communication {
 	{
 	public:
 		void Initialize();
-		void Send(Data);
-		Data Receive();
+		void Send(IData);
+		IData& Receive();
 		void Close();
+	};
+}
+
+namespace CommunicationMocks {
+	class MockData : public Communication::IData {
+		MOCK_METHOD(const uint8_t*, getData, ());
+		// We can set this to return a specific value:
+		// ON_CALL(obj_name, getData()).WillByDefault(Return("Hello World"));
+
+		MOCK_METHOD(size_t, getSize, ());
+	};
+
+	class MockCommunicator : public Communication::ICommunicator {
+		MOCK_METHOD(void, Initialize, ());
+		MOCK_METHOD(void, Send, (Communication::IData&));
+		MOCK_METHOD(Communication::IData&, Receive, ());
+		MOCK_METHOD(void, Close, ());
+	};
+
+	class MockClientRequest : public Communication::IClientRequest {
+		MOCK_METHOD(uint8_t, getAuthByte, ());
+		MOCK_METHOD(Tamagotchi::Command, getCommand, ());
+	};
+
+	class MockServerRequest : public Communication::IServerResponse {
+		MOCK_METHOD(bool, AuthSuccess, ());
+		MOCK_METHOD(std::optional<Tamagotchi::Command>, getCurrentTamagotchiCommand, ());
+		MOCK_METHOD(std::optional<Tamagotchi::TamagotchiStatus>, getTamagotchiStatus, ());
+		MOCK_METHOD(std::optional<Communication::Animation>, getAnimation, ());
 	};
 }
