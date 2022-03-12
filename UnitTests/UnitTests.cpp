@@ -11,7 +11,7 @@ namespace UnitTests
 	TEST_CLASS(CommunicationTests)
 	{
 	public:
-		
+			
 		TEST_METHOD(ConstructorTest)
 		{
 			// Arrange

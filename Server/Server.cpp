@@ -25,3 +25,11 @@ int Server::getFOO()
 {
     return 0;
 }
+
+Server::Server::Server(Communication::ICommunicator& Communicator) 
+    : Communicator(Communicator) { }
+
+Communication::ClientRequest Server::Server::ReceiveRequest()
+{
+    return Communication::ClientRequest();
+}

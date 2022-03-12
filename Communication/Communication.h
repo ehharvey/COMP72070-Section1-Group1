@@ -48,6 +48,7 @@ namespace Communication {
 		size_t size;
 
 	public:
+		Data() { this->payload = NULL; this->size = 0; }
 		Data(uint8_t * payload, size_t size);
 		const uint8_t* getPayload();
 		size_t getSize();
@@ -73,8 +74,6 @@ namespace Communication {
 
 		void AddRemote(IPV4Address);
 	};
-
-	const int HELLO = 1;
 
 	class ClientRequest : public IClientRequest {
 	private:
