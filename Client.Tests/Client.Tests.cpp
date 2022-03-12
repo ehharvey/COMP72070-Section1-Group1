@@ -1,6 +1,8 @@
 #include "pch.h"
-#include "Client.h"
 #include "CppUnitTest.h"
+#include "Client.h"
+#include "Communication.h"
+#include "gmock/gmock.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -10,9 +12,13 @@ namespace ClientTests
 	{
 	public:
 		
-		TEST_METHOD(getFoo_void_3)
+		TEST_METHOD(TestMethod1)
 		{
-			Assert::AreEqual(Client::EXPECTED_FOO, Client::getFOO());
-;		}
+			CommunicationMocks::MockData md;
+
+			ON_CALL(md, getSize).WillByDefault(testing::Return(5));
+
+			Assert::AreEqual(5, (int)md.getSize());
+		}
 	};
 }
