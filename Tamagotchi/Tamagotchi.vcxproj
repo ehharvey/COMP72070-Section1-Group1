@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Tamagotchi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
