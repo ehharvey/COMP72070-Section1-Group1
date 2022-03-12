@@ -48,9 +48,10 @@ namespace Communication {
 		size_t size;
 
 	public:
-		Data(uint8_t* payload, size_t size);
+		Data(uint8_t * payload, size_t size);
 		const uint8_t* getPayload();
 		size_t getSize();
+		~Data();
 	};
 
 	typedef struct ipv4_address {
