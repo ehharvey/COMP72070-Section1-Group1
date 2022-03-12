@@ -12,10 +12,10 @@ namespace Tamagotchi {
 
     Command Tamagotchi::GetCurrentCommand() {
         if (this->Commands.empty()) {
-            Command c = idle;
+            return idle;
         }
         else {
-            Command c = this->Commands.front();
+            return this->Commands.front();
         }
     }
 }
