@@ -26,7 +26,7 @@ namespace Tamagotchi
 		void AddCommand(Command); // This also needs durations? (We can also scrap durations)
 		void AddCommand_Immediate(Command); // ^^
 		Command GetCurrentCommand();
-		Status getStatus();
+		IStatus& getStatus();
 	};
 
 	class Status : public IStatus {
@@ -48,7 +48,7 @@ namespace Tamagotchi
 		void AddCommand(Command); // This also needs durations? (We can also scrap durations)
 		void AddCommand_Immediate(Command); // ^^
 		Command GetCurrentCommand();
-		Status getStatus();
+		IStatus& getStatus();
 	};
 }
 
@@ -57,7 +57,7 @@ namespace TamagotchiMocks {
 		MOCK_METHOD(void, AddCommand, (Tamagotchi::Command));
 		MOCK_METHOD(void, AddCommand_Immediate, (Tamagotchi::Command));
 		MOCK_METHOD(Tamagotchi::Command, GetCurrentCommand, ());
-		MOCK_METHOD(Tamagotchi::Status, getStatus, ());
+		MOCK_METHOD(Tamagotchi::IStatus&, getStatus, ());
 	};
 
 	class MockStatus : public Tamagotchi::Status {

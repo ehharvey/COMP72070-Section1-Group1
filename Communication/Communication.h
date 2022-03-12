@@ -29,6 +29,8 @@ namespace Communication {
 		Tamagotchi::Command getCommand();
 	};
 
+	class Animation;
+
 	__interface IServerResponse
 	{
 		bool AuthSuccess();
@@ -143,7 +145,8 @@ namespace Communication {
 
 namespace CommunicationMocks {
 	class MockData : public Communication::IData {
-		MOCK_METHOD(const uint8_t*, getData, ());
+	public:
+		MOCK_METHOD(const uint8_t*, getPayload, ());
 		// We can set this to return a specific value:
 		// ON_CALL(obj_name, getData()).WillByDefault(Return("Hello World"));
 

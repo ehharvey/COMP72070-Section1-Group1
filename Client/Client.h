@@ -4,10 +4,6 @@
 #include "gmock/gmock.h"
 
 namespace Client {
-	const int EXPECTED_FOO = 3;
-
-	int getFOO();
-
 	__interface IClient
 	{
 		Communication::IServerResponse& SendCommand(Communication::IClientRequest& ClientRequest);
@@ -25,6 +21,7 @@ namespace Client {
 
 namespace ClientMocks {
 	class MockClient : public Client::IClient {
+	public:
 		MOCK_METHOD(Communication::IServerResponse&, SendCommand, (Communication::IClientRequest&));
 	};
 }
