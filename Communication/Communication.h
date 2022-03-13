@@ -15,6 +15,11 @@ namespace Communication {
 		size_t getSize();
 	};
 
+	__interface ISerializable
+	{
+		IData& Serialize();
+	};
+
 	__interface ICommunicator
 	{
 		void Initialize();
@@ -23,7 +28,7 @@ namespace Communication {
 		void Close();
 	};
 
-	__interface IClientRequest
+	__interface IClientRequest : public ISerializable
 	{
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
@@ -31,7 +36,7 @@ namespace Communication {
 
 	class Animation;
 
-	__interface IServerResponse
+	__interface IServerResponse : public ISerializable
 	{
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
@@ -48,6 +53,7 @@ namespace Communication {
 		size_t size;
 
 	public:
+		Data() { this->payload = NULL; this->size = 0; }
 		Data(uint8_t * payload, size_t size);
 		const uint8_t* getPayload();
 		size_t getSize();
@@ -74,8 +80,6 @@ namespace Communication {
 		void AddRemote(IPV4Address);
 	};
 
-	const int HELLO = 1;
-
 	class ClientRequest : public IClientRequest {
 	private:
 		struct _Payload {
@@ -83,8 +87,11 @@ namespace Communication {
 			uint8_t CommandByte;
 		} Payload;
 	public:
+		ClientRequest();
+		ClientRequest(IData& Serialization);
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
+		IData& Serialize();
 	};
 	
 	class Animation {
@@ -100,10 +107,13 @@ namespace Communication {
 			std::optional<Animation> Animation;
 		} Payload;
 	public:
+		ServerResponse();
+		ServerResponse(IData& Serialization);
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
+		IData& Serialize();
 	};
 
 	class ITcpServer : ITcpCommunicator {

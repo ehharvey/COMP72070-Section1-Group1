@@ -15,6 +15,7 @@ namespace Server {
 	{
 		Communication::ICommunicator& Communicator;
 	public:
+		Server(Communication::ICommunicator& Communicator);
 		Communication::ClientRequest ReceiveRequest();
 	};
 
