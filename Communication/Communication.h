@@ -15,6 +15,11 @@ namespace Communication {
 		size_t getSize();
 	};
 
+	__interface ISerializable
+	{
+		IData& Serialize();
+	};
+
 	__interface ICommunicator
 	{
 		void Initialize();
@@ -23,20 +28,22 @@ namespace Communication {
 		void Close();
 	};
 
-	__interface IClientRequest
+	__interface IClientRequest : public ISerializable
 	{
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
+		IClientRequest& Deserialize();
 	};
 
 	class Animation;
 
-	__interface IServerResponse
+	__interface IServerResponse : public ISerializable
 	{
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
+		IServerResponse& Deserialize();
 	};
 
 	// ---------------------------------------------------------------
@@ -82,8 +89,11 @@ namespace Communication {
 			uint8_t CommandByte;
 		} Payload;
 	public:
+		ClientRequest();
+		ClientRequest(IData& Serialization);
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
+		IData& Serialize();
 	};
 	
 	class Animation {
@@ -99,10 +109,13 @@ namespace Communication {
 			std::optional<Animation> Animation;
 		} Payload;
 	public:
+		ServerResponse();
+		ServerResponse(IData& Serialization);
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
+		IData& Serialize();
 	};
 
 	class ITcpServer : ITcpCommunicator {

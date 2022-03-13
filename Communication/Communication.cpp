@@ -61,6 +61,14 @@ void Communication::ITcpCommunicator::AddRemote(IPV4Address)
 	return;
 }
 
+Communication::ClientRequest::ClientRequest()
+{
+}
+
+Communication::ClientRequest::ClientRequest(IData& Serialization)
+{
+}
+
 uint8_t Communication::ClientRequest::getAuthByte()
 {
 	return uint8_t();
@@ -69,6 +77,21 @@ uint8_t Communication::ClientRequest::getAuthByte()
 Tamagotchi::Command Communication::ClientRequest::getCommand()
 {
 	return Tamagotchi::Command();
+}
+
+Communication::IData& Communication::ClientRequest::Serialize()
+{
+	Communication::Data ret;
+	return ret;
+}
+
+
+Communication::ServerResponse::ServerResponse()
+{
+}
+
+Communication::ServerResponse::ServerResponse(IData& Serialization)
+{
 }
 
 bool Communication::ServerResponse::AuthSuccess()
@@ -89,6 +112,13 @@ std::optional<Tamagotchi::Status> Communication::ServerResponse::getTamagotchiSt
 std::optional<Communication::Animation> Communication::ServerResponse::getAnimation()
 {
 	return std::optional<Animation>();
+}
+
+Communication::IData& Communication::ServerResponse::Serialize()
+{
+	Communication::Data ret;
+	return ret;
+	// // O: insert return statement here
 }
 
 void Communication::ITcpServer::Await()
