@@ -32,7 +32,6 @@ namespace Communication {
 	{
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
-		IClientRequest& Deserialize();
 	};
 
 	class Animation;
@@ -43,7 +42,6 @@ namespace Communication {
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
-		IServerResponse& Deserialize();
 	};
 
 	// ---------------------------------------------------------------
