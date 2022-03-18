@@ -49,11 +49,15 @@ namespace Communication {
 	// ---------------------------------------------------------------
 
 	class Data : public IData {
-		uint8_t* payload;
+		const uint8_t* payload;
 		size_t size;
 
 	public:
 		Data() { this->payload = NULL; this->size = 0; }
+		Data& operator=(IData& d) { 
+			this->payload = d.getPayload(); 
+			this->size = this->getSize(); 
+		}
 		Data(uint8_t * payload, size_t size);
 		const uint8_t* getPayload();
 		size_t getSize();

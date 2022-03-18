@@ -13,23 +13,26 @@ namespace Logger {
 	__interface ILog
 	{
 		std::time_t getTime();
-		Communication::IData& getData();
+		Communication::Data getData();
 		action getAction();
 	};
 
 
 
 	class Log : public ILog {
+	private:
+		action a;
+		Communication::Data data;
 	public:
 		Log(action, Communication::IData& data);
 		std::time_t getTime();
-		Communication::IData& getData();
+		Communication::Data getData();
 	};
 }
 
 namespace LoggerMocks {
 	class MockLogger : public Logger::ILog {
 		MOCK_METHOD(time_t, getTime, ());
-		MOCK_METHOD(Communication::IData&, getData, ());
+		MOCK_METHOD(Communication::Data, getData, ());
 	};
 }
