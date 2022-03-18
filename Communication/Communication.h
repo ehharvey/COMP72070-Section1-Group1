@@ -17,14 +17,14 @@ namespace Communication {
 
 	__interface ISerializable
 	{
-		IData& Serialize();
+		Data Serialize();
 	};
 
 	__interface ICommunicator
 	{
 		void Initialize();
 		void Send(IData&);
-		IData& Receive();
+		Data Receive();
 		void Close();
 	};
 
@@ -73,8 +73,8 @@ namespace Communication {
 		ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes);
 
 		void Initialize();
-		void Send(Data);
-		IData& Receive();
+		void Send(IData&);
+		Data Receive();
 		void Close();
 
 		void AddRemote(IPV4Address);
@@ -91,7 +91,7 @@ namespace Communication {
 		ClientRequest(IData& Serialization);
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
-		IData& Serialize();
+		Data Serialize();
 	};
 	
 	class Animation {
@@ -113,7 +113,7 @@ namespace Communication {
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
-		IData& Serialize();
+		Data Serialize();
 	};
 
 	class ITcpServer : ITcpCommunicator {
@@ -149,7 +149,7 @@ namespace Communication {
 	public:
 		void Initialize();
 		void Send( IData&);
-		IData& Receive();
+		Data Receive();
 		void Close();
 	};
 }
@@ -167,7 +167,7 @@ namespace CommunicationMocks {
 	class MockCommunicator : public Communication::ICommunicator {
 		MOCK_METHOD(void, Initialize, ());
 		MOCK_METHOD(void, Send, (Communication::IData&));
-		MOCK_METHOD(Communication::IData&, Receive, ());
+		MOCK_METHOD(Communication::Data, Receive, ());
 		MOCK_METHOD(void, Close, ());
 	};
 

@@ -40,12 +40,11 @@ void Communication::ITcpCommunicator::Initialize()
 	return;
 }
 
-void Communication::ITcpCommunicator::Send(Data)
+void Communication::ITcpCommunicator::Send(IData&)
 {
-	return;
 }
 
-Communication::IData& Communication::ITcpCommunicator::Receive()
+Communication::Data Communication::ITcpCommunicator::Receive()
 {
 	Communication::Data result;
 	return result;
@@ -79,7 +78,7 @@ Tamagotchi::Command Communication::ClientRequest::getCommand()
 	return Tamagotchi::Command();
 }
 
-Communication::IData& Communication::ClientRequest::Serialize()
+Communication::Data Communication::ClientRequest::Serialize()
 {
 	Communication::Data ret;
 	return ret;
@@ -114,11 +113,10 @@ std::optional<Communication::Animation> Communication::ServerResponse::getAnimat
 	return std::optional<Animation>();
 }
 
-Communication::IData& Communication::ServerResponse::Serialize()
+Communication::Data Communication::ServerResponse::Serialize()
 {
 	Communication::Data ret;
 	return ret;
-	// // O: insert return statement here
 }
 
 void Communication::ITcpServer::Await()
@@ -139,7 +137,7 @@ void Communication::ILocalCommunicator::Send(IData&)
 {
 }
 
-Communication::IData& Communication::ILocalCommunicator::Receive()
+Communication::Data Communication::ILocalCommunicator::Receive()
 {
 	Communication::Data data;
 	return data;
