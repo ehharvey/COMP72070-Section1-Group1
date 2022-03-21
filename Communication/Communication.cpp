@@ -1,3 +1,5 @@
+
+
 #include "Communication.h"
 #include <exception>
 
@@ -37,11 +39,16 @@ Communication::ITcpCommunicator::ITcpCommunicator(IPV4Address local, std::vector
 
 void Communication::ITcpCommunicator::Initialize()
 {
-	return;
+	WSADATA wsaData;
+	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
+		// Handle error here
+		// throw something
+	}
 }
 
-void Communication::ITcpCommunicator::Send(IData&)
+void Communication::ITcpCommunicator::Send(IData& data)
 {
+	send(this->connection_socket, (const char*) data.getPayload(), data.getSize(), 0);
 }
 
 Communication::Data Communication::ITcpCommunicator::Receive()
@@ -55,9 +62,9 @@ void Communication::ITcpCommunicator::Close()
 	return;
 }
 
-void Communication::ITcpCommunicator::AddRemote(IPV4Address)
+void Communication::ITcpCommunicator::AddRemote(IPV4Address addr)
 {
-	return;
+	this->remotes.push_back(addr);
 }
 
 Communication::ClientRequest::ClientRequest()

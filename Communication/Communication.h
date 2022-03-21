@@ -1,4 +1,6 @@
 #pragma once
+#include <windows.networking.sockets.h>
+#pragma comment(lib, "Ws2_32.lib")
 
 #include <cstdint>
 #include <vector>
@@ -66,6 +68,7 @@ namespace Communication {
 
 	class ITcpCommunicator : public ICommunicator
 	{
+		SOCKET connection_socket;
 		IPV4Address local;
 		std::vector<IPV4Address> remotes; // We can have 0 or more remotes
 
