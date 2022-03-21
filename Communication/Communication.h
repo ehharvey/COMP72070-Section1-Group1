@@ -7,26 +7,27 @@
 #include "../Tamagotchi/Tamagotchi.h"
 #include <optional>
 #include <queue>
+#include <memory>
 #include "gmock/gmock.h"
 
 namespace Communication {
 	// Interfaces -------------------------------------------------------------------
 	__interface IData
 	{
-		const uint8_t* getPayload();
+		std::unique_ptr<const uint8_t> getPayload();
 		size_t getSize();
 	};
 
 	__interface ISerializable
 	{
-		Data Serialize();
+		std::unique_ptr<IData> Serialize();
 	};
 
 	__interface ICommunicator
 	{
 		void Initialize();
-		void Send(IData&);
-		Data Receive();
+		void Send(std::unique_ptr<IData>);
+		std::unique_ptr<IData> Receive();
 		void Close();
 	};
 
@@ -51,13 +52,13 @@ namespace Communication {
 	// ---------------------------------------------------------------
 
 	class Data : public IData {
-		uint8_t* payload;
+		std::unique_ptr<uint8_t> payload;
 		size_t size;
 
 	public:
-		Data() { this->payload = NULL; this->size = 0; }
-		Data(uint8_t * payload, size_t size);
-		const uint8_t* getPayload();
+		Data();
+		Data(std::unique_ptr<uint8_t> payload, size_t size);
+		std::unique_ptr<const uint8_t> getPayload();
 		size_t getSize();
 		~Data();
 	};
@@ -76,8 +77,8 @@ namespace Communication {
 		ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes);
 
 		void Initialize();
-		void Send(IData&);
-		Data Receive();
+		void Send(std::unique_ptr<IData>);
+		std::unique_ptr<IData> Receive();
 		void Close();
 
 		void AddRemote(IPV4Address);
@@ -91,10 +92,10 @@ namespace Communication {
 		} Payload;
 	public:
 		ClientRequest();
-		ClientRequest(IData& Serialization);
+		ClientRequest(std::unique_ptr<IData> Serialization);
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
-		Data Serialize();
+		std::unique_ptr<IData> Serialize();
 	};
 	
 	class Animation {
@@ -111,12 +112,12 @@ namespace Communication {
 		} Payload;
 	public:
 		ServerResponse();
-		ServerResponse(IData& Serialization);
+		ServerResponse(std::unique_ptr<IData> Serialization);
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
-		Data Serialize();
+		std::unique_ptr<IData> Serialize();
 	};
 
 	class ITcpServer : ITcpCommunicator {
@@ -151,8 +152,8 @@ namespace Communication {
 	{
 	public:
 		void Initialize();
-		void Send( IData&);
-		Data Receive();
+		void Send(std::unique_ptr<IData>);
+		std::unique_ptr<IData> Receive();
 		void Close();
 	};
 }
@@ -160,7 +161,7 @@ namespace Communication {
 namespace CommunicationMocks {
 	class MockData : public Communication::IData {
 	public:
-		MOCK_METHOD(const uint8_t*, getPayload, ());
+		MOCK_METHOD(std::unique_ptr<const uint8_t>, getPayload, ());
 		// We can set this to return a specific value:
 		// ON_CALL(obj_name, getData()).WillByDefault(Return("Hello World"));
 
@@ -170,7 +171,7 @@ namespace CommunicationMocks {
 	class MockCommunicator : public Communication::ICommunicator {
 		MOCK_METHOD(void, Initialize, ());
 		MOCK_METHOD(void, Send, (Communication::IData&));
-		MOCK_METHOD(Communication::Data, Receive, ());
+		MOCK_METHOD(std::unique_ptr<Communication::IData>, Receive, ());
 		MOCK_METHOD(void, Close, ());
 	};
 
