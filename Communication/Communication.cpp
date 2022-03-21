@@ -3,75 +3,60 @@
 #include "Communication.h"
 #include <exception>
 
-Communication::Data::Data(uint8_t * payload, size_t size) {
-	this->payload = (uint8_t*)malloc(size);
-
-	if (this->payload == NULL) {
-		throw std::bad_alloc();
-	}
-	else {
-		memcpy(this->payload, payload, size);
-		this->size = size;
-	}
+Communication::Data::Data() 
+{ 
+	this->payload = std::nullptr_t(); 
+	this->size = 0; 
 }
 
-const uint8_t* Communication::Data::getPayload()
+Communication::Data::Data(std::unique_ptr<uint8_t> payload, size_t size)
 {
-	return this->payload;
+}
+
+std::unique_ptr<const uint8_t> Communication::Data::getPayload()
+{
+	return std::unique_ptr<const uint8_t>();
 }
 
 size_t Communication::Data::getSize()
 {
-	return this->size;
+	return size_t();
 }
 
-Communication::Data::~Data() {
-	if (this->payload != NULL) {
-		free(this->payload);
-	}
+Communication::Data::~Data()
+{
 }
 
 Communication::ITcpCommunicator::ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes)
 {
-	this->local = local;
-	this->remotes = remotes;
 }
 
 void Communication::ITcpCommunicator::Initialize()
 {
-	WSADATA wsaData;
-	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
-		// Handle error here
-		// throw something
-	}
 }
 
-void Communication::ITcpCommunicator::Send(IData& data)
+void Communication::ITcpCommunicator::Send(std::unique_ptr<IData>)
 {
-	send(this->connection_socket, (const char*) data.getPayload(), data.getSize(), 0);
 }
 
-Communication::Data Communication::ITcpCommunicator::Receive()
+std::unique_ptr<Communication::IData> Communication::ITcpCommunicator::Receive()
 {
-	Communication::Data result;
-	return result;
+	return std::unique_ptr<IData>();
 }
 
 void Communication::ITcpCommunicator::Close()
 {
-	return;
 }
 
-void Communication::ITcpCommunicator::AddRemote(IPV4Address addr)
+void Communication::ITcpCommunicator::AddRemote(IPV4Address)
 {
-	this->remotes.push_back(addr);
 }
 
 Communication::ClientRequest::ClientRequest()
 {
 }
 
-Communication::ClientRequest::ClientRequest(IData& Serialization)
+Communication::ClientRequest::ClientRequest(std::unique_ptr<IData> Serialization)
 {
 }
 
@@ -85,18 +70,16 @@ Tamagotchi::Command Communication::ClientRequest::getCommand()
 	return Tamagotchi::Command();
 }
 
-Communication::Data Communication::ClientRequest::Serialize()
+std::unique_ptr<Communication::IData> Communication::ClientRequest::Serialize()
 {
-	Communication::Data ret;
-	return ret;
+	return std::unique_ptr<Communication::IData>();
 }
-
 
 Communication::ServerResponse::ServerResponse()
 {
 }
 
-Communication::ServerResponse::ServerResponse(IData& Serialization)
+Communication::ServerResponse::ServerResponse(std::unique_ptr<IData> Serialization)
 {
 }
 
@@ -120,34 +103,30 @@ std::optional<Communication::Animation> Communication::ServerResponse::getAnimat
 	return std::optional<Animation>();
 }
 
-Communication::Data Communication::ServerResponse::Serialize()
+std::unique_ptr<Communication::IData> Communication::ServerResponse::Serialize()
 {
-	Communication::Data ret;
-	return ret;
+	return std::unique_ptr<IData>();
 }
 
 void Communication::ITcpServer::Await()
 {
-	return;
 }
 
 void Communication::ITcpClient::ConnectTo(IPV4Address)
 {
-	return;
 }
 
 void Communication::ILocalCommunicator::Initialize()
 {
 }
 
-void Communication::ILocalCommunicator::Send(IData&)
+void Communication::ILocalCommunicator::Send(std::unique_ptr<IData>)
 {
 }
 
-Communication::Data Communication::ILocalCommunicator::Receive()
+std::unique_ptr<Communication::IData> Communication::ILocalCommunicator::Receive()
 {
-	Communication::Data data;
-	return data;
+	return std::unique_ptr<IData>();
 }
 
 void Communication::ILocalCommunicator::Close()
