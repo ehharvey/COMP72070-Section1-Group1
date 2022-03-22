@@ -9,22 +9,16 @@
 
 namespace Communication {
 	// Interfaces -------------------------------------------------------------------
-	__interface IData
-	{
-		const uint8_t* getPayload();
-		size_t getSize();
-	};
-
 	__interface ISerializable
 	{
-		IData& Serialize();
+		const std::vector<uint8_t> Serialize();
 	};
 
 	__interface ICommunicator
 	{
 		void Initialize();
-		void Send(IData&);
-		IData& Receive();
+		void Send(const std::vector<uint8_t>);
+		const std::vector<uint8_t> Receive();
 		void Close();
 	};
 
@@ -48,18 +42,6 @@ namespace Communication {
 	// ---------------------------------------------------------------
 	// ---------------------------------------------------------------
 
-	class Data : public IData {
-		uint8_t* payload;
-		size_t size;
-
-	public:
-		Data() { this->payload = NULL; this->size = 0; }
-		Data(uint8_t * payload, size_t size);
-		const uint8_t* getPayload();
-		size_t getSize();
-		~Data();
-	};
-
 	typedef struct ipv4_address {
 		uint8_t octet[3];
 	} IPV4Address;
@@ -73,8 +55,8 @@ namespace Communication {
 		ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes);
 
 		void Initialize();
-		void Send(Data);
-		IData& Receive();
+		void Send(const std::vector<uint8_t>);
+		const std::vector<uint8_t> Receive();
 		void Close();
 
 		void AddRemote(IPV4Address);
@@ -88,10 +70,10 @@ namespace Communication {
 		} Payload;
 	public:
 		ClientRequest();
-		ClientRequest(IData& Serialization);
+		ClientRequest(const std::vector<uint8_t> Serialization);
 		uint8_t getAuthByte();
 		Tamagotchi::Command getCommand();
-		IData& Serialize();
+		const std::vector<uint8_t> Serialize();
 	};
 	
 	class Animation {
@@ -108,12 +90,12 @@ namespace Communication {
 		} Payload;
 	public:
 		ServerResponse();
-		ServerResponse(IData& Serialization);
+		ServerResponse(const std::vector<uint8_t> Serialization);
 		bool AuthSuccess();
 		std::optional<Tamagotchi::Command> getCurrentTamagotchiCommand();
 		std::optional<Tamagotchi::Status> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
-		IData& Serialize();
+		const std::vector<uint8_t> Serialize();
 	};
 
 	class ITcpServer : ITcpCommunicator {
@@ -148,26 +130,17 @@ namespace Communication {
 	{
 	public:
 		void Initialize();
-		void Send( IData&);
-		IData& Receive();
+		void Send(const std::vector<uint8_t>);
+		const std::vector<uint8_t> Receive();
 		void Close();
 	};
 }
 
 namespace CommunicationMocks {
-	class MockData : public Communication::IData {
-	public:
-		MOCK_METHOD(const uint8_t*, getPayload, ());
-		// We can set this to return a specific value:
-		// ON_CALL(obj_name, getData()).WillByDefault(Return("Hello World"));
-
-		MOCK_METHOD(size_t, getSize, ());
-	};
-
 	class MockCommunicator : public Communication::ICommunicator {
 		MOCK_METHOD(void, Initialize, ());
-		MOCK_METHOD(void, Send, (Communication::IData&));
-		MOCK_METHOD(Communication::IData&, Receive, ());
+		MOCK_METHOD(void, Send, (const std::vector<uint8_t>));
+		MOCK_METHOD(const std::vector<uint8_t>, Receive, ());
 		MOCK_METHOD(void, Close, ());
 	};
 
