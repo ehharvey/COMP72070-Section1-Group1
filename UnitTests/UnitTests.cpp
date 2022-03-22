@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTests
 {
-	TEST_CLASS(CommunicationTests)
+	TEST_CLASS(Data_TESTS)
 	{
 	public:
 	};
