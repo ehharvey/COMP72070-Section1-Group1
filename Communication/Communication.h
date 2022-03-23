@@ -171,3 +171,23 @@ namespace Communicators
 		const std::vector<uint8_t> Send(const std::vector<uint8_t> message);
 	};
 }
+
+namespace CommunicatorsMocks
+{
+	class MockRemoteResponder : public Communicators::RemoteResponder
+	{
+		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
+	};
+
+	class MockSender : public Communicators::Sender
+	{
+		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
+	};
+
+	class Responder : public Communicators::Responder
+	{
+		MOCK_METHOD(void, Start, ());
+		MOCK_METHOD(bool, getIsRunning, ());
+		MOCK_METHOD(void, Stop, ());
+	};
+}
