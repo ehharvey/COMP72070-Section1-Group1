@@ -1,125 +1,100 @@
 #include "Communication.h"
-#include <exception>
 
-
-Communication::ITcpCommunicator::ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes)
-{
-	this->local = local;
-	this->remotes = remotes;
-}
-
-void Communication::ITcpCommunicator::Initialize()
-{
-	return;
-}
-
-void Communication::ITcpCommunicator::Send(const std::vector<uint8_t>)
+Data::ClientRequest::ClientRequest()
 {
 }
 
-const std::vector<uint8_t> Communication::ITcpCommunicator::Receive()
-{
-	return std::vector<uint8_t>();
-}
-
-
-
-
-void Communication::ITcpCommunicator::Close()
-{
-	return;
-}
-
-void Communication::ITcpCommunicator::AddRemote(IPV4Address)
-{
-	return;
-}
-
-Communication::ClientRequest::ClientRequest()
+Data::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
 {
 }
 
-Communication::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
-{
-}
-
-
-
-uint8_t Communication::ClientRequest::getAuthByte()
+uint8_t Data::ClientRequest::getAuthByte()
 {
 	return uint8_t();
 }
 
-Tamagotchi::Command Communication::ClientRequest::getCommand()
+Data::Command Data::ClientRequest::getCommand()
 {
-	return Tamagotchi::Command();
+	return Data::Command();
 }
 
-const std::vector<uint8_t> Communication::ClientRequest::Serialize()
+const std::vector<uint8_t> Data::ClientRequest::Serialize()
 {
 	return std::vector<uint8_t>();
 }
 
-
-
-
-Communication::ServerResponse::ServerResponse()
+Data::ServerResponse::ServerResponse()
 {
 }
 
-Communication::ServerResponse::ServerResponse(const std::vector<uint8_t> Serialization)
+Data::ServerResponse::ServerResponse(const std::vector<uint8_t> Serialization)
 {
 }
 
-
-
-bool Communication::ServerResponse::AuthSuccess()
+bool Data::ServerResponse::AuthSuccess()
 {
 	return false;
 }
 
-std::optional<Tamagotchi::Command> Communication::ServerResponse::getCurrentTamagotchiCommand()
+std::optional<Data::Command> Data::ServerResponse::getCurrentTamagotchiCommand()
 {
-	return std::optional<Tamagotchi::Command>();
+	return std::optional<Data::Command>();
 }
 
-std::optional<Tamagotchi::Status> Communication::ServerResponse::getTamagotchiStatus()
+std::unique_ptr<Data::IStatus> Data::ServerResponse::getTamagotchiStatus()
 {
-	return std::optional<Tamagotchi::Status>();
+	return std::unique_ptr<IStatus>();
 }
 
-std::optional<Communication::Animation> Communication::ServerResponse::getAnimation()
+std::optional<Data::Animation> Data::ServerResponse::getAnimation()
 {
 	return std::optional<Animation>();
 }
 
-const std::vector<uint8_t> Communication::ServerResponse::Serialize()
+const std::vector<uint8_t> Data::ServerResponse::Serialize()
 {
 	return std::vector<uint8_t>();
 }
 
-
-
-void Communication::ITcpServer::Await()
-{
-	return;
-}
-
-void Communication::ITcpClient::ConnectTo(IPV4Address)
-{
-	return;
-}
-
-void Communication::ILocalCommunicator::Initialize()
+void Data::Status::setHappiness(uint8_t happiness)
 {
 }
 
+void Data::Status::setAlertness(uint8_t alertness)
+{
+}
 
-const std::vector<uint8_t> Communication::ILocalCommunicator::Receive()
+void Data::Status::setStomachLevel(uint8_t stomach)
+{
+}
+
+void Data::Status::setCleaniness(uint8_t cleaniness)
+{
+}
+
+void Data::Status::setStats(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
+{
+}
+
+Communicators::rPtr Communicators::RemoteTcpServer::getSendFunction()
+{
+	return rPtr();
+}
+
+void Communicators::TCPHost::Start()
+{
+}
+
+bool Communicators::TCPHost::getIsRunning()
+{
+	return false;
+}
+
+void Communicators::TCPHost::Stop()
+{
+}
+
+const std::vector<uint8_t> Communicators::TCPClient::Send(const std::vector<uint8_t> message)
 {
 	return std::vector<uint8_t>();
-}
-
-void Communication::ILocalCommunicator::Close()
-{
 }

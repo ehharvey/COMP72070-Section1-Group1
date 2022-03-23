@@ -3,24 +3,16 @@
 #include "gmock/gmock.h"
 
 namespace Server {
-	const int EXPECTED_FOO = 3;
-	int getFOO();
-
-	__interface IServer
+	class Server : public Communicators::Responder
 	{
-		Communication::IClientRequest& ReceiveRequest();
-	};
-
-	class Server
-	{
-		Communication::ICommunicator& Communicator;
+		std::unique_ptr<Communicators::Responder> responder;
 	public:
-		Server(Communication::ICommunicator& Communicator);
-		Communication::ClientRequest ReceiveRequest();
+		Server();
+		Server(std::unique_ptr<Communicators::Responder> responder);
+		
+		void Start();
+		bool getIsRunning();
+		void Stop();
 	};
-
-}
-
-namespace ServerMocks {
 
 }

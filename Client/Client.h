@@ -7,25 +7,23 @@
 namespace Client {
 	__interface IClient
 	{
-		std::unique_ptr<Communication::IServerResponse> SendCommand(std::unique_ptr<Communication::IClientRequest> ClientRequest);
+		std::unique_ptr<Data::IServerResponse> SendCommand(std::unique_ptr<Data::IClientRequest> request);
 	};
 
 	class Client : public IClient {
 	private:
-		std::unique_ptr<Communication:: 
-
-		// To be removed
-		Communication::ICommunicator& Communicator;
+		std::unique_ptr<Communicators::Sender> sender;
 
 	public:
-		Client(Communication::ICommunicator& Communicator);
-		Communication::IServerResponse& SendCommand(Communication::IClientRequest& ClientRequest);
+		Client();
+		Client(std::unique_ptr<Communicators::Sender> sender);
+		std::unique_ptr<Data::IServerResponse> SendCommand(std::unique_ptr < Data::IClientRequest> request);
 	};
 }
 
 namespace ClientMocks {
 	class MockClient : public Client::IClient {
 	public:
-		MOCK_METHOD(Communication::IServerResponse&, SendCommand, (Communication::IClientRequest&));
+		MOCK_METHOD(std::unique_ptr<Data::IServerResponse>, SendCommand, (std::unique_ptr<Data::IClientRequest>));
 	};
 }
