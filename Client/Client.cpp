@@ -26,12 +26,15 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
-Client::Client::Client(Communication::ICommunicator& Communicator) 
-    : Communicator(Communicator)
-{ }
-
-Communication::IServerResponse& Client::Client::SendCommand(Communication::IClientRequest& ClientRequest)
+Client::Client::Client()
 {
-    Communication::ServerResponse response;
-    return response;
+}
+
+Client::Client::Client(std::unique_ptr<Communicators::Sender> sender)
+{
+}
+
+std::unique_ptr<Data::IServerResponse> Client::Client::SendCommand(std::unique_ptr<Data::IClientRequest> request)
+{
+    return std::unique_ptr<Data::IServerResponse>();
 }

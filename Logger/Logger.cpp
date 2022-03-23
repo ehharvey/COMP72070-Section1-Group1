@@ -5,16 +5,21 @@
 #include "framework.h"
 #include "Logger.h"
 
-Logger::Log::Log(Logger::action action, Communication::IData& data) {
-	this->a = action;
-	this->data = data;
+Logger::Log::Log(action, const std::vector<uint8_t> data)
+{
 }
 
-std::time_t Logger::Log::getTime() {
-	return std::time_t();
+std::time_t Logger::Log::getTime()
+{
+    return std::time_t();
 }
 
-Communication::Data Logger::Log::getData() {
-	Communication::Data ret;
-	return ret;
+const std::vector<uint8_t> Logger::Log::getData()
+{
+    return std::vector<uint8_t>();
+}
+
+Logger::action Logger::Log::getAction()
+{
+    return action();
 }
