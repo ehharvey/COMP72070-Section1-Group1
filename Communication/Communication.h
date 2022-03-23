@@ -71,6 +71,20 @@ namespace Communication {
 	};
 }
 
+namespace CommunicationMocks {
+	class MockClientRequest : public Communication::IClientRequest {
+		MOCK_METHOD(uint8_t, getAuthByte, ());
+		MOCK_METHOD(Tamagotchi::Command, getCommand, ());
+	};
+
+	class MockServerRequest : public Communication::IServerResponse {
+		MOCK_METHOD(bool, AuthSuccess, ());
+		MOCK_METHOD(std::optional<Tamagotchi::Command>, getCurrentTamagotchiCommand, ());
+		MOCK_METHOD(std::optional<Tamagotchi::Status>, getTamagotchiStatus, ());
+		MOCK_METHOD(std::optional<Communication::Animation>, getAnimation, ());
+	};
+}
+
 namespace Communicators
 {
 	typedef std::vector<const uint8_t>(*rPtr)(std::vector<const uint8_t>);
@@ -155,19 +169,5 @@ namespace Communicators
 		{ }
 
 		const std::vector<uint8_t> Send(const std::vector<uint8_t> message);
-	};
-}
-
-namespace CommunicationMocks {
-	class MockClientRequest : public Communication::IClientRequest {
-		MOCK_METHOD(uint8_t, getAuthByte, ());
-		MOCK_METHOD(Tamagotchi::Command, getCommand, ());
-	};
-
-	class MockServerRequest : public Communication::IServerResponse {
-		MOCK_METHOD(bool, AuthSuccess, ());
-		MOCK_METHOD(std::optional<Tamagotchi::Command>, getCurrentTamagotchiCommand, ());
-		MOCK_METHOD(std::optional<Tamagotchi::Status>, getTamagotchiStatus, ());
-		MOCK_METHOD(std::optional<Communication::Animation>, getAnimation, ());
 	};
 }
