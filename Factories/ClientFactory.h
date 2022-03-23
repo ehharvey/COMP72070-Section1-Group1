@@ -6,5 +6,5 @@
 
 namespace Create
 {
-	std::unique_ptr<Client::Client> Client(Communication::ICommunicator& Communicator);
+	std::unique_ptr<Client::Client> Client();
 }
