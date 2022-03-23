@@ -5,6 +5,7 @@
 #include "../Tamagotchi/Tamagotchi.h"
 #include <optional>
 #include <queue>
+#include <future>
 #include "gmock/gmock.h"
 
 namespace Communication {
@@ -14,14 +15,7 @@ namespace Communication {
 		const std::vector<uint8_t> Serialize();
 	};
 
-	__interface ICommunicator
-	{
-		void Initialize();
-		void Send(const std::vector<uint8_t>);
-		const std::vector<uint8_t> Receive();
-		void Close();
-	};
-
+	
 	__interface IClientRequest : public ISerializable
 	{
 		uint8_t getAuthByte();
@@ -39,28 +33,6 @@ namespace Communication {
 	};
 
 	// ---------------------------------------------------------------
-	// ---------------------------------------------------------------
-	// ---------------------------------------------------------------
-
-	typedef struct ipv4_address {
-		uint8_t octet[3];
-	} IPV4Address;
-
-	class ITcpCommunicator : public ICommunicator
-	{
-		IPV4Address local;
-		std::vector<IPV4Address> remotes; // We can have 0 or more remotes
-
-	public:
-		ITcpCommunicator(IPV4Address local, std::vector<IPV4Address> remotes);
-
-		void Initialize();
-		void Send(const std::vector<uint8_t>);
-		const std::vector<uint8_t> Receive();
-		void Close();
-
-		void AddRemote(IPV4Address);
-	};
 
 	class ClientRequest : public IClientRequest {
 	private:
@@ -97,53 +69,96 @@ namespace Communication {
 		std::optional<Animation> getAnimation();
 		const std::vector<uint8_t> Serialize();
 	};
+}
 
-	class ITcpServer : ITcpCommunicator {
-	public:
-		/*
-		void Initialize();
-		void Send(Data);
-		Data Receive();
-		void Close();
-		*/
-
-		// Server-specific function
-		void Await(); // Waits for and establishes a connection with a client
-	};
-
-	class ITcpClient : ITcpCommunicator {
-	public:
-		/*
-		void Initialize();
-		void Send(Data);
-		Data Receive();
-		void Close();
-		*/
-
-		// Client-specific function
-		void ConnectTo(IPV4Address); // Connects to a server
-	};
-
-	// Idea: Implement local?
-	// e.g., Client-Server communication uses interprocess communication
-	class ILocalCommunicator : public ICommunicator
+namespace Communicators
+{
+	typedef std::vector<const uint8_t>(*rPtr)(std::vector<const uint8_t>);
+	__interface RemoteResponder
 	{
+		// To use:
+		// {
+		//		auto remote_responder = Create::MockRemoteResponder();
+		//		auto send_function = remote_responder.getSendFunction();
+		//
+		//		std::vector<uint8_t> payload = { 'h', 'e', 'l', 'l', 'o' };
+		//		auto server_response = send_function(payload);
+		// }
+		rPtr getSendFunction();
+	};
+
+	__interface Sender
+	{
+		const std::vector<uint8_t> Send(const std::vector<uint8_t> message); // Returns the received response
+	};
+
+	__interface Responder
+	{
+		// This function does not return anything. It receives a pointer to another function as a parameter (you can use lambda instead)
+		//
+		// The lambda should do a few things:
+		// - It should take in a std::vector<uint8_t>		<-- This will be the data that the client sent to the server as a [request]
+		// - It should return a std::vector<uint8_t>		<-- This will be the data that will sent *back* to the client as a [response]
+		void RegisterResponse(rPtr);
+
+		void Start();
+		void Stop();
+		bool getIsRunning();
+	};
+
+	typedef struct ipv4_address {
+		uint8_t octet[4];
+	} IPV4Address;
+
+	// This class is used by clients in order to connect to remote TCP servers
+	class RemoteTcpServer : RemoteResponder
+	{
+	private:
+		IPV4Address address;
+
 	public:
-		void Initialize();
-		void Send(const std::vector<uint8_t>);
-		const std::vector<uint8_t> Receive();
-		void Close();
+		RemoteTcpServer(IPV4Address address) :
+			address(address)
+		{ };
+
+		// Returns a function that you can use to connect to this server
+		rPtr getSendFunction();
+	};
+
+	// This class is used by server apps in order to start their own TCP server
+	class TCPHost : Responder
+	{
+	private:
+		IPV4Address address;
+		rPtr response_function;
+	public:
+		TCPHost(IPV4Address address, rPtr response_function) :
+			address(address),
+			response_function(response_function)
+		{ };
+
+		void Start();
+		bool getIsRunning();
+		void Stop();
+
+	};
+
+	class TCPClient : Sender
+	{
+		IPV4Address address;
+		std::unique_ptr<RemoteResponder> remote;
+
+	public:
+		TCPClient(IPV4Address address, std::unique_ptr<RemoteResponder> remote) :
+			address(address),
+			remote(std::move(remote))
+		{ }
+
+		const std::vector<uint8_t> Send(const std::vector<uint8_t> message);
 	};
 }
 
 namespace CommunicationMocks {
-	class MockCommunicator : public Communication::ICommunicator {
-		MOCK_METHOD(void, Initialize, ());
-		MOCK_METHOD(void, Send, (const std::vector<uint8_t>));
-		MOCK_METHOD(const std::vector<uint8_t>, Receive, ());
-		MOCK_METHOD(void, Close, ());
-	};
-
 	class MockClientRequest : public Communication::IClientRequest {
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Tamagotchi::Command, getCommand, ());
