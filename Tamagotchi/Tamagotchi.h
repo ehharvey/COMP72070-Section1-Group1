@@ -86,7 +86,7 @@ namespace TamagotchiMocks {
 		MOCK_METHOD(Tamagotchi::IStatus&, getStatus, ());
 	};
 
-	class MockStatus : public Tamagotchi::Status {
+	class MockStatus : public Tamagotchi::IStatus {
 		MOCK_METHOD(uint8_t, getHappiness, ());
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
