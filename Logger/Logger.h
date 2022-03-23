@@ -21,11 +21,12 @@ namespace Logger {
 	class Log : public ILog {
 	private:
 		action a;
-		const std::vector<uint8_t> data;
+		std::vector<uint8_t> data;
 	public:
 		Log(action, const std::vector<uint8_t> data);
 		std::time_t getTime();
 		const std::vector<uint8_t> getData();
+		action getAction();
 	};
 }
 

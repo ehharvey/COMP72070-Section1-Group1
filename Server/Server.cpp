@@ -21,15 +21,23 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
-int Server::getFOO()
+Server::Server::Server()
 {
-    return 0;
 }
 
-Server::Server::Server(Communication::ICommunicator& Communicator) 
-    : Communicator(Communicator) { }
-
-Communication::ClientRequest Server::Server::ReceiveRequest()
+Server::Server::Server(std::unique_ptr<Communicators::Responder> responder)
 {
-    return Communication::ClientRequest();
+}
+
+void Server::Server::Start()
+{
+}
+
+bool Server::Server::getIsRunning()
+{
+    return false;
+}
+
+void Server::Server::Stop()
+{
 }
