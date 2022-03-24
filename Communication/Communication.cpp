@@ -72,29 +72,25 @@ void Data::Status::setCleaniness(uint8_t cleaniness)
 {
 }
 
-void Data::Status::setStats(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
-{
-}
-
 Communicators::rPtr Communicators::RemoteTcpServer::getSendFunction()
 {
 	return rPtr();
 }
 
-void Communicators::TCPHost::Start()
+void Communicators::TcpHost::Start()
 {
 }
 
-bool Communicators::TCPHost::getIsRunning()
+bool Communicators::TcpHost::getIsRunning()
 {
 	return false;
 }
 
-void Communicators::TCPHost::Stop()
+void Communicators::TcpHost::Stop()
 {
 }
 
-const std::vector<uint8_t> Communicators::TCPClient::Send(const std::vector<uint8_t> message)
+const std::vector<uint8_t> Communicators::TcpClient::Send(const std::vector<uint8_t> message)
 {
 	return std::vector<uint8_t>();
 }

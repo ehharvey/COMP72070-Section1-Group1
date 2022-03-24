@@ -8,6 +8,10 @@
 #include "gmock/gmock.h"
 
 namespace Data {
+	typedef struct ipv4_address {
+		uint8_t octet[4];
+	} IPV4Address;
+
 	// Interfaces -------------------------------------------------------------------
 	__interface ISerializable
 	{
@@ -165,18 +169,14 @@ namespace Communicators
 		bool getIsRunning();
 	};
 
-	typedef struct ipv4_address {
-		uint8_t octet[4];
-	} IPV4Address;
-
 	// This class is used by clients in order to connect to remote TCP servers
 	class RemoteTcpServer : public RemoteResponder
 	{
 	private:
-		IPV4Address address;
+		Data::IPV4Address address;
 
 	public:
-		RemoteTcpServer(IPV4Address address) :
+		RemoteTcpServer(Data::IPV4Address address) :
 			address(address)
 		{ };
 
@@ -185,13 +185,13 @@ namespace Communicators
 	};
 
 	// This class is used by server apps in order to start their own TCP server
-	class TCPHost : public Responder
+	class TcpHost : public Responder
 	{
 	private:
-		IPV4Address address;
+		Data::IPV4Address address;
 		rPtr response_function;
 	public:
-		TCPHost(IPV4Address address, rPtr response_function) :
+		TcpHost(Data::IPV4Address address, rPtr response_function) :
 			address(address),
 			response_function(response_function)
 		{ };
@@ -202,13 +202,13 @@ namespace Communicators
 
 	};
 
-	class TCPClient : public Sender
+	class TcpClient : public Sender
 	{
-		IPV4Address address;
+		Data::IPV4Address address;
 		std::unique_ptr<RemoteResponder> remote;
 
 	public:
-		TCPClient(IPV4Address address, std::unique_ptr<RemoteResponder> remote) :
+		TcpClient(Data::IPV4Address address, std::unique_ptr<RemoteResponder> remote) :
 			address(address),
 			remote(std::move(remote))
 		{ }
