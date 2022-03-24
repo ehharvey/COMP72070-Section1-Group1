@@ -113,20 +113,21 @@ namespace Data {
 	};
 }
 
-namespace DataMocks {
-	class MockClientRequest : public Data::IClientRequest {
+// There is another namespace Mocks { ... }, for Communicators, on this document (Communication.h)
+namespace Mocks {
+	class ClientRequestMock : public Data::IClientRequest {
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Data::Command, getCommand, ());
 	};
 
-	class MockServerRequest : public Data::IServerResponse {
+	class ServerResponseMock : public Data::IServerResponse {
 		MOCK_METHOD(bool, AuthSuccess, ());
 		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
 	};
 
-	class MockStatus : public Data::Status {
+	class StatusMock : public Data::Status {
 		MOCK_METHOD(uint8_t, getHappiness, ());
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
@@ -217,19 +218,20 @@ namespace Communicators
 	};
 }
 
-namespace CommunicatorsMocks
+// There is another namespace Mocks { ... }, for Data mocks, on this document (Communication.h)
+namespace Mocks
 {
-	class MockRemoteResponder : public Communicators::RemoteResponder
+	class RemoteResponderMock : public Communicators::RemoteResponder
 	{
 		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
 	};
 
-	class MockSender : public Communicators::Sender
+	class SenderMock : public Communicators::Sender
 	{
 		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
 	};
 
-	class Responder : public Communicators::Responder
+	class ResponderMock : public Communicators::Responder
 	{
 		MOCK_METHOD(void, Start, ());
 		MOCK_METHOD(bool, getIsRunning, ());

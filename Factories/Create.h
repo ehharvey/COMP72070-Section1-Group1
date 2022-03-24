@@ -4,6 +4,7 @@
 #include "../Communication/Communication.h"
 #include "../Logger/Logger.h"
 #include "../Server/Server.h"
+#include "../Tamagotchi/Tamagotchi.h"
 #include <memory>
 
 namespace Create
@@ -32,7 +33,7 @@ namespace Create
 	// 
 	// - auto remote = Create::RemoteTcpServer({192, 168, 1, 100});
 	std::unique_ptr<Communicators::RemoteTcpServer> RemoteTcpServer(Data::IPV4Address address);
-	std::unique_ptr<Communicators::TcpClient> TcpHost(Data::IPV4Address address, Communicators::rPtr response_function);
+	std::unique_ptr<Communicators::TcpHost> TcpHost(Data::IPV4Address address, Communicators::rPtr response_function);
 	std::unique_ptr<Communicators::TcpClient> TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::RemoteResponder> remote);
 
 	// Logger:: (from Logger.h)
@@ -42,5 +43,32 @@ namespace Create
 	std::unique_ptr<Server::Server> Server();
 	std::unique_ptr<Server::Server> Server(std::unique_ptr<Communicators::Responder> responder);
 
+	// Tamagotchi:: (from Tamagotchi.h)
+	std::unique_ptr<Tamagotchi::Tamagotchi> Tamagotchi();
+}
 
+namespace CreateMocks
+{
+	// Client (from Client.h)
+	std::unique_ptr<Mocks::ClientMock> ClientMock();
+
+
+	// Data:: (from Communication.h)
+	std::unique_ptr<Mocks::ClientRequestMock> ClientRequestMock();
+	std::unique_ptr<Mocks::ServerResponseMock> ServerResponseMock();
+	std::unique_ptr<Mocks::StatusMock> StatusMock();
+
+	// Comunicators:: (from Communication.h)
+	std::unique_ptr<Mocks::RemoteResponderMock> RemoteResponderMock();
+	std::unique_ptr<Mocks::ResponderMock> ResponderMock();
+	std::unique_ptr<Mocks::SenderMock> SenderMock();
+
+	// Logger:: (from Logger.h)
+	std::unique_ptr<Mocks::LogMock> LogMock();
+
+	// Server:: (from Server.h)
+	std::unique_ptr<Mocks::ServerMock> ServerMock();
+
+	// Tamagotchi:: (from Tamagotchi.h)
+	std::unique_ptr<Mocks::TamagotchiMock> TamagotchiMock();
 }

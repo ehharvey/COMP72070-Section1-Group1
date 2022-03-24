@@ -16,3 +16,9 @@ namespace Server {
 	};
 
 }
+
+// As Server is itself a Communicators::Responder, we can mock it via Mocks::ResponderMock
+namespace Mocks
+{
+	typedef Mocks::ResponderMock ServerMock;
+}
