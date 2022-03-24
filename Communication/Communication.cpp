@@ -72,6 +72,11 @@ void Data::Status::setCleaniness(uint8_t cleaniness)
 {
 }
 
+const std::vector<uint8_t> Data::Status::Serialize()
+{
+	return std::vector<uint8_t>();
+}
+
 Communicators::rPtr Communicators::RemoteTcpServer::getSendFunction()
 {
 	return rPtr();
@@ -87,6 +92,10 @@ bool Communicators::TcpHost::getIsRunning()
 }
 
 void Communicators::TcpHost::Stop()
+{
+}
+
+void Communicators::TcpHost::RegisterResponse(Communicators::rPtr response_function)
 {
 }
 

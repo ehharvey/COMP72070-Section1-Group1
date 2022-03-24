@@ -24,7 +24,6 @@ namespace Data {
 		uint8_t getAlertness();
 		uint8_t getStomachLevel();
 		uint8_t getCleaniness();
-		void setStats(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 	};
 
 	enum Command
@@ -93,7 +92,7 @@ namespace Data {
 		const std::vector<uint8_t> Serialize();
 	};
 
-	class Status : public IStatus {
+	class Status : public IStatus, public ISerializable {
 		// Payload format
 		// hhhh aaaa [happiness alertness]
 		// ssss cccc [stomach cleaniness]
@@ -110,6 +109,8 @@ namespace Data {
 		void setAlertness(uint8_t alertness);
 		void setStomachLevel(uint8_t stomach);
 		void setCleaniness(uint8_t cleaniness);
+
+		const std::vector<uint8_t> Serialize();
 	};
 }
 
@@ -118,6 +119,7 @@ namespace Mocks {
 	class ClientRequestMock : public Data::IClientRequest {
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Data::Command, getCommand, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
 	class ServerResponseMock : public Data::IServerResponse {
@@ -125,13 +127,15 @@ namespace Mocks {
 		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
-	class StatusMock : public Data::Status {
+	class StatusMock : public Data::IStatus, public Data::ISerializable {
 		MOCK_METHOD(uint8_t, getHappiness, ());
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
-		MOCK_METHOD(uint8_t, getDirtiness, ());
+		MOCK_METHOD(uint8_t, getCleaniness, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 }
 
@@ -200,6 +204,7 @@ namespace Communicators
 		void Start();
 		bool getIsRunning();
 		void Stop();
+		void RegisterResponse(rPtr response_function);
 
 	};
 
@@ -236,5 +241,6 @@ namespace Mocks
 		MOCK_METHOD(void, Start, ());
 		MOCK_METHOD(bool, getIsRunning, ());
 		MOCK_METHOD(void, Stop, ());
+		MOCK_METHOD(void, RegisterResponse, (Communicators::rPtr));
 	};
 }

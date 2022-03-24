@@ -13,6 +13,7 @@ namespace Server {
 		void Start();
 		bool getIsRunning();
 		void Stop();
+		void RegisterResponse(Communicators::rPtr);
 	};
 
 }

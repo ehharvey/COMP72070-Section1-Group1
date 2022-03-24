@@ -41,3 +41,7 @@ bool Server::Server::getIsRunning()
 void Server::Server::Stop()
 {
 }
+
+void Server::Server::RegisterResponse(Communicators::rPtr)
+{
+}
