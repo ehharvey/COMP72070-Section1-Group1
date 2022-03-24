@@ -142,7 +142,7 @@ namespace Mocks {
 namespace Communicators
 {
 	typedef const std::vector<uint8_t>(*rPtr)(const std::vector<uint8_t>);
-	__interface RemoteResponder
+	__interface IRemoteResponder
 	{
 		// To use:
 		// {
@@ -155,12 +155,12 @@ namespace Communicators
 		rPtr getSendFunction();
 	};
 
-	__interface Sender
+	__interface ISender
 	{
 		const std::vector<uint8_t> Send(const std::vector<uint8_t> message); // Returns the received response
 	};
 
-	__interface Responder
+	__interface IResponder
 	{
 		// This function does not return anything. It receives a pointer to another function as a parameter (you can use lambda instead)
 		//
@@ -175,7 +175,7 @@ namespace Communicators
 	};
 
 	// This class is used by clients in order to connect to remote TCP servers
-	class RemoteTcpServer : public RemoteResponder
+	class RemoteTcpServer : public IRemoteResponder
 	{
 	private:
 		Data::IPV4Address address;
@@ -190,7 +190,7 @@ namespace Communicators
 	};
 
 	// This class is used by server apps in order to start their own TCP server
-	class TcpHost : public Responder
+	class TcpHost : public IResponder
 	{
 	private:
 		Data::IPV4Address address;
@@ -208,13 +208,13 @@ namespace Communicators
 
 	};
 
-	class TcpClient : public Sender
+	class TcpClient : public ISender
 	{
 		Data::IPV4Address address;
-		std::unique_ptr<RemoteResponder> remote;
+		std::unique_ptr<IRemoteResponder> remote;
 
 	public:
-		TcpClient(Data::IPV4Address address, std::unique_ptr<RemoteResponder> remote) :
+		TcpClient(Data::IPV4Address address, std::unique_ptr<IRemoteResponder> remote) :
 			address(address),
 			remote(std::move(remote))
 		{ }
@@ -226,17 +226,17 @@ namespace Communicators
 // There is another namespace Mocks { ... }, for Data mocks, on this document (Communication.h)
 namespace Mocks
 {
-	class RemoteResponderMock : public Communicators::RemoteResponder
+	class RemoteResponderMock : public Communicators::IRemoteResponder
 	{
 		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
 	};
 
-	class SenderMock : public Communicators::Sender
+	class SenderMock : public Communicators::ISender
 	{
 		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
 	};
 
-	class ResponderMock : public Communicators::Responder
+	class ResponderMock : public Communicators::IResponder
 	{
 		MOCK_METHOD(void, Start, ());
 		MOCK_METHOD(bool, getIsRunning, ());

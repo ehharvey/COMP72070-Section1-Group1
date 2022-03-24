@@ -9,7 +9,7 @@ namespace Create {
 		return std::make_unique<Client::Client>(Client::Client());
 	}
 
-	std::unique_ptr<Client::Client> Client(std::unique_ptr<Communicators::Sender> sender)
+	std::unique_ptr<Client::Client> Client(std::unique_ptr<Communicators::ISender> sender)
 	{
 		return std::make_unique<Client::Client>(Client::Client(std::move(sender)));
 	}

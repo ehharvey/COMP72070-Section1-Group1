@@ -30,7 +30,7 @@ Client::Client::Client()
 {
 }
 
-Client::Client::Client(std::unique_ptr<Communicators::Sender> sender)
+Client::Client::Client(std::unique_ptr<Communicators::ISender> sender)
 {
 }
 

@@ -25,7 +25,7 @@ Server::Server::Server()
 {
 }
 
-Server::Server::Server(std::unique_ptr<Communicators::Responder> responder)
+Server::Server::Server(std::unique_ptr<Communicators::IResponder> responder)
 {
 }
 

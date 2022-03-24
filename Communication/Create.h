@@ -48,7 +48,7 @@ namespace Create
 	{
 		return std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(address, response_function));
 	}
-	std::unique_ptr<Communicators::TcpClient> TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::RemoteResponder> remote)
+	std::unique_ptr<Communicators::TcpClient> TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::IRemoteResponder> remote)
 	{
 		return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
 	}
