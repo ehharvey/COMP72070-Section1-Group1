@@ -117,12 +117,14 @@ namespace Data {
 // There is another namespace Mocks { ... }, for Communicators, on this document (Communication.h)
 namespace Mocks {
 	class ClientRequestMock : public Data::IClientRequest {
+	public:
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Data::Command, getCommand, ());
 		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
 	class ServerResponseMock : public Data::IServerResponse {
+	public:
 		MOCK_METHOD(bool, AuthSuccess, ());
 		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
@@ -131,6 +133,7 @@ namespace Mocks {
 	};
 
 	class StatusMock : public Data::IStatus, public Data::ISerializable {
+	public:
 		MOCK_METHOD(uint8_t, getHappiness, ());
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
@@ -228,16 +231,19 @@ namespace Mocks
 {
 	class RemoteResponderMock : public Communicators::IRemoteResponder
 	{
+	public:
 		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
 	};
 
 	class SenderMock : public Communicators::ISender
 	{
+	public:
 		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
 	};
 
 	class ResponderMock : public Communicators::IResponder
 	{
+	public:
 		MOCK_METHOD(void, Start, ());
 		MOCK_METHOD(bool, getIsRunning, ());
 		MOCK_METHOD(void, Stop, ());

@@ -36,6 +36,7 @@ namespace Tamagotchi
 
 namespace Mocks {
 	class TamagotchiMock : public Tamagotchi::ITamagotchi {
+	public:
 		MOCK_METHOD(void, AddCommand, (Data::Command));
 		MOCK_METHOD(void, AddCommand_Immediate, (Data::Command));
 		MOCK_METHOD(Data::Command, GetCurrentCommand, ());

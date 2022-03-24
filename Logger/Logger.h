@@ -32,6 +32,7 @@ namespace Logger {
 
 namespace Mocks {
 	class LogMock : public Logger::ILog {
+	public:
 		MOCK_METHOD(time_t, getTime, ());
 		MOCK_METHOD(const std::vector<uint8_t>, getData, ());
 		MOCK_METHOD(Logger::action, getAction, ());
