@@ -2,6 +2,8 @@
 
 #include "../Client/Client.h"
 #include "../Communication/Communication.h"
+#include "../Logger/Logger.h"
+#include "../Server/Server.h"
 #include <memory>
 
 namespace Create
@@ -32,4 +34,13 @@ namespace Create
 	std::unique_ptr<Communicators::RemoteTcpServer> RemoteTcpServer(Data::IPV4Address address);
 	std::unique_ptr<Communicators::TcpClient> TcpHost(Data::IPV4Address address, Communicators::rPtr response_function);
 	std::unique_ptr<Communicators::TcpClient> TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::RemoteResponder> remote);
+
+	// Logger:: (from Logger.h)
+	std::unique_ptr<Logger::Log> Log(Logger::action, const std::vector<uint8_t> data);
+
+	// Server:: (from Server.h)
+	std::unique_ptr<Server::Server> Server();
+	std::unique_ptr<Server::Server> Server(std::unique_ptr<Communicators::Responder> responder);
+
+
 }
