@@ -25,7 +25,7 @@ Server::Server::Server()
 {
 }
 
-Server::Server::Server(std::unique_ptr<Communicators::Responder> responder)
+Server::Server::Server(std::unique_ptr<Communicators::IResponder> responder)
 {
 }
 
@@ -39,5 +39,9 @@ bool Server::Server::getIsRunning()
 }
 
 void Server::Server::Stop()
+{
+}
+
+void Server::Server::RegisterResponse(Communicators::rPtr)
 {
 }

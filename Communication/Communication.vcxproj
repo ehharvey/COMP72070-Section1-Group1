@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Communication.h" />
+    <ClInclude Include="Create.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

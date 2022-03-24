@@ -12,17 +12,17 @@ namespace Client {
 
 	class Client : public IClient {
 	private:
-		std::unique_ptr<Communicators::Sender> sender;
+		std::unique_ptr<Communicators::ISender> sender;
 
 	public:
 		Client();
-		Client(std::unique_ptr<Communicators::Sender> sender);
+		Client(std::unique_ptr<Communicators::ISender> sender);
 		std::unique_ptr<Data::IServerResponse> SendCommand(std::unique_ptr < Data::IClientRequest> request);
 	};
 }
 
-namespace ClientMocks {
-	class MockClient : public Client::IClient {
+namespace Mocks {
+	class ClientMock : public Client::IClient {
 	public:
 		MOCK_METHOD(std::unique_ptr<Data::IServerResponse>, SendCommand, (std::unique_ptr<Data::IClientRequest>));
 	};

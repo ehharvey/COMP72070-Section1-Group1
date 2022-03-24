@@ -1,5 +1,9 @@
 #include "Tamagotchi.h"
 
+void Tamagotchi::Tamagotchi::RecalculateHappiness()
+{
+}
+
 void Tamagotchi::Tamagotchi::AddCommand(Data::Command)
 {
 }
@@ -18,6 +22,6 @@ std::unique_ptr<Data::IStatus> Tamagotchi::Tamagotchi::getStatus()
 	return std::unique_ptr<Data::IStatus>();
 }
 
-void Tamagotchi::Tamagotchi::adjustStat(Stat, signed int relativeChange)
+void Tamagotchi::Tamagotchi::adjustStat(Data::Stat stat, signed int relativeChange)
 {
 }

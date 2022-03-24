@@ -1,7 +1,6 @@
 #pragma once
-#pragma once
-#include "..\Communication\Communication.h"
 #include <ctime>
+#include <vector>
 #include "gmock/gmock.h"
 
 namespace Logger {
@@ -31,9 +30,11 @@ namespace Logger {
 	};
 }
 
-namespace LoggerMocks {
-	class MockLogger : public Logger::ILog {
+namespace Mocks {
+	class LogMock : public Logger::ILog {
+	public:
 		MOCK_METHOD(time_t, getTime, ());
 		MOCK_METHOD(const std::vector<uint8_t>, getData, ());
+		MOCK_METHOD(Logger::action, getAction, ());
 	};
 }

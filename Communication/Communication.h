@@ -8,6 +8,10 @@
 #include "gmock/gmock.h"
 
 namespace Data {
+	typedef struct ipv4_address {
+		uint8_t octet[4];
+	} IPV4Address;
+
 	// Interfaces -------------------------------------------------------------------
 	__interface ISerializable
 	{
@@ -20,7 +24,6 @@ namespace Data {
 		uint8_t getAlertness();
 		uint8_t getStomachLevel();
 		uint8_t getCleaniness();
-		void setStats(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 	};
 
 	enum Command
@@ -89,50 +92,60 @@ namespace Data {
 		const std::vector<uint8_t> Serialize();
 	};
 
-	class Status : public IStatus {
+	class Status : public IStatus, public ISerializable {
 		// Payload format
 		// hhhh aaaa [happiness alertness]
 		// ssss cccc [stomach cleaniness]
 		uint16_t Payload; // 2 bytes
 	public:
+		Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
+		Status(uint16_t Payload);
 		uint8_t getHappiness() { return Payload >> 12; };
 		uint8_t getAlertness() { return Payload << 4 >> 12; };
 		uint8_t getStomachLevel() { return Payload << 8 >> 12; };
 		uint8_t getCleaniness() { return Payload << 12 >> 12; };
 
-		void setHappiness(uint8_t happiness);
+		void setHappiness(uint8_t happiness); // Probably uneeded
 		void setAlertness(uint8_t alertness);
 		void setStomachLevel(uint8_t stomach);
 		void setCleaniness(uint8_t cleaniness);
-		void setStats(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
+
+		const std::vector<uint8_t> Serialize();
 	};
 }
 
-namespace DataMocks {
-	class MockClientRequest : public Data::IClientRequest {
+// There is another namespace Mocks { ... }, for Communicators, on this document (Communication.h)
+namespace Mocks {
+	class ClientRequestMock : public Data::IClientRequest {
+	public:
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Data::Command, getCommand, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
-	class MockServerRequest : public Data::IServerResponse {
+	class ServerResponseMock : public Data::IServerResponse {
+	public:
 		MOCK_METHOD(bool, AuthSuccess, ());
 		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
-	class MockStatus : public Data::Status {
+	class StatusMock : public Data::IStatus, public Data::ISerializable {
+	public:
 		MOCK_METHOD(uint8_t, getHappiness, ());
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
-		MOCK_METHOD(uint8_t, getDirtiness, ());
+		MOCK_METHOD(uint8_t, getCleaniness, ());
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 }
 
 namespace Communicators
 {
 	typedef const std::vector<uint8_t>(*rPtr)(const std::vector<uint8_t>);
-	__interface RemoteResponder
+	__interface IRemoteResponder
 	{
 		// To use:
 		// {
@@ -145,12 +158,12 @@ namespace Communicators
 		rPtr getSendFunction();
 	};
 
-	__interface Sender
+	__interface ISender
 	{
 		const std::vector<uint8_t> Send(const std::vector<uint8_t> message); // Returns the received response
 	};
 
-	__interface Responder
+	__interface IResponder
 	{
 		// This function does not return anything. It receives a pointer to another function as a parameter (you can use lambda instead)
 		//
@@ -164,18 +177,14 @@ namespace Communicators
 		bool getIsRunning();
 	};
 
-	typedef struct ipv4_address {
-		uint8_t octet[4];
-	} IPV4Address;
-
 	// This class is used by clients in order to connect to remote TCP servers
-	class RemoteTcpServer : public RemoteResponder
+	class RemoteTcpServer : public IRemoteResponder
 	{
 	private:
-		IPV4Address address;
+		Data::IPV4Address address;
 
 	public:
-		RemoteTcpServer(IPV4Address address) :
+		RemoteTcpServer(Data::IPV4Address address) :
 			address(address)
 		{ };
 
@@ -184,13 +193,13 @@ namespace Communicators
 	};
 
 	// This class is used by server apps in order to start their own TCP server
-	class TCPHost : public Responder
+	class TcpHost : public IResponder
 	{
 	private:
-		IPV4Address address;
+		Data::IPV4Address address;
 		rPtr response_function;
 	public:
-		TCPHost(IPV4Address address, rPtr response_function) :
+		TcpHost(Data::IPV4Address address, rPtr response_function) :
 			address(address),
 			response_function(response_function)
 		{ };
@@ -198,16 +207,17 @@ namespace Communicators
 		void Start();
 		bool getIsRunning();
 		void Stop();
+		void RegisterResponse(rPtr response_function);
 
 	};
 
-	class TCPClient : public Sender
+	class TcpClient : public ISender
 	{
-		IPV4Address address;
-		std::unique_ptr<RemoteResponder> remote;
+		Data::IPV4Address address;
+		std::unique_ptr<IRemoteResponder> remote;
 
 	public:
-		TCPClient(IPV4Address address, std::unique_ptr<RemoteResponder> remote) :
+		TcpClient(Data::IPV4Address address, std::unique_ptr<IRemoteResponder> remote) :
 			address(address),
 			remote(std::move(remote))
 		{ }
@@ -216,22 +226,27 @@ namespace Communicators
 	};
 }
 
-namespace CommunicatorsMocks
+// There is another namespace Mocks { ... }, for Data mocks, on this document (Communication.h)
+namespace Mocks
 {
-	class MockRemoteResponder : public Communicators::RemoteResponder
+	class RemoteResponderMock : public Communicators::IRemoteResponder
 	{
+	public:
 		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
 	};
 
-	class MockSender : public Communicators::Sender
+	class SenderMock : public Communicators::ISender
 	{
+	public:
 		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
 	};
 
-	class Responder : public Communicators::Responder
+	class ResponderMock : public Communicators::IResponder
 	{
+	public:
 		MOCK_METHOD(void, Start, ());
 		MOCK_METHOD(bool, getIsRunning, ());
 		MOCK_METHOD(void, Stop, ());
+		MOCK_METHOD(void, RegisterResponse, (Communicators::rPtr));
 	};
 }
