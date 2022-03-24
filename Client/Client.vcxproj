@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Create.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communication\Communication.vcxproj">
