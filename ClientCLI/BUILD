@@ -6,6 +6,7 @@ cc_binary(
     visibility = [
         "//Testing:__pkg__",
         "//Testing/Unit:__pkg__",
+        "//Testing/Mocks:__pkg__",
     ],
     deps = [
             "//Client:Client",
