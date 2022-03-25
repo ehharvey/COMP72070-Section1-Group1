@@ -2,9 +2,8 @@
 //
 
 #include <iostream>
-#include "../Communication/Communication.h"
 
 int main()
 {
-    
+    return 0;
 }
