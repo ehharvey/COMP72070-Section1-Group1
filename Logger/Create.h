@@ -10,12 +10,3 @@ namespace Create
 		return std::make_unique<Logger::Log>(Logger::Log(a, data));
 	}
 }
-
-namespace CreateMocks
-{
-	// Logger:: (from Logger.h)
-	std::unique_ptr<Mocks::LogMock> LogMock()
-	{
-		return std::make_unique<Mocks::LogMock>();
-	}
-}

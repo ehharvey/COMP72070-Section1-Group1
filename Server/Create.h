@@ -14,12 +14,3 @@ namespace Create
 		return std::make_unique<Server::Server>(Server::Server(std::move(responder)));
 	}
 }
-
-namespace CreateMocks
-{
-	// Server:: (from Server.h)
-	std::unique_ptr<Mocks::ServerMock> ServerMock()
-	{
-		return std::make_unique<Mocks::ServerMock>();
-	}
-}

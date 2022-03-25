@@ -14,12 +14,3 @@ namespace Create {
 		return std::make_unique<Client::Client>(Client::Client(std::move(sender)));
 	}
 }
-
-namespace CreateMocks
-{
-	// Client (from Client.h)
-	std::unique_ptr<Mocks::ClientMock> ClientMock()
-	{
-		return std::make_unique<Mocks::ClientMock>();
-	}
-}

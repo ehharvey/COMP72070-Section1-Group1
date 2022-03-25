@@ -1,6 +1,5 @@
 #pragma once
 #include "../Communication/Communication.h"
-#include "gmock/gmock.h"
 
 namespace Server {
 	class Server : public Communicators::IResponder
@@ -16,10 +15,4 @@ namespace Server {
 		void RegisterResponse(Communicators::rPtr);
 	};
 
-}
-
-// As Server is itself a Communicators::Responder, we can mock it via Mocks::ResponderMock
-namespace Mocks
-{
-	typedef Mocks::ResponderMock ServerMock;
 }

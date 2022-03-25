@@ -5,7 +5,6 @@
 #include <optional>
 #include <queue>
 #include <future>
-#include "gmock/gmock.h"
 
 namespace Data {
 	typedef struct ipv4_address {
@@ -114,34 +113,6 @@ namespace Data {
 	};
 }
 
-// There is another namespace Mocks { ... }, for Communicators, on this document (Communication.h)
-namespace Mocks {
-	class ClientRequestMock : public Data::IClientRequest {
-	public:
-		MOCK_METHOD(uint8_t, getAuthByte, ());
-		MOCK_METHOD(Data::Command, getCommand, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
-	};
-
-	class ServerResponseMock : public Data::IServerResponse {
-	public:
-		MOCK_METHOD(bool, AuthSuccess, ());
-		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
-		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
-		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
-	};
-
-	class StatusMock : public Data::IStatus, public Data::ISerializable {
-	public:
-		MOCK_METHOD(uint8_t, getHappiness, ());
-		MOCK_METHOD(uint8_t, getAlertness, ());
-		MOCK_METHOD(uint8_t, getStomachLevel, ());
-		MOCK_METHOD(uint8_t, getCleaniness, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
-	};
-}
-
 namespace Communicators
 {
 	typedef const std::vector<uint8_t>(*rPtr)(const std::vector<uint8_t>);
@@ -223,30 +194,5 @@ namespace Communicators
 		{ }
 
 		const std::vector<uint8_t> Send(const std::vector<uint8_t> message);
-	};
-}
-
-// There is another namespace Mocks { ... }, for Data mocks, on this document (Communication.h)
-namespace Mocks
-{
-	class RemoteResponderMock : public Communicators::IRemoteResponder
-	{
-	public:
-		MOCK_METHOD(Communicators::rPtr, getSendFunction, ());
-	};
-
-	class SenderMock : public Communicators::ISender
-	{
-	public:
-		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
-	};
-
-	class ResponderMock : public Communicators::IResponder
-	{
-	public:
-		MOCK_METHOD(void, Start, ());
-		MOCK_METHOD(bool, getIsRunning, ());
-		MOCK_METHOD(void, Stop, ());
-		MOCK_METHOD(void, RegisterResponse, (Communicators::rPtr));
 	};
 }
