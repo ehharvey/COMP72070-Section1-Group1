@@ -1,4 +1,5 @@
 #include "../../Client/Create.h"
+#include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
 // Demonstrate some basic assertions.
@@ -9,4 +10,5 @@ TEST(HelloTest, BasicAssertions) {
   EXPECT_EQ(7 * 6, 42);
 
   auto client = Create::Client();
+  auto clientMock = CreateMocks::ClientMock();
 }
