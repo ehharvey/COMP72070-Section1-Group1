@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "Server",
+    srcs = ["Server.cpp"],
+    hdrs = ["Server.h", "Create.h"],
+    deps = [ 
+        "//Communication:Communication",
+        "//Tamagotchi:Tamagotchi"
+    ]
+)
