@@ -1,3 +1,6 @@
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 // Client
 namespace Mocks {
 	class ClientMock : public Client::IClient {
