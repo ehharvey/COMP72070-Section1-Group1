@@ -116,7 +116,7 @@ namespace Data {
 
 namespace Communicators
 {
-	typedef const std::vector<uint8_t>(*rPtr)(const std::vector<uint8_t>);
+	typedef std::function<std::vector<uint8_t>(std::vector<uint8_t>)> rPtr;
 	__interface IRemoteResponder
 	{
 		// To use:

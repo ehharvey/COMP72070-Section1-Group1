@@ -10,5 +10,6 @@ cc_library(
         "//Tamagotchi:__pkg__",
         "//Testing:__pkg__",
         "//Testing/Unit:__pkg__",
+        "//Communication/Examples:__pkg__",
     ],
 )
