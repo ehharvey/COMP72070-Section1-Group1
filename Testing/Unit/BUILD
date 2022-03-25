@@ -1,5 +1,5 @@
 cc_test(
-  name = "ClientTests",
+  name = "Client",
   size = "small",
   srcs = ["ClientTests.cpp"],
   deps = [
@@ -9,7 +9,7 @@ cc_test(
 )
 
 cc_test(
-  name = "CommunicationTests",
+  name = "Communication",
   size = "small",
   srcs = ["CommunicationTests.cpp"],
   deps = [
@@ -19,7 +19,7 @@ cc_test(
 )
 
 cc_test(
-  name = "LoggerTests",
+  name = "Logger",
   size = "small",
   srcs = ["LoggerTests.cpp"],
   deps = [
@@ -29,7 +29,7 @@ cc_test(
 )
 
 cc_test(
-  name = "ServerTests",
+  name = "Server",
   size = "small",
   srcs = ["ServerTests.cpp"],
   deps = [
