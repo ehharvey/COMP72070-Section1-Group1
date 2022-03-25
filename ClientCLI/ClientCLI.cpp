@@ -9,6 +9,11 @@
 #include "..\Server\Server.h"
 #include "..\Tamagotchi\Tamagotchi.h"
 
+// REQUIRED IMPLEMENTATIONS*
+// Implement queue
+// Integrate Log
+// Implement Code corresponding to each switch case (Transmission of data)
+
 int main()
 {
     cout << "Tamagotchi [Version 1.0] \n";
@@ -18,22 +23,38 @@ int main()
 
     string userInput;
 
+    string command; // e.g Feed, Clean
+    string amount;  // e.g '20'
+
+    queue<string> commands; // if userInput = 'l'
+
     while (!Quit)
     {
         hashit();
         cout << "\Tamagotchi> ";
         cin >> userInput;
 
-        string command;
-        string amount;
+        if (userInput == "l")
+        {
+            // Add code to change state to QUEUE
 
+            
+
+
+
+
+
+        }
+
+
+
+        // Split string (Command, value)
         for (int i = 0; i < userInput.length(); i++)
         {
             if (userInput[i] == ' ')
             {
                 command.append(userInput.substr(0, i));
                 amount.append(userInput.substr(i + 1, userInput.length() - 1));
-
                 break;
             }
         }
@@ -58,13 +79,15 @@ int main()
             help();
             break;
         }
+
         case QUIT:
         {
             cout << "Goodbye!";
-
+            // Add code to delete queue if in QUEUE state
             Quit = true;
             break;
         }
+
         }
     }
     return 0;
