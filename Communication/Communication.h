@@ -63,6 +63,7 @@ namespace Data {
 		} Payload;
 	public:
 		ClientRequest();
+		ClientRequest(uint8_t authbyte, Command command);
 		ClientRequest(const std::vector<uint8_t> Serialization);
 		uint8_t getAuthByte();
 		Command getCommand();

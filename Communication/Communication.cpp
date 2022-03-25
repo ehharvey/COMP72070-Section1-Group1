@@ -4,23 +4,33 @@ Data::ClientRequest::ClientRequest()
 {
 }
 
+Data::ClientRequest::ClientRequest(uint8_t authbyte, Command command)
+{
+	this->Payload.AuthByte = authbyte;
+	this->Payload.CommandByte = command;
+}
+
 Data::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
 {
 }
 
 uint8_t Data::ClientRequest::getAuthByte()
 {
-	return uint8_t();
+	return this->Payload.AuthByte;
 }
 
+// #StillAStub
 Data::Command Data::ClientRequest::getCommand()
 {
-	return Data::Command();
+	return Data::Command::sleep;
 }
 
 const std::vector<uint8_t> Data::ClientRequest::Serialize()
 {
-	return std::vector<uint8_t>();
+	std::vector<uint8_t> serialization;
+	serialization.push_back(this->Payload.AuthByte);
+	serialization.push_back(this->Payload.CommandByte);
+	return serialization;
 }
 
 Data::ServerResponse::ServerResponse()
