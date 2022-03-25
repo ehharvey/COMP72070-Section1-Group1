@@ -7,6 +7,7 @@ cc_library(
     visibility = [
         "//ClientCLI:__pkg__",
         "//Testing:__pkg__",
+        "//Testing/Unit:__pkg__",
         ],
-    deps = [ "//Communication:Communication"]
+    deps = [ "//Communication:Communication" ]
 )
