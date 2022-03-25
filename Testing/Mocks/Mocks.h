@@ -1,5 +1,9 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include "../../Client/Client.h"
+#include "../../Communication/Communication.h"
+#include "../../Logger/Logger.h"
+#include "../../Server/Server.h"
+#include "../../Tamagotchi/Tamagotchi.h"
 
 // Client
 namespace Mocks {
@@ -108,15 +112,6 @@ namespace CreateMocks
 
 
 // Logger
-namespace CreateMocks
-{
-	// Logger:: (from Logger.h)
-	std::unique_ptr<Mocks::LogMock> LogMock()
-	{
-		return std::make_unique<Mocks::LogMock>();
-	}
-}
-
 namespace Mocks {
 	class LogMock : public Logger::ILog {
 	public:
@@ -124,6 +119,14 @@ namespace Mocks {
 		MOCK_METHOD(const std::vector<uint8_t>, getData, ());
 		MOCK_METHOD(Logger::action, getAction, ());
 	};
+}
+namespace CreateMocks
+{
+	// Logger:: (from Logger.h)
+	std::unique_ptr<Mocks::LogMock> LogMock()
+	{
+		return std::make_unique<Mocks::LogMock>();
+	}
 }
 
 // Server
