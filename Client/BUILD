@@ -4,6 +4,9 @@ cc_library(
     name = "Client",
     srcs = ["Client.cpp"],
     hdrs = ["Client.h", "Create.h"],
-    visibility = ["//ClientCLI:__pkg__"],
+    visibility = [
+        "//ClientCLI:__pkg__",
+        "//Testing:__pkg__",
+        ],
     deps = [ "//Communication:Communication"]
 )

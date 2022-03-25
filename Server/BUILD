@@ -7,5 +7,8 @@ cc_library(
     deps = [ 
         "//Communication:Communication",
         "//Tamagotchi:Tamagotchi"
-    ]
+    ],
+    visibility = [
+        "//Testing:__pkg__",
+    ],
 )
