@@ -66,6 +66,16 @@ const std::vector<uint8_t> Data::ServerResponse::Serialize()
 	return std::vector<uint8_t>();
 }
 
+Data::Status::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
+{
+	
+}
+
+Data::Status::Status(uint16_t Payload)
+{
+
+}
+
 void Data::Status::setHappiness(uint8_t happiness)
 {
 }
