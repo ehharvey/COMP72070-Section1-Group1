@@ -11,5 +11,6 @@ cc_library(
         "//Server:__pkg__",
         "//Testing:__pkg__",
         "//Testing/Unit:__pkg__",
+        "//Testing/Mocks:__pkg__",
     ],
 )
