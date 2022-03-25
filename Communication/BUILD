@@ -9,5 +9,6 @@ cc_library(
         "//Server:__pkg__",
         "//Tamagotchi:__pkg__",
         "//Testing:__pkg__",
+        "//Testing/Unit:__pkg__",
     ],
 )

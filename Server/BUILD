@@ -10,5 +10,7 @@ cc_library(
     ],
     visibility = [
         "//Testing:__pkg__",
+        "//Testing/Unit:__pkg__",
+        "//ClientCLI:__pkg__",
     ],
 )
