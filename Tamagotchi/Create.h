@@ -11,11 +11,3 @@ namespace Create
 	}
 }
 
-namespace CreateMocks
-{
-	// Tamagotchi:: (from Tamagotchi.h)
-	std::unique_ptr<Mocks::TamagotchiMock> TamagotchiMock()
-	{
-		return std::make_unique<Mocks::TamagotchiMock>();
-	}
-}

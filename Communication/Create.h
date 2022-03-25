@@ -53,37 +53,3 @@ namespace Create
 		return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
 	}
 }
-
-namespace CreateMocks
-{
-	namespace CreateMocks
-	{
-		// Data:: (from Communication.h)
-		std::unique_ptr<Mocks::ClientRequestMock> ClientRequestMock()
-		{
-			return std::make_unique<Mocks::ClientRequestMock>();
-		}
-		std::unique_ptr<Mocks::ServerResponseMock> ServerResponseMock()
-		{
-			return std::make_unique<Mocks::ServerResponseMock>();
-		}
-		std::unique_ptr<Mocks::StatusMock> StatusMock()
-		{
-			return std::make_unique<Mocks::StatusMock>();
-		}
-
-		// Comunicators:: (from Communication.h)
-		std::unique_ptr<Mocks::RemoteResponderMock> RemoteResponderMock()
-		{
-			return std::make_unique<Mocks::RemoteResponderMock>();
-		}
-		std::unique_ptr<Mocks::ResponderMock> ResponderMock()
-		{
-			return std::make_unique<Mocks::ResponderMock>();
-		}
-		std::unique_ptr<Mocks::SenderMock> SenderMock()
-		{
-			return std::make_unique<Mocks::SenderMock>();
-		}
-	}
-}

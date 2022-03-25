@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <deque>
 #include "../Communication/Communication.h"
-#include "gmock/gmock.h"
 
 namespace Tamagotchi 
 {
@@ -31,16 +30,5 @@ namespace Tamagotchi
 		Data::Command GetCurrentCommand();
 		std::unique_ptr<Data::IStatus> getStatus();
 		void adjustStat(Data::Stat, signed int relativeChange);
-	};
-}
-
-namespace Mocks {
-	class TamagotchiMock : public Tamagotchi::ITamagotchi {
-	public:
-		MOCK_METHOD(void, AddCommand, (Data::Command));
-		MOCK_METHOD(void, AddCommand_Immediate, (Data::Command));
-		MOCK_METHOD(Data::Command, GetCurrentCommand, ());
-		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getStatus, ());
-		MOCK_METHOD(void, adjustStat, (Data::Stat, signed int relativeChange));
 	};
 }
