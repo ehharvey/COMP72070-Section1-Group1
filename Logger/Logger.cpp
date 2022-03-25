@@ -1,8 +1,6 @@
 // Logger.cpp : Defines the functions for the static library.
 //
 
-#include "pch.h"
-#include "framework.h"
 #include "Logger.h"
 
 Logger::Log::Log(action, const std::vector<uint8_t> data)
