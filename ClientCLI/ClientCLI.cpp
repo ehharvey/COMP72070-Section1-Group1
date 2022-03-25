@@ -2,9 +2,9 @@
 //
 
 #include <iostream>
-#include "../Communication/Communication.h"
+#include "..\Client\Client.h"
 
 int main()
 {
-    
+    return 0;
 }

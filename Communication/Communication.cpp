@@ -48,7 +48,7 @@ std::unique_ptr<Data::IStatus> Data::ServerResponse::getTamagotchiStatus()
 
 std::optional<Data::Animation> Data::ServerResponse::getAnimation()
 {
-	return std::optional<Animation>();
+	return std::optional<Data::Animation>();
 }
 
 const std::vector<uint8_t> Data::ServerResponse::Serialize()
