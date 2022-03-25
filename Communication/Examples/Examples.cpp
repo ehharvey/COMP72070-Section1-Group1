@@ -1,5 +1,6 @@
 #include "../Communication.h";
 #include "../Create.h";
+#include <iostream>
 
 void __TcpHost_Example()
 {
@@ -14,6 +15,8 @@ void __TcpHost_Example()
 int main()
 {
 	__TcpHost_Example();
+
+	std::cout << "Hello, World!\n";
 
 	return 0;
 }
