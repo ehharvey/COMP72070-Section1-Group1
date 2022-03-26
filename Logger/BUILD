@@ -3,7 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 cc_library(
     name = "Logger",
     srcs = ["Logger.cpp"],
-    hdrs = ["Logger.h", "Create.h"],
+    hdrs = ["Logger.h"],
     visibility = [
         "//Client:__pkg__",
         "//ClientCLI:__pkg__",
@@ -12,4 +12,12 @@ cc_library(
         "//Testing/Unit:__pkg__",
         "//Testing/Mocks:__pkg__",
     ],
+)
+
+cc_library(
+    name = "CreateLogger",
+    srcs = ["Create.cpp"],
+    hdrs = ["Create.h"],
+    visibility = ["//visibility:public"],
+    deps = [ "//Logger:Logger" ]
 )
