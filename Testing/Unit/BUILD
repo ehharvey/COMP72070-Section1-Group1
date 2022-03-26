@@ -4,7 +4,7 @@ cc_test(
   srcs = ["ClientTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Client:Client",
+    "//Client:CreateClient",
     "//Testing/Mocks:Mocks"
   ],
 )
