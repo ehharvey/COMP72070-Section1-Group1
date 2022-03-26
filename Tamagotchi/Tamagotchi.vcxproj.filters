@@ -18,18 +18,15 @@
     <ClInclude Include="Tamagotchi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Create.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Tamagotchi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tamagotchi.cpp">
+    <ClCompile Include="Create.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

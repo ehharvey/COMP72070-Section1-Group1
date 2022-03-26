@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <deque>
-#include "../Communication/Communication.h"
+#include "../Communication/Create.h"
 
 namespace Tamagotchi 
 {
