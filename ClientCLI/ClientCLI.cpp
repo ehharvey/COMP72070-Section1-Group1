@@ -2,22 +2,17 @@
 //
 
 #include <iostream>
-#include "CLI.h"
-#include "..\Client\Client.h"
-#include "..\Communication\Communication.h"
-#include "..\Logger\Logger.h"
-#include "..\Server\Server.h"
-#include "..\Tamagotchi\Tamagotchi.h"
+#include "ClientCLI.h"
+#include "..\Client\Create.h"
+#include "..\Communication\Create.h"
+#include "..\Logger\Create.h"
+#include "..\Server\Create.h"
+#include "..\Tamagotchi\Create.h"
 
-// REQUIRED IMPLEMENTATIONS*
-// Implement queue
-// Integrate Log
-// Implement Code corresponding to each switch case (Transmission of data)
-
-int main()
+void app(istream& input, ostream& output)
 {
-    cout << "Tamagotchi [Version 1.0] \n";
-    cout << "COMP72070. Group #1\n\n";
+    output << "Tamagotchi [Version 1.0] \n";
+    output << "COMP72070. Group #1\n\n";
 
     bool Quit = false;
 
@@ -31,22 +26,14 @@ int main()
     while (!Quit)
     {
         hashit();
-        cout << "\Tamagotchi> ";
-        cin >> userInput;
+        output << "Tamagotchi> ";
+        input >> userInput;
 
         if (userInput == "l")
         {
             // Add code to change state to QUEUE
 
-            
-
-
-
-
-
         }
-
-
 
         // Split string (Command, value)
         for (int i = 0; i < userInput.length(); i++)
@@ -65,7 +52,6 @@ int main()
         {
             break;
         }
-
         case eSleep:
         {
             break;
@@ -82,13 +68,22 @@ int main()
 
         case QUIT:
         {
-            cout << "Goodbye!";
+            output << "Goodbye!";
             // Add code to delete queue if in QUEUE state
             Quit = true;
             break;
         }
-
         }
     }
+}
+
+// REQUIRED IMPLEMENTATIONS*
+// Implement queue
+// Integrate Log
+// Implement Code corresponding to each switch case (Transmission of data)
+
+int main()
+{
+    app(cin, cout);
     return 0;
 }

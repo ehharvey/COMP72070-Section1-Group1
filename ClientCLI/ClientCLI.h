@@ -44,6 +44,6 @@ void help()
 	cout << "Help" << endl;
 	cout << "l (Queue)" << endl;
 	cout << "Quit\n" << endl;
-
+	
 	cout << "Example: 'Feed 20'\n" << endl;
 }
