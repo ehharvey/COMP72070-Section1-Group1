@@ -32,5 +32,8 @@
     <ClCompile Include="Communication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

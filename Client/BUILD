@@ -9,6 +9,15 @@ cc_library(
         "//Testing:__pkg__",
         "//Testing/Unit:__pkg__",
         "//Testing/Mocks:__pkg__",
+        "//Client:__pkg__",
         ],
     deps = [ "//Communication:Communication" ]
+)
+
+cc_library(
+    name = "CreateClient",
+    srcs = ["Create.cpp"],
+    hdrs = ["Create.h"],
+    visibility = ["//visibility:public"],
+    deps = [ "//Client:Client" ]
 )

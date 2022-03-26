@@ -145,6 +145,7 @@
     <ClInclude Include="Tamagotchi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Create.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Tamagotchi.cpp" />
   </ItemGroup>
