@@ -4,7 +4,7 @@ cc_library(
     name = "Tamagotchi",
     srcs = ["Tamagotchi.cpp"],
     hdrs = ["Tamagotchi.h"],
-    deps = ["//Communication:Communication"],
+    deps = ["//Communication:CreateCommunication"],
     visibility = [
         "//Client:__pkg__",
         "//ClientCLI:__pkg__",

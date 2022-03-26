@@ -2,6 +2,11 @@
 #include <memory>
 #include "Server.h"
 
+// Example usage:
+// #include "../Server/Server.h"
+// 
+// ...
+// auto server = Create::Server();
 namespace Create
 {
 	// Server:: (from Server.h)

@@ -2,6 +2,11 @@
 #include <memory>
 #include "Communication.h"
 
+// Example usage:
+// #include "../Communication/Create.h"
+// 
+// ...
+// auto client_request = Create::ClientRequest();
 namespace Create
 {
 	// Data:: (from Communication.h)

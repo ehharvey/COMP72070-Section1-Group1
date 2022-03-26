@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClCompile Include="Communication.cpp" />
     <ClCompile Include="Create.cpp" />
-    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

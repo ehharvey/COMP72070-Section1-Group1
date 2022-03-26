@@ -5,8 +5,8 @@ cc_library(
     srcs = ["Server.cpp"],
     hdrs = ["Server.h"],
     deps = [ 
-        "//Communication:Communication",
-        "//Tamagotchi:Tamagotchi"
+        "//Communication:CreateCommunication",
+        "//Tamagotchi:CreateTamagotchi"
     ],
     visibility = [
         "//Testing:__pkg__",
