@@ -1,5 +1,5 @@
 #pragma once
-#include "../Communication/Communication.h"
+#include "../Communication/Create.h"
 
 namespace Server {
 	class Server : public Communicators::IResponder

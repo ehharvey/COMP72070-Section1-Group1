@@ -5,8 +5,12 @@ cc_binary(
     srcs = ["ClientCLI.cpp"],
     visibility = [
         "//Testing:__pkg__",
+        "//Testing/Unit:__pkg__",
+        "//Testing/Mocks:__pkg__",
     ],
     deps = [
-            "//Client:Client"
+            "//Client:Client",
+            "//Logger:Logger",
+            "//Server:Server",
     ],
 )

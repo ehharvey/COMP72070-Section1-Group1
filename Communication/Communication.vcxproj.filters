@@ -26,10 +26,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Communication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Communication.cpp">
+    <ClCompile Include="Create.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

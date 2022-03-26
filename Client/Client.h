@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "../Communication/Communication.h"
+#include "../Communication/Create.h"
 
 namespace Client {
 	__interface IClient
