@@ -10,3 +10,8 @@ TEST(HelloTest, BasicAssertions) {
 
   auto client = Create::ClientRequest();
 }
+
+TEST(ClientRequestTests, Constructor)
+{
+  auto client_request = Create::ClientRequest();
+}

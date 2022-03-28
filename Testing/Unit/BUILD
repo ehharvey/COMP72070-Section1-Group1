@@ -15,7 +15,7 @@ cc_test(
   srcs = ["CommunicationTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Communication:Communication",
+    "//Communication:CreateCommunication",
   ],
 )
 
