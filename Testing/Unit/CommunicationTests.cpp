@@ -30,3 +30,20 @@ TEST(ClientRequestTests, GettersAndParameters)
   EXPECT_EQ(client_request->getAuthByte(), 120) << "Authbyte was not the same!";
   EXPECT_EQ(client_request->getCommand(), command) << "Command was not the same!";
 }
+
+TEST(ClientRequestTests, SerializationIsConsistent)
+{
+  // Arrange
+  std::vector<uint8_t> serialization;
+
+  for (auto i : {1, 2, 3, 4})
+  {
+    serialization.push_back(i);
+  }
+
+  // Act
+  auto actual = Create::ClientRequest(serialization);
+
+  // Assert
+  EXPECT_EQ(serialization, actual->Serialize()) << "The serialization was not consistent!";
+}
