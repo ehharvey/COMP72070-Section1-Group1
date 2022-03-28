@@ -142,6 +142,9 @@
   <ItemGroup>
     <ClCompile Include="ClientCLI.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientCLI.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
