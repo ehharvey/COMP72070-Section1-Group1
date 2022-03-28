@@ -55,8 +55,11 @@ namespace Data {
 	//-------------------------------------------------------------------------------
 
 
+	typedef std::function<Command(uint8_t CommandByte)> CommandParser;
 	class ClientRequest : public IClientRequest {
 	private:
+		CommandParser __command_parser;
+
 		struct _Payload {
 			uint8_t AuthByte;
 			uint8_t CommandByte;
@@ -68,6 +71,8 @@ namespace Data {
 		uint8_t getAuthByte();
 		Command getCommand();
 		const std::vector<uint8_t> Serialize();
+
+		void __setCommandParser(CommandParser command_parser);
 	};
 	
 	class Animation {

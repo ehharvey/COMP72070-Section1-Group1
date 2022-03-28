@@ -1,16 +1,24 @@
 #include "Communication.h"
 
+const Data::CommandParser DefaultCommandParser = [](uint8_t command_byte)
+{
+	return Data::Command::idle;
+};
+
 Data::ClientRequest::ClientRequest()
+	: __command_parser(DefaultCommandParser)
 {
 }
 
 Data::ClientRequest::ClientRequest(uint8_t authbyte, Command command)
+	: __command_parser(DefaultCommandParser)
 {
 	this->Payload.AuthByte = authbyte;
 	this->Payload.CommandByte = command;
 }
 
 Data::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
+	: __command_parser(DefaultCommandParser)
 {
 }
 
@@ -31,6 +39,11 @@ const std::vector<uint8_t> Data::ClientRequest::Serialize()
 	serialization.push_back(this->Payload.AuthByte);
 	serialization.push_back(this->Payload.CommandByte);
 	return serialization;
+}
+
+void Data::ClientRequest::__setCommandParser(Data::CommandParser command_parser)
+{
+	this->__command_parser = command_parser;
 }
 
 Data::ServerResponse::ServerResponse()

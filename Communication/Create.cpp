@@ -6,6 +6,11 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest()
 	return std::make_unique<Data::ClientRequest>(Data::ClientRequest());
 }
 
+std::unique_ptr<Data::ClientRequest> Create::ClientRequest(uint8_t authbyte, Data::Command command)
+{
+	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(authbyte, command));
+}
+
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(const std::vector<uint8_t> Serialization)
 {
 	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(Serialization));

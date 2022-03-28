@@ -11,6 +11,7 @@ namespace Create
 {
 	// Data:: (from Communication.h)
 	std::unique_ptr<Data::ClientRequest> ClientRequest();
+	std::unique_ptr<Data::ClientRequest> ClientRequest(uint8_t authbyte, Data::Command command);
 	std::unique_ptr<Data::ClientRequest> ClientRequest(const std::vector<uint8_t> Serialization);
 
 	std::unique_ptr<Data::ServerResponse> ServerResponse();
