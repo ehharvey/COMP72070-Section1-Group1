@@ -47,3 +47,25 @@ TEST(ClientRequestTests, SerializationIsConsistent)
   // Assert
   EXPECT_EQ(serialization, actual->Serialize()) << "The serialization was not consistent!";
 }
+
+TEST(ServerResponseTests, DefaultConstructor)
+{
+  auto server_response = Create::ServerResponse(); // shouldn't crash
+}
+
+TEST(ServerResponseTests, ConsistentSerialization)
+{
+  // Arrange
+  std::vector<uint8_t> serialization;
+
+  for (uint8_t i: {1, 2, 3, 4})
+  {
+    serialization.push_back(i);
+  }
+
+  // Act
+  auto actual = Create::ServerResponse(serialization);
+
+  // Assert
+  EXPECT_EQ(serialization, actual->Serialize()) << "The serialization was not consistent!";
+}
