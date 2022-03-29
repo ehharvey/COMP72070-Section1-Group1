@@ -36,11 +36,6 @@ const std::vector<uint8_t> Data::ClientRequest::Serialize()
 	return serialization;
 }
 
-void Data::ClientRequest::__setCommandParser(Data::CommandParser command_parser)
-{
-	this->__command_parser = command_parser;
-}
-
 Data::ServerResponse::ServerResponse()
 {
 }
