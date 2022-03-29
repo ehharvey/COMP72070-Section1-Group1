@@ -1,5 +1,5 @@
 #include "../../Communication/Create.h"
-#include "../../Communication/Communication.h"
+#include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
 // Demonstrate some basic assertions.
@@ -155,4 +155,65 @@ TEST(Command, CommandAction)
 
   // Assert
   EXPECT_EQ(command->getAction(), action);
+}
+
+TEST(TcpHostTests, Idles)
+{
+  auto response_function = [](std::vector<uint8_t> request)
+  {
+    return std::vector<uint8_t>{1, 2, 3, 4};
+  };
+
+  Data::IPV4Address localhost{127, 0, 0, 1};
+
+  auto tcp_host = Create::TcpHost(localhost, response_function);
+
+  // act
+  //tcp_host->Start();
+
+  // Assert
+  EXPECT_EQ(tcp_host->getIsRunning(), false);
+}
+
+TEST(TcpHostTests, Start)
+{
+  auto response_function = [](std::vector<uint8_t> request)
+  {
+    return std::vector<uint8_t>{1, 2, 3, 4};
+  };
+
+  Data::IPV4Address localhost{127, 0, 0, 1};
+
+  auto tcp_host = Create::TcpHost(localhost, response_function);
+
+  // act
+  tcp_host->Start();
+
+  // Assert
+  EXPECT_EQ(tcp_host->getIsRunning(), true);
+}
+
+TEST(TcpClientTests, Send)
+{
+  auto mock_responder = CreateMocks::RemoteResponderMock();
+
+  auto send_function = [](std::vector<uint8_t> request)
+  {
+    return std::vector<uint8_t>{1, 2};
+  };
+
+  Data::IPV4Address localhost{127, 0, 0, 1};
+
+  EXPECT_CALL(*mock_responder, getSendFunction)
+    .Times(1)
+    .WillOnce([&]()
+    {
+      return send_function;
+    });
+  
+  auto tcp_client = Create::TcpClient(localhost, std::move(mock_responder));
+
+  auto actual = tcp_client->Send({1, 2,3});
+  auto EXPECTED = std::vector<uint8_t>{1, 2};
+  EXPECT_EQ(actual, EXPECTED);
 }
