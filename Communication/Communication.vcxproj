@@ -140,13 +140,67 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Communication.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Authorization.h" />
+    <ClInclude Include="ClientRequest.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandAction.h" />
+    <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="Create.h" />
+    <ClInclude Include="IAnimation.h" />
+    <ClInclude Include="IAuthorization.h" />
+    <ClInclude Include="IClientRequest.h" />
+    <ClInclude Include="ICommand.h" />
+    <ClInclude Include="ICommandBuilder.h" />
+    <ClInclude Include="IPV4Address.h" />
+    <ClInclude Include="IRemoteResponder.h" />
+    <ClInclude Include="IResponder.h" />
+    <ClInclude Include="ISender.h" />
+    <ClInclude Include="ISerializable.h" />
+    <ClInclude Include="ISerializationGroup.h" />
+    <ClInclude Include="IServerResponse.h" />
+    <ClInclude Include="IStatus.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RemoteTcpServer.h" />
+    <ClInclude Include="rPtr.h" />
+    <ClInclude Include="SerializationGroup.h" />
+    <ClInclude Include="ServerResponse.h" />
+    <ClInclude Include="Stat.h" />
+    <ClInclude Include="Status.h" />
+    <ClInclude Include="TcpClient.h" />
+    <ClInclude Include="TcpHost.h" />
+    <ClInclude Include="_packet.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Communication.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Authorization.cpp" />
+    <ClCompile Include="ClientRequest.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandAction.cpp" />
+    <ClCompile Include="CommandBuilder.cpp" />
     <ClCompile Include="Create.cpp" />
+    <ClCompile Include="IAnimation.cpp" />
+    <ClCompile Include="IAuthorization.cpp" />
+    <ClCompile Include="IClientRequest.cpp" />
+    <ClCompile Include="ICommand.cpp" />
+    <ClCompile Include="ICommandBuilder.cpp" />
+    <ClCompile Include="IPV4Address.cpp" />
+    <ClCompile Include="IRemoteResponder.cpp" />
+    <ClCompile Include="IResponder.cpp" />
+    <ClCompile Include="ISender.cpp" />
+    <ClCompile Include="ISerializable.cpp" />
+    <ClCompile Include="ISerializationGroup.cpp" />
+    <ClCompile Include="IServerResponse.cpp" />
+    <ClCompile Include="IStatus.cpp" />
+    <ClCompile Include="RemoteTcpServer.cpp" />
+    <ClCompile Include="rPtr.cpp" />
+    <ClCompile Include="SerializationGroup.cpp" />
+    <ClCompile Include="ServerResponse.cpp" />
+    <ClCompile Include="Stat.cpp" />
+    <ClCompile Include="Status.cpp" />
+    <ClCompile Include="TcpClient.cpp" />
+    <ClCompile Include="TcpHost.cpp" />
+    <ClCompile Include="_packet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
