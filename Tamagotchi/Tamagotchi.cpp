@@ -4,17 +4,17 @@ void Tamagotchi::Tamagotchi::RecalculateHappiness()
 {
 }
 
-void Tamagotchi::Tamagotchi::AddCommand(Data::Command)
+void Tamagotchi::Tamagotchi::AddCommand(Data::CommandAction)
 {
 }
 
-void Tamagotchi::Tamagotchi::AddCommand_Immediate(Data::Command)
+void Tamagotchi::Tamagotchi::AddCommand_Immediate(Data::CommandAction)
 {
 }
 
-Data::Command Tamagotchi::Tamagotchi::GetCurrentCommand()
+Data::CommandAction Tamagotchi::Tamagotchi::GetCurrentCommand()
 {
-	return Data::Command();
+	return Data::CommandAction();
 }
 
 std::unique_ptr<Data::IStatus> Tamagotchi::Tamagotchi::getStatus()

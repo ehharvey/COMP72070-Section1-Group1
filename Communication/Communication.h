@@ -25,12 +25,17 @@ namespace Data {
 		uint8_t getCleaniness();
 	};
 
-	enum Command
+	enum CommandAction
 	{
 		feed,
 		sleep,
 		clean,
 		idle
+	};
+
+	__interface ICommand : public ISerializable
+	{
+		CommandAction getAction();
 	};
 
 	enum Stat {
@@ -40,25 +45,40 @@ namespace Data {
 	__interface IClientRequest : public ISerializable
 	{
 		uint8_t getAuthByte();
-		Command getCommand();
+		CommandAction getCommand();
 	};
 
 	class Animation;
 	__interface IServerResponse : public ISerializable
 	{
 		bool AuthSuccess();
-		std::optional<Command> getCurrentTamagotchiCommand();
+		std::optional<CommandAction> getCurrentTamagotchiCommand();
 		std::unique_ptr<IStatus> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
 	};
 
 	//-------------------------------------------------------------------------------
+	typedef std::function<std::unique_ptr<ICommand>(const std::vector<uint8_t> Serialization)> CommandCreator;
 
+	class Command : public ICommand
+	{
+	private:
+		CommandAction command_action;
+	public:
+		Command();
+		Command(const std::vector<uint8_t> Serialization);
+		Command(CommandAction action);
 
-	typedef std::function<Command(uint8_t CommandByte)> CommandParser;
+		const std::vector<uint8_t> Serialize();
+		CommandAction getAction();
+		
+		static std::unique_ptr<Command> New(const std::vector<uint8_t> Serialization);
+	};
+
+	
 	class ClientRequest : public IClientRequest {
 	private:
-		CommandParser __command_parser;
+		CommandCreator __command_creator;
 
 		struct _Payload {
 			uint8_t AuthByte;
@@ -66,13 +86,11 @@ namespace Data {
 		} Payload;
 	public:
 		ClientRequest();
-		ClientRequest(uint8_t authbyte, Command command);
+		ClientRequest(uint8_t authbyte, CommandAction command);
 		ClientRequest(const std::vector<uint8_t> Serialization);
 		uint8_t getAuthByte();
-		Command getCommand();
+		CommandAction getCommand();
 		const std::vector<uint8_t> Serialize();
-
-		void __setCommandParser(CommandParser command_parser);
 	};
 	
 	class Animation {
@@ -91,7 +109,7 @@ namespace Data {
 		ServerResponse();
 		ServerResponse(const std::vector<uint8_t> Serialization);
 		bool AuthSuccess();
-		std::optional<Command> getCurrentTamagotchiCommand();
+		std::optional<CommandAction> getCurrentTamagotchiCommand();
 		std::unique_ptr<IStatus> getTamagotchiStatus();
 		std::optional<Animation> getAnimation();
 		const std::vector<uint8_t> Serialize();

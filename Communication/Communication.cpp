@@ -1,24 +1,19 @@
 #include "Communication.h"
 
-const Data::CommandParser DefaultCommandParser = [](uint8_t command_byte)
-{
-	return Data::Command::idle;
-};
-
 Data::ClientRequest::ClientRequest()
-	: __command_parser(DefaultCommandParser)
+	: __command_creator(Command::New)
 {
 }
 
-Data::ClientRequest::ClientRequest(uint8_t authbyte, Command command)
-	: __command_parser(DefaultCommandParser)
+Data::ClientRequest::ClientRequest(uint8_t authbyte, CommandAction command)
+	: __command_creator(Command::New)
 {
 	this->Payload.AuthByte = authbyte;
 	this->Payload.CommandByte = command;
 }
 
 Data::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
-	: __command_parser(DefaultCommandParser)
+	: __command_creator(Command::New)
 {
 }
 
@@ -28,9 +23,9 @@ uint8_t Data::ClientRequest::getAuthByte()
 }
 
 // #StillAStub
-Data::Command Data::ClientRequest::getCommand()
+Data::CommandAction Data::ClientRequest::getCommand()
 {
-	return Data::Command::sleep;
+	return Data::CommandAction::sleep;
 }
 
 const std::vector<uint8_t> Data::ClientRequest::Serialize()
@@ -59,9 +54,9 @@ bool Data::ServerResponse::AuthSuccess()
 	return false;
 }
 
-std::optional<Data::Command> Data::ServerResponse::getCurrentTamagotchiCommand()
+std::optional<Data::CommandAction> Data::ServerResponse::getCurrentTamagotchiCommand()
 {
-	return std::optional<Data::Command>();
+	return std::optional<Data::CommandAction>();
 }
 
 std::unique_ptr<Data::IStatus> Data::ServerResponse::getTamagotchiStatus()
@@ -135,4 +130,31 @@ void Communicators::TcpHost::RegisterResponse(Communicators::rPtr response_funct
 const std::vector<uint8_t> Communicators::TcpClient::Send(const std::vector<uint8_t> message)
 {
 	return std::vector<uint8_t>();
+}
+
+Data::Command::Command()
+{
+}
+
+Data::Command::Command(const std::vector<uint8_t> Serialization)
+{
+}
+
+Data::Command::Command(CommandAction action)
+{
+}
+
+const std::vector<uint8_t> Data::Command::Serialize()
+{
+	return std::vector<uint8_t>();
+}
+
+Data::CommandAction Data::Command::getAction()
+{
+	return CommandAction();
+}
+
+std::unique_ptr<Data::Command> Data::Command::New(const std::vector<uint8_t> Serialization)
+{
+	return std::make_unique<Command>();
 }
