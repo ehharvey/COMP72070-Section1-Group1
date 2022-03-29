@@ -4,15 +4,9 @@
 
 #include <iostream>
 #include <string>
-#include "..\Communication\Communication.h"
+#include "..\Communication\Create.h"
 #include "Client.h"
 
-
-
-int main()
-{
-    std::cout << "Hello World!" << std::endl;
-}
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
@@ -26,15 +20,26 @@ int main()
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
+
 Client::Client::Client()
 {
+	Data::IPV4Address localhost = { 127, 0, 0, 1 };
+	auto remote_host = Create::RemoteTcpServer(localhost);
+	this->sender = Create::TcpClient(localhost, std::move(remote_host));
+
 }
 
 Client::Client::Client(std::unique_ptr<Communicators::ISender> sender)
+	: sender(std::move(sender))
 {
+
+}
+
+inline void Client::Client::__setResponseParser(ResponseParser rp) {
+	this->response_parser = rp;
 }
 
 std::unique_ptr<Data::IServerResponse> Client::Client::SendCommand(std::unique_ptr<Data::IClientRequest> request)
 {
-    return std::unique_ptr<Data::IServerResponse>();
+    return Create::ServerResponse();
 }

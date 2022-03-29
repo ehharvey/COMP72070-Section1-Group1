@@ -1,5 +1,10 @@
 #pragma once
 
+#include "..\Communication\Create.h"
+#include "..\Logger\Create.h"
+#include "..\Server\Create.h"
+#include "..\Tamagotchi\Create.h"
+#include "..\Client\Create.h"
 #include <iostream>
 #include <cstring>
 #include <map>

@@ -1,3 +1,4 @@
+#pragma once
 #include <gmock/gmock.h>
 #include "../../Client/Client.h"
 #include "../../Communication/Communication.h"
@@ -11,20 +12,7 @@ namespace Mocks {
 	public:
 		MOCK_METHOD(std::unique_ptr<Data::IServerResponse>, SendCommand, (std::unique_ptr<Data::IClientRequest>));
 	};
-}
 
-namespace CreateMocks
-{
-	// Client (from Client.h)
-	std::unique_ptr<Mocks::ClientMock> ClientMock()
-	{
-		return std::make_unique<Mocks::ClientMock>();
-	}
-}
-
-// Communication
-// There is another namespace Mocks { ... }, for Communicators, on this document (Communication.h)
-namespace Mocks {
 	class ClientRequestMock : public Data::IClientRequest {
 	public:
 		MOCK_METHOD(uint8_t, getAuthByte, ());
@@ -49,11 +37,7 @@ namespace Mocks {
 		MOCK_METHOD(uint8_t, getCleaniness, ());
 		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
-}
 
-// There is another namespace Mocks { ... }, for Data mocks, on this document (Communication.h)
-namespace Mocks
-{
 	class RemoteResponderMock : public Communicators::IRemoteResponder
 	{
 	public:
@@ -74,79 +58,19 @@ namespace Mocks
 		MOCK_METHOD(void, Stop, ());
 		MOCK_METHOD(void, RegisterResponse, (Communicators::rPtr));
 	};
-}
 
-namespace CreateMocks
-{
-	namespace CreateMocks
-	{
-		// Data:: (from Communication.h)
-		std::unique_ptr<Mocks::ClientRequestMock> ClientRequestMock()
-		{
-			return std::make_unique<Mocks::ClientRequestMock>();
-		}
-		std::unique_ptr<Mocks::ServerResponseMock> ServerResponseMock()
-		{
-			return std::make_unique<Mocks::ServerResponseMock>();
-		}
-		std::unique_ptr<Mocks::StatusMock> StatusMock()
-		{
-			return std::make_unique<Mocks::StatusMock>();
-		}
-
-		// Comunicators:: (from Communication.h)
-		std::unique_ptr<Mocks::RemoteResponderMock> RemoteResponderMock()
-		{
-			return std::make_unique<Mocks::RemoteResponderMock>();
-		}
-		std::unique_ptr<Mocks::ResponderMock> ResponderMock()
-		{
-			return std::make_unique<Mocks::ResponderMock>();
-		}
-		std::unique_ptr<Mocks::SenderMock> SenderMock()
-		{
-			return std::make_unique<Mocks::SenderMock>();
-		}
-	}
-}
-
-
-// Logger
-namespace Mocks {
 	class LogMock : public Logger::ILog {
 	public:
 		MOCK_METHOD(time_t, getTime, ());
 		MOCK_METHOD(const std::vector<uint8_t>, getData, ());
 		MOCK_METHOD(Logger::action, getAction, ());
 	};
-}
-namespace CreateMocks
-{
-	// Logger:: (from Logger.h)
-	std::unique_ptr<Mocks::LogMock> LogMock()
-	{
-		return std::make_unique<Mocks::LogMock>();
-	}
-}
 
-// Server
-// As Server is itself a Communicators::Responder, we can mock it via Mocks::ResponderMock
-namespace Mocks
-{
+	// Server
+	// As Server is itself a Communicators::Responder, we can mock it 
+	// via Mocks::ResponderMock
 	typedef Mocks::ResponderMock ServerMock;
-}
 
-namespace CreateMocks
-{
-	// Server:: (from Server.h)
-	std::unique_ptr<Mocks::ServerMock> ServerMock()
-	{
-		return std::make_unique<Mocks::ServerMock>();
-	}
-}
-
-// Tamagotchi
-namespace Mocks {
 	class TamagotchiMock : public Tamagotchi::ITamagotchi {
 	public:
 		MOCK_METHOD(void, AddCommand, (Data::Command));
@@ -159,6 +83,48 @@ namespace Mocks {
 
 namespace CreateMocks
 {
+	// Data:: (from Communication.h)
+	std::unique_ptr<Mocks::ClientRequestMock> ClientRequestMock()
+	{
+		return std::make_unique<Mocks::ClientRequestMock>();
+	}
+	std::unique_ptr<Mocks::ServerResponseMock> ServerResponseMock()
+	{
+		return std::make_unique<Mocks::ServerResponseMock>();
+	}
+	std::unique_ptr<Mocks::StatusMock> StatusMock()
+	{
+		return std::make_unique<Mocks::StatusMock>();
+	}
+
+	// Comunicators:: (from Communication.h)
+	std::unique_ptr<Mocks::RemoteResponderMock> RemoteResponderMock()
+	{
+		return std::make_unique<Mocks::RemoteResponderMock>();
+	}
+
+	std::unique_ptr<Mocks::ResponderMock> ResponderMock()
+	{
+		return std::make_unique<Mocks::ResponderMock>();
+	}
+
+	std::unique_ptr<Mocks::SenderMock> SenderMock()
+	{
+		return std::make_unique<Mocks::SenderMock>();
+	}
+
+	// Logger:: (from Logger.h)
+	std::unique_ptr<Mocks::LogMock> LogMock()
+	{
+		return std::make_unique<Mocks::LogMock>();
+	}
+
+	// Server:: (from Server.h)
+	std::unique_ptr<Mocks::ServerMock> ServerMock()
+	{
+		return std::make_unique<Mocks::ServerMock>();
+	}
+
 	// Tamagotchi:: (from Tamagotchi.h)
 	std::unique_ptr<Mocks::TamagotchiMock> TamagotchiMock()
 	{

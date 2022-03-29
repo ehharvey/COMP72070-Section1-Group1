@@ -1,7 +1,7 @@
 {
     "files.associations": {
-        "vector": "cpp",
         "*.rh": "cpp",
+        "functional": "cpp",
         "algorithm": "cpp",
         "any": "cpp",
         "array": "cpp",
@@ -30,7 +30,6 @@
         "format": "cpp",
         "forward_list": "cpp",
         "fstream": "cpp",
-        "functional": "cpp",
         "future": "cpp",
         "initializer_list": "cpp",
         "iomanip": "cpp",

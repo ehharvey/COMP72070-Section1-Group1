@@ -145,6 +145,23 @@
   <ItemGroup>
     <ClInclude Include="ClientCLI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Client.vcxproj">
+      <Project>{f983940c-bce6-4ff6-b99e-60028c4d8152}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.vcxproj">
+      <Project>{d82e706c-7f0f-483c-bc67-e2f254a70158}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Logger.vcxproj">
+      <Project>{439d3b44-6da4-4805-860e-b5d2eeb5bcab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.vcxproj">
+      <Project>{2d5b06dd-4ea7-47fa-b4cf-150953343a87}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Tamagotchi\Tamagotchi.vcxproj">
+      <Project>{5ab985ca-8280-4919-84a3-6567af6473b2}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
