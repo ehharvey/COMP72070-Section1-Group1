@@ -1,6 +1,16 @@
 #pragma once
 #include <memory>
-#include "Communication.h"
+#include "Animation.h"
+#include "Authorization.h"
+#include "ClientRequest.h"
+#include "Command.h"
+#include "CommandAction.h"
+#include "CommandBuilder.h"
+#include "ServerResponse.h"
+#include "Status.h"
+#include "RemoteTcpServer.h"
+#include "TcpHost.h"
+#include "TcpClient.h"
 
 // Example usage:
 // #include "../Communication/Create.h"
