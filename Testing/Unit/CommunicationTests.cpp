@@ -21,7 +21,7 @@ TEST(ClientRequestTests, GettersAndParameters)
 {
   // Arrange
   uint8_t authbyte = 120;
-  Data::Command command = Data::Command::clean;
+  Data::CommandAction command = Data::CommandAction::clean;
 
   // Act
   auto client_request = Create::ClientRequest(authbyte, command);
@@ -68,4 +68,91 @@ TEST(ServerResponseTests, ConsistentSerialization)
 
   // Assert
   EXPECT_EQ(serialization, actual->Serialize()) << "The serialization was not consistent!";
+}
+
+// Remaining ServerResponse
+// Tests needed for AuthSuccess
+// Animation
+// getCurrentTamagotchiCommand
+
+TEST(StatusTests, ConstructorAndGetters)
+{
+  // Arrange
+  uint8_t stat = 15;
+
+  // Act
+  auto actual = Create::Status(stat, stat, stat, stat);
+
+  // Assert
+  EXPECT_EQ(actual->getHappiness(), stat);
+  EXPECT_EQ(actual->getCleaniness(), stat);
+  EXPECT_EQ(actual->getAlertness(), stat);
+  EXPECT_EQ(actual->getStomachLevel(), stat);
+}
+
+TEST(StatusTests, ConstructorAndGettersTwo)
+{
+  // Arrange
+
+  // Act
+  auto actual = Create::Status(1, 2, 3, 4);
+
+  // Assert
+  EXPECT_EQ(actual->getHappiness(), 1);
+  EXPECT_EQ(actual->getCleaniness(), 2);
+  EXPECT_EQ(actual->getAlertness(), 3);
+  EXPECT_EQ(actual->getStomachLevel(), 4);
+}
+
+TEST(StatusTests, Serialization)
+{
+  // Arrange
+  std::vector<uint8_t> Serialization;
+
+  for (uint8_t i : {1,2,3,4})
+  {
+    Serialization.push_back(i);
+  }
+
+  // Act
+  auto actual = Create::Status(Serialization);
+
+  // Assert
+  EXPECT_EQ(actual->Serialize(), Serialization);
+}
+
+TEST(StatusTests, setAlertness)
+{
+  // Arrange
+  auto status = Create::Status(15, 15, 15, 15);
+
+  // Act
+  status->setAlertness(5);
+
+  // Assert
+  EXPECT_EQ(status->getAlertness(), 5);
+}
+
+TEST(Command, Serialization)
+{
+  // Arrange
+  const std::vector<uint8_t> Serialization{5};
+
+  // Act
+  auto command = Create::Command(Serialization);
+
+  // Assert
+  EXPECT_EQ(command->Serialize(), Serialization);
+}
+
+TEST(Command, CommandAction)
+{
+  // Arrange
+  Data::CommandAction action = Data::CommandAction::clean;
+
+  // Act
+  auto command = Create::Command(action);
+
+  // Assert
+  EXPECT_EQ(command->getAction(), action);
 }

@@ -79,6 +79,14 @@ namespace Mocks {
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getStatus, ());
 		MOCK_METHOD(void, adjustStat, (Data::Stat, signed int relativeChange));
 	};
+
+	class CommandMock : public Data::ICommand
+	{
+	public:
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize,());
+		MOCK_METHOD(Data::CommandAction, getAction,());
+		static std::unique_ptr<CommandMock> New(const std::vector<uint8_t> Serialization);
+	}
 }
 
 namespace CreateMocks
