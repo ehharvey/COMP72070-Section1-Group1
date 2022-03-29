@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <vector>
 #include <typeindex>
 #include <memory>
@@ -15,7 +16,7 @@ namespace Data
     private:
         std::vector<_packet> items;
     public:
-        SerializationGroup(const std::vector<uint8_t> Serialization);
+        SerializationGroup(Data::IContainer Serialization);
         SerializationGroup();
 
         std::vector<_packet>::iterator begin();
@@ -27,7 +28,7 @@ namespace Data
         
         std::unique_ptr<ISerializationGroup> add(std::unique_ptr<ISerializable> item);
         std::unique_ptr<ISerializationGroup> add(std::shared_ptr<ISerializable> item);
-        const std::vector<uint8_t> Serialize();
+        Data::IContainer Serialize();
 
         static std::unique_ptr<SerializationGroup> New();
     };

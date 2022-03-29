@@ -17,11 +17,11 @@ TEST(ClientTests, SendCommandTest)
 
   EXPECT_CALL(*sender_mock, Send)
     .Times(1)
-    .WillOnce([](const std::vector<uint8_t> message) {
-      return std::vector<uint8_t>();
+    .WillOnce([](Data::IContainer message) {
+      return Data::IContainer();
     });
 
-  auto response_parser = [](const std::vector<uint8_t> response_serialization) {
+  auto response_parser = [](Data::IContainer response_serialization) {
     auto server_response_mock = CreateMocks::ServerResponseMock();
 
     EXPECT_CALL(*server_response_mock, AuthSuccess)
@@ -33,7 +33,7 @@ TEST(ClientTests, SendCommandTest)
     EXPECT_CALL(*server_response_mock, Serialize)
       .Times(1)
       .WillOnce([]() {
-        return std::vector<uint8_t>({ 200 });
+        return Data::IContainer({ 200 });
       });
     return std::move(server_response_mock);
   };
@@ -46,12 +46,12 @@ TEST(ClientTests, SendCommandTest)
   EXPECT_CALL(*client_request_mock, Serialize)
     .Times(1)
     .WillOnce([]() {
-      return std::vector<uint8_t>();
+      return Data::IContainer();
     });
 
   auto response = client->SendCommand(std::move(client_request_mock));
 
   EXPECT_EQ(response->AuthSuccess(), false) << "Client did not return mock";
-  EXPECT_EQ(response->Serialize(), std::vector<uint8_t>({ 100 }));
+  EXPECT_EQ(response->Serialize(), Data::IContainer({ 100 }));
   EXPECT_EQ(10, 20);
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include "rPtr.h"
 #include "IRemoteResponder.h"
 #include "IPV4Address.h"

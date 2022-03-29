@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include "ISerializable.h"
 #include "ICommand.h"
 #include <memory>

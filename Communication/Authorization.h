@@ -1,15 +1,18 @@
 #pragma once
-#include <vector>
+#include <deque>
 #include "IAuthorization.h"
+#include "IContainer.h"
 
 namespace Data
 {
     class Authorization : public IAuthorization
 	{
+	private:
+		uint8_t payload;
 	public:
-		Authorization(std::vector<uint8_t> Serialization);
+		Authorization(Data::IContainer Serialization);
 		Authorization(uint8_t AuthByte);
 		uint8_t getAuthByte();
-		const std::vector<uint8_t> Serialize();
+		Data::IContainer Serialize();
 	};
 }

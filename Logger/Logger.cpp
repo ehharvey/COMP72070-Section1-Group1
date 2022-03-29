@@ -3,7 +3,7 @@
 
 #include "Logger.h"
 
-Logger::Log::Log(action, const std::vector<uint8_t> data)
+Logger::Log::Log(action, Data::IContainer data)
 {
 }
 
@@ -12,9 +12,9 @@ std::time_t Logger::Log::getTime()
     return std::time_t();
 }
 
-const std::vector<uint8_t> Logger::Log::getData()
+Data::IContainer Logger::Log::getData()
 {
-    return std::vector<uint8_t>();
+    return Data::IContainer();
 }
 
 Logger::action Logger::Log::getAction()

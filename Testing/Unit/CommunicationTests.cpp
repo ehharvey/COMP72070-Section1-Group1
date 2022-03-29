@@ -34,7 +34,7 @@ TEST(ClientRequestTests, GettersAndParameters)
 TEST(ClientRequestTests, SerializationIsConsistent)
 {
   // Arrange
-  std::vector<uint8_t> serialization;
+  Data::IContainer serialization;
 
   for (auto i : {1, 2, 3, 4})
   {
@@ -56,7 +56,7 @@ TEST(ServerResponseTests, DefaultConstructor)
 TEST(ServerResponseTests, ConsistentSerialization)
 {
   // Arrange
-  std::vector<uint8_t> serialization;
+  Data::IContainer serialization;
 
   for (uint8_t i: {1, 2, 3, 4})
   {
@@ -107,7 +107,7 @@ TEST(StatusTests, ConstructorAndGettersTwo)
 TEST(StatusTests, Serialization)
 {
   // Arrange
-  std::vector<uint8_t> Serialization;
+  Data::IContainer Serialization;
 
   for (uint8_t i : {1,2,3,4})
   {
@@ -136,7 +136,7 @@ TEST(StatusTests, setAlertness)
 TEST(Command, Serialization)
 {
   // Arrange
-  const std::vector<uint8_t> Serialization{5};
+  Data::IContainer Serialization{5};
 
   // Act
   auto command = Create::Command(Serialization);
@@ -159,9 +159,9 @@ TEST(Command, CommandAction)
 
 TEST(TcpHostTests, Idles)
 {
-  auto response_function = [](std::vector<uint8_t> request)
+  auto response_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2, 3, 4};
+    return Data::IContainer{1, 2, 3, 4};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -177,9 +177,9 @@ TEST(TcpHostTests, Idles)
 
 TEST(TcpHostTests, Start)
 {
-  auto response_function = [](std::vector<uint8_t> request)
+  auto response_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2, 3, 4};
+    return Data::IContainer{1, 2, 3, 4};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -197,9 +197,9 @@ TEST(TcpClientTests, Send)
 {
   auto mock_responder = CreateMocks::RemoteResponderMock();
 
-  auto send_function = [](std::vector<uint8_t> request)
+  auto send_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2};
+    return Data::IContainer{1, 2};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -214,6 +214,6 @@ TEST(TcpClientTests, Send)
   auto tcp_client = Create::TcpClient(localhost, std::move(mock_responder));
 
   auto actual = tcp_client->Send({1, 2,3});
-  auto EXPECTED = std::vector<uint8_t>{1, 2};
+  auto EXPECTED = Data::IContainer{1, 2};
   EXPECT_EQ(actual, EXPECTED);
 }

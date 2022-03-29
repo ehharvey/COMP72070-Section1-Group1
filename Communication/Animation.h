@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <queue>
 #include "IAnimation.h"
 
@@ -8,6 +9,6 @@ namespace Data
 	public:
 		std::queue<uint8_t> frames;
 
-		const std::vector<uint8_t> Serialize();
+		Data::IContainer Serialize();
 	};
 } // namespace Data

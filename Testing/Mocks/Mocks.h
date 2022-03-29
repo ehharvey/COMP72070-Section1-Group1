@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include "../../Client/Client.h"
 #include "../../Communication/Communication.h"
 #include "../../Logger/Logger.h"
@@ -17,7 +18,7 @@ namespace Mocks {
 	public:
 		MOCK_METHOD(uint8_t, getAuthByte, ());
 		MOCK_METHOD(Data::CommandAction, getCommand, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
+		MOCK_METHOD(Data::IContainer, Serialize, ());
 	};
 
 	class ServerResponseMock : public Data::IServerResponse {
@@ -26,7 +27,7 @@ namespace Mocks {
 		MOCK_METHOD(std::optional<Data::CommandAction>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
+		MOCK_METHOD(Data::IContainer, Serialize, ());
 	};
 
 	class StatusMock : public Data::IStatus, public Data::ISerializable {
@@ -35,7 +36,7 @@ namespace Mocks {
 		MOCK_METHOD(uint8_t, getAlertness, ());
 		MOCK_METHOD(uint8_t, getStomachLevel, ());
 		MOCK_METHOD(uint8_t, getCleaniness, ());
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
+		MOCK_METHOD(Data::IContainer, Serialize, ());
 	};
 
 	class RemoteResponderMock : public Communicators::IRemoteResponder
@@ -47,7 +48,7 @@ namespace Mocks {
 	class SenderMock : public Communicators::ISender
 	{
 	public:
-		MOCK_METHOD(const std::vector<uint8_t>, Send, (const std::vector<uint8_t>));
+		MOCK_METHOD(Data::IContainer, Send, (Data::IContainer));
 	};
 
 	class ResponderMock : public Communicators::IResponder
@@ -62,7 +63,7 @@ namespace Mocks {
 	class LogMock : public Logger::ILog {
 	public:
 		MOCK_METHOD(time_t, getTime, ());
-		MOCK_METHOD(const std::vector<uint8_t>, getData, ());
+		MOCK_METHOD(Data::IContainer, getData, ());
 		MOCK_METHOD(Logger::action, getAction, ());
 	};
 
@@ -83,9 +84,9 @@ namespace Mocks {
 	class CommandMock : public Data::ICommand
 	{
 	public:
-		MOCK_METHOD(const std::vector<uint8_t>, Serialize,());
+		MOCK_METHOD(Data::IContainer, Serialize,());
 		MOCK_METHOD(Data::CommandAction, getAction,());
-		static std::unique_ptr<CommandMock> New(const std::vector<uint8_t> Serialization);
+		static std::unique_ptr<CommandMock> New(Data::IContainer Serialization);
 	};
 }
 

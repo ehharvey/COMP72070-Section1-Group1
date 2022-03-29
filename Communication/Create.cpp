@@ -11,7 +11,7 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest(uint8_t authbyte, Dat
 	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(authbyte, command));
 }
 
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(Serialization));
 }
@@ -21,7 +21,7 @@ std::unique_ptr<Data::ServerResponse> Create::ServerResponse()
 	return std::make_unique<Data::ServerResponse>(Data::ServerResponse());
 }
 
-std::unique_ptr<Data::ServerResponse> Create::ServerResponse(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::ServerResponse>(Data::ServerResponse(Serialization));
 }
@@ -32,7 +32,7 @@ std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertnes
 }
 
 
-std::unique_ptr<Data::Status> Create::Status(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::Status> Create::Status(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::Status>(Data::Status(Serialization));
 }
@@ -60,7 +60,7 @@ std::unique_ptr<Communicators::TcpClient> Create::TcpClient(Data::IPV4Address ad
 	return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
 }
 
-std::unique_ptr<Data::Command> Create::Command(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::Command>(Data::Command(Serialization));
 }

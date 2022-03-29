@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <memory>
 #include "Animation.h"
 #include "Authorization.h"
@@ -22,16 +23,18 @@ namespace Create
 	// Data:: (from Communication.h)
 	std::unique_ptr<Data::ClientRequest> ClientRequest();
 	std::unique_ptr<Data::ClientRequest> ClientRequest(uint8_t authbyte, Data::CommandAction command);
-	std::unique_ptr<Data::ClientRequest> ClientRequest(const std::vector<uint8_t> Serialization);
+	std::unique_ptr<Data::ClientRequest> ClientRequest(Data::IContainer Serialization);
 
 	std::unique_ptr<Data::ServerResponse> ServerResponse();
-	std::unique_ptr<Data::ServerResponse> ServerResponse(const std::vector<uint8_t> Serialization);
+	std::unique_ptr<Data::ServerResponse> ServerResponse(Data::IContainer Serialization);
 
 	std::unique_ptr<Data::Status> Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
-	std::unique_ptr<Data::Status> Status(const std::vector<uint8_t> Serialization);
+	std::unique_ptr<Data::Status> Status(Data::IContainer Serialization);
 
-	std::unique_ptr<Data::Command> Command(const std::vector<uint8_t> Serialization);
+	std::unique_ptr<Data::Command> Command(Data::IContainer Serialization);
 	std::unique_ptr<Data::Command> Command(Data::CommandAction action);
+
+	//std::unique_ptr<Data::CommandBuilder> CommandBuilder();
 
 	// Comunicators:: (from Communication.h)
 	// To initialize:

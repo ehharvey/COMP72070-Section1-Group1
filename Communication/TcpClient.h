@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <memory>
 #include "IPV4Address.h"
 #include "IRemoteResponder.h"
@@ -17,6 +18,6 @@ namespace Communicators
 			remote(std::move(remote))
 		{ }
 
-		const std::vector<uint8_t> Send(const std::vector<uint8_t> message);
+		Data::IContainer Send(Data::IContainer message);
 	};
 } // namespace Communicators

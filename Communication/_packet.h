@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <memory>
 #include <typeinfo>
 #include "ISerializable.h"

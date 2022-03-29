@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <memory>
 #include <vector>
 #include "CommandAction.h"
@@ -13,12 +14,12 @@ namespace Data
 		CommandAction command_action;
 	public:
 		Command();
-		Command(const std::vector<uint8_t> Serialization);
+		Command(Data::IContainer Serialization);
 		Command(CommandAction action);
 
-		const std::vector<uint8_t> Serialize();
+		Data::IContainer Serialize();
 		CommandAction getAction();
 		
-		static std::unique_ptr<Command> New(const std::vector<uint8_t> Serialization);
+		static std::unique_ptr<Command> New(Data::IContainer Serialization);
 	};
 } // namespace Data

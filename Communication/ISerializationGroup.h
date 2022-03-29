@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include <vector>
 #include <typeindex>
 #include <unordered_map>
@@ -6,7 +7,7 @@
 #include "ISerializable.h"
 
 namespace Data
-{
+{ 
     __interface ISerializationGroup : public ISerializable
 	{
 		std::vector<_packet>::iterator begin();

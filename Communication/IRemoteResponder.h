@@ -1,4 +1,5 @@
 #pragma once
+#include "IContainer.h"
 #include "rPtr.h"
 
 namespace Communicators
@@ -10,7 +11,7 @@ namespace Communicators
 		//		auto remote_responder = Create::MockRemoteResponder();
 		//		auto send_function = remote_responder.getSendFunction();
 		//
-		//		std::vector<uint8_t> payload = { 'h', 'e', 'l', 'l', 'o' };
+		//		Data::IContainer payload = { 'h', 'e', 'l', 'l', 'o' };
 		//		auto server_response = send_function(payload);
 		// }
 		rPtr getSendFunction();

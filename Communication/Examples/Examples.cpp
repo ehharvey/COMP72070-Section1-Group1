@@ -3,7 +3,7 @@
 #include <iostream>
 
 // Declared const so that myFunc does not get redefined
-const Communicators::rPtr myFunc = [](std::vector<uint8_t> request)
+const Communicators::rPtr myFunc = [](Data::IContainer request)
 {
 	// Retrieves an integer
 	int request_integer;
@@ -11,7 +11,7 @@ const Communicators::rPtr myFunc = [](std::vector<uint8_t> request)
 
 	request_integer++;
 
-	std::vector<uint8_t> result(sizeof(int)); // Initializes the vector with ~4 bytes
+	Data::IContainer result(sizeof(int)); // Initializes the vector with ~4 bytes
 	std::memcpy((void*) result.front(), &request_integer, sizeof(int));
 
 	return result;
@@ -20,8 +20,8 @@ const Communicators::rPtr myFunc = [](std::vector<uint8_t> request)
 void __TcpHost_Example()
 {
 	Data::IPV4Address test = { 192, 168, 100, 1 };
-	static auto function = [](std::vector<uint8_t>) {
-		return std::vector<uint8_t>();
+	static auto function = [](Data::IContainer) {
+		return Data::IContainer();
 	};
 	
     auto tcp_host = Create::TcpHost(test, function);
