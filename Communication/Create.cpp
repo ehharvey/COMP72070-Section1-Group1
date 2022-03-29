@@ -31,10 +31,6 @@ std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertnes
 	return std::make_unique<Data::Status>(Data::Status(Happiness, Alertness, Cleanliness, StomachLevel));
 }
 
-std::unique_ptr<Data::Status> Create::Status(uint16_t Payload)
-{
-	return std::make_unique<Data::Status>(Data::Status(Payload));
-}
 
 std::unique_ptr<Data::Status> Create::Status(const std::vector<uint8_t> Serialization)
 {

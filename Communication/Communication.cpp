@@ -3,37 +3,54 @@
 Data::ClientRequest::ClientRequest()
 	: __command_creator(Command::New)
 {
+	
 }
 
 Data::ClientRequest::ClientRequest(uint8_t authbyte, CommandAction command)
 	: __command_creator(Command::New)
 {
-	this->Payload.AuthByte = authbyte;
-	this->Payload.CommandByte = command;
+	
 }
 
 Data::ClientRequest::ClientRequest(const std::vector<uint8_t> Serialization)
 	: __command_creator(Command::New)
 {
+	// First byte is authbyte
+	
 }
 
-uint8_t Data::ClientRequest::getAuthByte()
+std::shared_ptr<Data::ISerializable> Data::ClientRequest::getAuthorization()
 {
-	return this->Payload.AuthByte;
+	return this->authorization;
 }
 
 // #StillAStub
-Data::CommandAction Data::ClientRequest::getCommand()
+std::shared_ptr<Data::ICommand> Data::ClientRequest::getCommand()
 {
-	return Data::CommandAction::sleep;
+	return this->command;
 }
 
 const std::vector<uint8_t> Data::ClientRequest::Serialize()
 {
-	std::vector<uint8_t> serialization;
-	serialization.push_back(this->Payload.AuthByte);
-	serialization.push_back(this->Payload.CommandByte);
-	return serialization;
+	return SerializationGroup::New()
+		->add(this->getAuthorization())
+		->add(this->getCommand())
+		->Serialize();
+}
+
+std::unique_ptr<Data::ClientRequest> Data::ClientRequest::New()
+{
+	return std::unique_ptr<ClientRequest>();
+}
+
+std::unique_ptr<Data::ClientRequest> Data::ClientRequest::New(uint8_t authbyte, CommandAction command)
+{
+	return std::unique_ptr<ClientRequest>();
+}
+
+std::unique_ptr<Data::ClientRequest> Data::ClientRequest::New(const std::vector<uint8_t> Serialization)
+{
+	return std::unique_ptr<ClientRequest>();
 }
 
 Data::ServerResponse::ServerResponse()
@@ -54,38 +71,55 @@ std::optional<Data::CommandAction> Data::ServerResponse::getCurrentTamagotchiCom
 	return std::optional<Data::CommandAction>();
 }
 
-std::unique_ptr<Data::IStatus> Data::ServerResponse::getTamagotchiStatus()
+std::shared_ptr<Data::IStatus> Data::ServerResponse::getTamagotchiStatus()
 {
 	return std::unique_ptr<IStatus>();
 }
 
-std::optional<Data::Animation> Data::ServerResponse::getAnimation()
+std::shared_ptr<Data::ISerializable> Data::ServerResponse::getAnimation()
 {
-	return std::optional<Data::Animation>();
+	return std::unique_ptr<ISerializable>();
+}
+
+std::shared_ptr<Data::ISerializable> Data::ServerResponse::getResult()
+{
+	return std::shared_ptr<ISerializable>();
 }
 
 const std::vector<uint8_t> Data::ServerResponse::Serialize()
 {
-	return std::vector<uint8_t>();
+	return SerializationGroup::New()
+		->add(this->getAnimation())
+		->add(this->getResult())
+		->add(this->getTamagotchiStatus())
+		->Serialize();
+}
+
+std::unique_ptr<Data::ServerResponse> Data::ServerResponse::New()
+{
+	return std::unique_ptr<ServerResponse>();
+}
+
+std::unique_ptr<Data::ServerResponse> Data::ServerResponse::New(const std::vector<uint8_t> Serialization)
+{
+	return std::unique_ptr<ServerResponse>();
 }
 
 Data::Status::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
 {
-	
+	uint8_t happiness_and_alertness = (Happiness << 4) | (Alertness << 4 >> 4);
+	uint8_t cleanliness_and_stomach = (Cleanliness << 4) | (StomachLevel << 4 >> 4);
+	this->Payload = {happiness_and_alertness, cleanliness_and_stomach};
 }
 
 Data::Status::Status(const std::vector<uint8_t> Serialization)
 {
-	
-}
-
-Data::Status::Status(uint16_t Payload)
-{
-
+	this->Payload = std::vector<uint8_t>{Serialization[0], Serialization[1]};	
 }
 
 void Data::Status::setHappiness(uint8_t happiness)
 {
+	
 }
 
 void Data::Status::setAlertness(uint8_t alertness)
@@ -102,7 +136,7 @@ void Data::Status::setCleaniness(uint8_t cleaniness)
 
 const std::vector<uint8_t> Data::Status::Serialize()
 {
-	return std::vector<uint8_t>();
+	return this->Payload;
 }
 
 Communicators::rPtr Communicators::RemoteTcpServer::getSendFunction()
@@ -157,4 +191,70 @@ Data::CommandAction Data::Command::getAction()
 std::unique_ptr<Data::Command> Data::Command::New(const std::vector<uint8_t> Serialization)
 {
 	return std::make_unique<Command>();
+}
+
+std::unique_ptr < Data::SerializationGroup > Data::SerializationGroup::New()
+{
+	return std::unique_ptr<SerializationGroup>();
+}
+
+Data::SerializationGroup::SerializationGroup(const std::vector<uint8_t> Serialization)
+{
+}
+
+Data::SerializationGroup::SerializationGroup()
+{
+}
+
+std::vector<Data::_packet>::iterator Data::SerializationGroup::begin()
+{
+	return std::vector<_packet>::iterator();
+}
+
+std::vector<Data::_packet>::iterator Data::SerializationGroup::end()
+{
+	return std::vector<_packet>::iterator();
+}
+
+std::unordered_map<std::type_index, std::vector<std::unique_ptr<Data::ISerializable>>> Data::SerializationGroup::get()
+{
+	return std::unordered_map<std::type_index, std::vector<std::unique_ptr<ISerializable>>>();
+}
+
+std::unique_ptr<Data::ISerializationGroup> Data::SerializationGroup::add(std::unique_ptr<ISerializable> item)
+{
+	return std::unique_ptr<ISerializationGroup>();
+}
+
+std::unique_ptr<Data::ISerializationGroup> Data::SerializationGroup::add(std::shared_ptr<ISerializable> item)
+{
+	return std::unique_ptr<ISerializationGroup>();
+}
+
+const std::vector<uint8_t> Data::SerializationGroup::Serialize()
+{
+	return std::vector<uint8_t>();
+}
+
+Data::Authorization::Authorization(std::vector<uint8_t> Serialization)
+{
+}
+
+Data::Authorization::Authorization(uint8_t AuthByte)
+{
+}
+
+uint8_t Data::Authorization::getAuthByte()
+{
+	return uint8_t();
+}
+
+const std::vector<uint8_t> Data::Authorization::Serialize()
+{
+	return std::vector<uint8_t>();
+}
+
+const std::vector<uint8_t> Data::Animation::Serialize()
+{
+	return std::vector<uint8_t>();
 }

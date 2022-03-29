@@ -18,7 +18,6 @@ namespace Create
 	std::unique_ptr<Data::ServerResponse> ServerResponse(const std::vector<uint8_t> Serialization);
 
 	std::unique_ptr<Data::Status> Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
-	std::unique_ptr<Data::Status> Status(uint16_t Payload);
 	std::unique_ptr<Data::Status> Status(const std::vector<uint8_t> Serialization);
 
 	std::unique_ptr<Data::Command> Command(const std::vector<uint8_t> Serialization);
