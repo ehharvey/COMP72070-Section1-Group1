@@ -18,13 +18,13 @@ std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Se
 
 std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
 {
-	return std::make_unique<Data::Status>(Data::Status(Happiness, Alertness, Cleanliness, StomachLevel));
+	return Data::Status::New(Happiness, Alertness, Cleanliness, StomachLevel);
 }
 
 
 std::unique_ptr<Data::Status> Create::Status(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::Status>(Data::Status(Serialization));
+	return Data::Status::New(Serialization);
 }
 
 // Comunicators:: (from Communication.h)
