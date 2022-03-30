@@ -1,7 +1,36 @@
+#include <ctime>
+#include <random>
 #include "../../Communication/Create.h"
 #include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
+TEST(AuthorizationTests, Serialization)
+{
+  // Arrange
+  std::random_device rd;
+  std::mt19937 gen(rd());
+
+  uint8_t byte =  (uint8_t) gen();
+
+  // Act
+  auto authorization = Data::Authorization::New(byte);
+
+  EXPECT_EQ(authorization->getAuthByte(), byte);
+}
+
+TEST(AuthorizationTests, Serialization)
+{
+  // Arrange
+  std::random_device rd;
+  std::mt19937 gen(rd());
+
+  uint8_t byte =  (uint8_t) gen();
+
+  // Act
+  auto authorization = Data::Authorization::New(byte);
+
+  EXPECT_EQ(authorization->Serialize(), Data::IContainer(1, byte));
+}
 
 TEST(ClientRequestTests, Constructor)
 {
