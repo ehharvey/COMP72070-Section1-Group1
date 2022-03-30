@@ -82,6 +82,7 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "random": "cpp"
     }
 }

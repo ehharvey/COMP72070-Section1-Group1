@@ -4,7 +4,7 @@
 #include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
-TEST(AuthorizationTests, Serialization)
+TEST(AuthorizationTests, SerializationToByte)
 {
   // Arrange
   std::random_device rd;
@@ -18,7 +18,7 @@ TEST(AuthorizationTests, Serialization)
   EXPECT_EQ(authorization->getAuthByte(), byte);
 }
 
-TEST(AuthorizationTests, Serialization)
+TEST(AuthorizationTests, SerializationToIContainer)
 {
   // Arrange
   std::random_device rd;
@@ -234,6 +234,8 @@ TEST(TcpClientTests, Send)
   auto tcp_client = Create::TcpClient(localhost, std::move(mock_responder));
 
   auto actual = tcp_client->Send({1, 2,3});
-  auto EXPECTED = Data::IContainer{1, 2};
+  auto EXPECTED = Data::IContainer(); //{1, 2}
+  EXPECTED.push_back(1);
+  EXPECTED.push_back(2);
   EXPECT_EQ(actual, EXPECTED);
 }
