@@ -1,19 +1,14 @@
 #include "Create.h"
 
 // Data:: (from Communication.h)
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest()
+std::unique_ptr<Data::ClientRequest> Create::ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command)
 {
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest());
-}
-
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest(uint8_t authbyte, Data::CommandAction command)
-{
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(authbyte, command));
+	return Data::ClientRequest::New(authorization, command);
 }
 
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(Serialization));
+	return Data::ClientRequest::New(Serialization);
 }
 
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse()

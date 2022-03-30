@@ -32,8 +32,7 @@ namespace Data
 namespace Create
 {
 	// Data:: (from Communication.h)
-	std::unique_ptr<Data::ClientRequest> ClientRequest();
-	std::unique_ptr<Data::ClientRequest> ClientRequest(uint8_t authbyte, Data::CommandAction command);
+	std::unique_ptr<Data::ClientRequest> ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command);
 	std::unique_ptr<Data::ClientRequest> ClientRequest(Data::IContainer Serialization);
 
 	std::unique_ptr<Data::ServerResponse> ServerResponse();
