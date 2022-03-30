@@ -92,7 +92,7 @@ cc_library(
     name = "Create",
     srcs = ["Create.cpp"],
     hdrs = ["Create.h"],
-    visibility = ["//Communication:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
 	"//Communication:Animation", 
 	"//Communication:Authorization", 

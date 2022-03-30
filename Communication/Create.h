@@ -13,6 +13,17 @@
 #include "TcpHost.h"
 #include "TcpClient.h"
 
+namespace Data
+{
+	enum Stat
+	{
+		happiness,
+		alertness,
+		cleanliness,
+		stomachlevel
+	};
+}
+
 // Example usage:
 // #include "../Communication/Create.h"
 // 

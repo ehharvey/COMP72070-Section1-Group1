@@ -27,8 +27,8 @@ TEST(ClientRequestTests, GettersAndParameters)
   auto client_request = Create::ClientRequest(authbyte, command);
 
   // Assert 
-  EXPECT_EQ(client_request->getAuthByte(), 120) << "Authbyte was not the same!";
-  EXPECT_EQ(client_request->getCommand(), command) << "Command was not the same!";
+  EXPECT_EQ(client_request->getAuthorization()->Serialize()[0], 120) << "Authbyte was not the same!";
+  EXPECT_EQ(client_request->getCommand()->getAction(), command) << "Command was not the same!";
 }
 
 TEST(ClientRequestTests, SerializationIsConsistent)
@@ -195,7 +195,7 @@ TEST(TcpHostTests, Start)
 
 TEST(TcpClientTests, Send)
 {
-  auto mock_responder = CreateMocks::RemoteResponderMock();
+  auto mock_responder = Mocks::RemoteResponderMock::New();
 
   auto send_function = [](Data::IContainer request)
   {

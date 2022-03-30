@@ -1,5 +1,4 @@
 #pragma once
-#include "IContainer.h"
 #include <string>
 #include <memory>
 #include <algorithm>
@@ -27,11 +26,12 @@ namespace Client {
 		ResponseParser response_parser;
 	public:
 		Client();
-
 		Client(std::unique_ptr<Communicators::ISender> sender);;
 
 		void __setResponseParser(ResponseParser rp);
 
 		std::unique_ptr<Data::IServerResponse> SendCommand(std::unique_ptr <Data::IClientRequest> request);
+
+		static std::unique_ptr<Client> New();
 	};
 }
