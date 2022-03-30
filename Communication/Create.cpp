@@ -11,14 +11,9 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Seri
 	return Data::ClientRequest::New(Serialization);
 }
 
-std::unique_ptr<Data::ServerResponse> Create::ServerResponse()
-{
-	return std::make_unique<Data::ServerResponse>(Data::ServerResponse());
-}
-
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::ServerResponse>(Data::ServerResponse(Serialization));
+	return Data::ServerResponse::New(Serialization);
 }
 
 std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)

@@ -35,7 +35,6 @@ namespace Create
 	std::unique_ptr<Data::ClientRequest> ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command);
 	std::unique_ptr<Data::ClientRequest> ClientRequest(Data::IContainer Serialization);
 
-	std::unique_ptr<Data::ServerResponse> ServerResponse();
 	std::unique_ptr<Data::ServerResponse> ServerResponse(Data::IContainer Serialization);
 
 	std::unique_ptr<Data::Status> Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);

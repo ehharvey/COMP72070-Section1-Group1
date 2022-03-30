@@ -10,11 +10,10 @@ namespace Data
 	private:
 		std::shared_ptr<IStatus> status;
 		std::shared_ptr<IAnimation> animation;
-	public:
+
 		// "Traditional" constructors: do not use!
-		ServerResponse();
 		ServerResponse(Data::IContainer Serialization);
-		
+	public:		
 		bool AuthSuccess();
 		std::shared_ptr<CommandAction> getCurrentTamagotchiCommand();
 		std::shared_ptr<IStatus> getTamagotchiStatus();
@@ -23,7 +22,7 @@ namespace Data
 		Data::IContainer Serialize();
 
 		// Our "constructors"
-		static std::unique_ptr<ServerResponse> New();
+		// TODO: More constructors, Result implementation
 		static std::unique_ptr<ServerResponse> New(Data::IContainer Serialization);
 	};
 } // namespace Data
