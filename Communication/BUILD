@@ -2,20 +2,14 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 
 cc_library(
-    name = "IContainer",
-    hdrs = ["IContainer.h"],
-    visibility = ["//Communication:__pkg__"],
-)
-
-cc_library(
     name = "Animation",
     srcs = ["Animation.cpp"],
     hdrs = ["Animation.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IAnimation",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:IAnimation", 
+	]
 )
 
 
@@ -25,9 +19,9 @@ cc_library(
     hdrs = ["Authorization.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IAuthorization",
+	"//Communication:IAuthorization", 
 	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -37,16 +31,13 @@ cc_library(
     hdrs = ["ClientRequest.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-    "//Communication:IClientRequest",
+	"//Communication:ISerializationGroup", 
+	"//Communication:IContainer", 
+	"//Communication:IClientRequest", 
 	"//Communication:ICommand", 
 	"//Communication:IAuthorization", 
-	"//Communication:CommandAction", 
 	"//Communication:ISerializable", 
-    "//Communication:ISerializationGroup",
-    "//Communication:SerializationGroup",
-    "//Communication:_packet",
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -56,11 +47,11 @@ cc_library(
     hdrs = ["Command.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:CommandAction", 
 	"//Communication:ISerializationGroup", 
 	"//Communication:ICommand", 
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -70,8 +61,8 @@ cc_library(
     hdrs = ["CommandAction.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IContainer", 
-    ]
+	"//Communication:IContainer",
+	]
 )
 
 
@@ -81,10 +72,11 @@ cc_library(
     hdrs = ["CommandBuilder.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ICommandBuilder", 
-	"//Communication:ICommand", 
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ICommandBuilder", 
+	"//Communication:CommandAction", 
+	"//Communication:ICommand", 
+	]
 )
 
 
@@ -92,8 +84,9 @@ cc_library(
     name = "Create",
     srcs = ["Create.cpp"],
     hdrs = ["Create.h"],
-    visibility = ["//visibility:public"],
+    visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:Animation", 
 	"//Communication:Authorization", 
 	"//Communication:ClientRequest", 
@@ -105,9 +98,9 @@ cc_library(
 	"//Communication:RemoteTcpServer", 
 	"//Communication:TcpHost", 
 	"//Communication:TcpClient", 
-    "//Communication:ISerializable",
-	"//Communication:IContainer", 
-    ]
+	"//Communication:TypeConstructor", 
+	"//Communication:SerializationGroup", 
+	]
 )
 
 
@@ -117,9 +110,9 @@ cc_library(
     hdrs = ["IAnimation.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ISerializable",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ISerializable", 
+	]
 )
 
 
@@ -129,9 +122,9 @@ cc_library(
     hdrs = ["IAuthorization.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ISerializable",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ISerializable", 
+	]
 )
 
 
@@ -141,10 +134,10 @@ cc_library(
     hdrs = ["IClientRequest.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:ISerializable", 
 	"//Communication:ICommand", 
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -154,10 +147,10 @@ cc_library(
     hdrs = ["ICommand.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:CommandAction", 
 	"//Communication:ISerializable", 
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -167,19 +160,31 @@ cc_library(
     hdrs = ["ICommandBuilder.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ICommand",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ICommand", 
+	]
+)
+
+
+cc_library(
+    name = "IContainer",
+    srcs = [],
+    hdrs = ["IContainer.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	]
 )
 
 
 cc_library(
     name = "IPV4Address",
+    srcs = ["IPV4Address.cpp"],
     hdrs = ["IPV4Address.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ISerializable", 
+	]
 )
 
 
@@ -189,9 +194,9 @@ cc_library(
     hdrs = ["IRemoteResponder.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:rPtr",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:rPtr", 
+	]
 )
 
 
@@ -201,9 +206,9 @@ cc_library(
     hdrs = ["IResponder.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:rPtr",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:rPtr", 
+	]
 )
 
 
@@ -213,8 +218,8 @@ cc_library(
     hdrs = ["ISender.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IContainer", 
-    ]
+	"//Communication:IContainer",
+	]
 )
 
 
@@ -224,8 +229,8 @@ cc_library(
     hdrs = ["ISerializable.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IContainer", 
-    ]
+	"//Communication:IContainer",
+	]
 )
 
 
@@ -235,10 +240,9 @@ cc_library(
     hdrs = ["ISerializationGroup.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-    "//Communication:_packet",
-	"//Communication:ISerializable",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ISerializable", 
+	]
 )
 
 
@@ -248,11 +252,11 @@ cc_library(
     hdrs = ["IServerResponse.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:IAnimation", 
 	"//Communication:ISerializable", 
 	"//Communication:IStatus", 
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
@@ -262,9 +266,21 @@ cc_library(
     hdrs = ["IStatus.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ISerializable",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:ISerializable", 
+	]
+)
+
+
+cc_library(
+    name = "ITypeConstructor",
+    srcs = [],
+    hdrs = ["ITypeConstructor.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	"//Communication:IContainer", 
+	"//Communication:ISerializable", 
+	]
 )
 
 
@@ -274,22 +290,22 @@ cc_library(
     hdrs = ["RemoteTcpServer.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:rPtr", 
 	"//Communication:IRemoteResponder", 
 	"//Communication:IPV4Address", 
-    "//Communication:ISerializable",
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
 cc_library(
     name = "rPtr",
+    srcs = ["rPtr.cpp"],
     hdrs = ["rPtr.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IContainer", 
-    ]
+	"//Communication:IContainer",
+	]
 )
 
 
@@ -299,11 +315,11 @@ cc_library(
     hdrs = ["SerializationGroup.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:ISerializable", 
 	"//Communication:ISerializationGroup", 
-	"//Communication:_packet", 
-	"//Communication:IContainer", 
-    ]
+	"//Communication:ITypeConstructor", 
+	]
 )
 
 
@@ -313,22 +329,23 @@ cc_library(
     hdrs = ["ServerResponse.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:CommandAction", 
 	"//Communication:IAnimation", 
 	"//Communication:IServerResponse", 
-    "//Communication:SerializationGroup",
-	"//Communication:IContainer", 
-    ]
+    "//Communication:ISerializationGroup",
+	]
 )
 
 
 cc_library(
     name = "Stat",
+    srcs = ["Stat.cpp"],
     hdrs = ["Stat.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IContainer", 
-    ]
+	"//Communication:IContainer",
+	]
 )
 
 
@@ -338,9 +355,9 @@ cc_library(
     hdrs = ["Status.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:IStatus",
 	"//Communication:IContainer", 
-    ]
+	"//Communication:IStatus", 
+	]
 )
 
 
@@ -350,12 +367,11 @@ cc_library(
     hdrs = ["TcpClient.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:IPV4Address", 
 	"//Communication:IRemoteResponder", 
-	"//Communication:ISender",
-    "//Communication:ISerializable",
-	"//Communication:IContainer", 
-    ]
+	"//Communication:ISender", 
+	]
 )
 
 
@@ -365,21 +381,19 @@ cc_library(
     hdrs = ["TcpHost.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IContainer", 
 	"//Communication:IPV4Address", 
 	"//Communication:IResponder", 
-    "//Communication:ISerializable",
-	"//Communication:IContainer", 
-    ]
+	]
 )
 
 
 cc_library(
-    name = "_packet",
-    srcs = ["_packet.cpp"],
-    hdrs = ["_packet.h"],
+    name = "TypeConstructor",
+    srcs = ["TypeConstructor.cpp"],
+    hdrs = ["TypeConstructor.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ISerializable",
-	"//Communication:IContainer", 
-    ]
+	"//Communication:ITypeConstructor",
+	]
 )

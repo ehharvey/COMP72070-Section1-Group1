@@ -1,8 +1,8 @@
 #pragma once
 #include <cstdint>
-#include <deque>
+#include <list>
 
 namespace Data
 {
-    typedef std::deque<uint8_t> IContainer;
+    typedef std::list<uint8_t> IContainer;
 }

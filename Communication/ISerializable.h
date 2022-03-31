@@ -1,6 +1,7 @@
 #pragma once
 #include "IContainer.h"
-#include <vector>
+#include <memory>
+#include <functional>
 
 namespace Data
 {
@@ -8,4 +9,6 @@ namespace Data
 	{
 		Data::IContainer Serialize();
 	};
+
+	typedef std::function<std::unique_ptr<ISerializable>(Data::IContainer)> ISerializableConstructor;
 }

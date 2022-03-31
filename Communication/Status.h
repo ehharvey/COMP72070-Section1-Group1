@@ -1,6 +1,7 @@
 #pragma once
 #include "IContainer.h"
 #include <memory>
+#include <array>
 #include "IStatus.h"
 
 namespace Data
@@ -9,7 +10,7 @@ namespace Data
 		// Payload format
 		// hhhh aaaa [happiness alertness]
 		// ssss cccc [stomach cleaniness]
-		Data::IContainer Payload; // 2 bytes
+		std::array<uint8_t, 2> Payload; // 2 bytes
 
 		Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 		Status(Data::IContainer Serialization);

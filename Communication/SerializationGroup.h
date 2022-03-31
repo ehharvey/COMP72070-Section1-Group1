@@ -1,12 +1,13 @@
 #pragma once
 #include "IContainer.h"
-#include <vector>
+#include <deque>
 #include <typeindex>
 #include <memory>
+#include <utility>
 #include <unordered_map>
 #include "ISerializable.h"
 #include "ISerializationGroup.h"
-#include "_packet.h"
+#include "ITypeConstructor.h"
 
 
 namespace Data
@@ -14,23 +15,43 @@ namespace Data
     class SerializationGroup : public ISerializationGroup
     {
     private:
-        std::vector<_packet> items;
-    public:
-        SerializationGroup(Data::IContainer Serialization);
-        SerializationGroup();
+        // Serialization information:
+        // uint_16 indicating size of subsequent transmission (not part of this)
+        // [ type uint8_t: serialization ]  <--- Item #1
+        // [ type uint8_t: serialization ]  <--- Item #2
 
-        std::vector<_packet>::iterator begin();
-        std::vector<_packet>::iterator end();
+        std::shared_ptr<ITypeConstructor> type_constructor;
+
+        std::vector<std::unique_ptr<ISerializable>> items;
+
+        SerializationGroup(Data::IContainer Serialization, std::shared_ptr<ITypeConstructor> type_constructor);
+        SerializationGroup(std::shared_ptr<ITypeConstructor> type_constructor);
+    public:
+        std::vector<std::unique_ptr<ISerializable>>::iterator begin();
+        std::vector<std::unique_ptr<ISerializable>>::iterator end();
+
+        Data::ISerializationGroup&
+        Deserialize
+        (IContainer Serialization);
 
         // Returns a map *items*
         // items[typeid(ClientRequest)] retrieves all ClientRequest objects contained
-        std::unordered_map<std::type_index, std::vector<std::unique_ptr<ISerializable>>> get();
         
-        std::unique_ptr<ISerializationGroup> add(std::unique_ptr<ISerializable> item);
-        std::unique_ptr<ISerializationGroup> add(std::shared_ptr<ISerializable> item);
+        ISerializationGroup* add(std::unique_ptr<ISerializable> item); 
+        ISerializationGroup* add(std::shared_ptr<ISerializable> item);
+
         Data::IContainer Serialize();
 
         static std::unique_ptr<SerializationGroup> New();
+        
+
+        static std::unique_ptr<SerializationGroup> 
+        New
+        (std::shared_ptr<ITypeConstructor> type_constructor);
+
+        static std::unique_ptr<SerializationGroup> 
+        New
+        (Data::IContainer Serialization, std::shared_ptr<ITypeConstructor> type_constructor);
     };
 } // namespace Data
 

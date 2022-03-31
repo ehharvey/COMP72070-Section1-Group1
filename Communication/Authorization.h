@@ -18,6 +18,6 @@ namespace Data
 		uint8_t getAuthByte();
 		Data::IContainer Serialize();
 
-		static std::shared_ptr<Authorization> New(const uint8_t byte);
+		static std::unique_ptr<Authorization> New(const uint8_t byte);
 	};
 }

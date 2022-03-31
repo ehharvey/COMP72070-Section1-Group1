@@ -3,11 +3,14 @@
 #include "CommandAction.h"
 #include "IAnimation.h"
 #include "IServerResponse.h"
+#include "ISerializationGroup.h"
 
 namespace Data
 {
     class ServerResponse : public IServerResponse {
 	private:
+		Data::SerializationGroup_Constructor serialization_group_constructor;
+		
 		std::shared_ptr<IStatus> status;
 		std::shared_ptr<IAnimation> animation;
 

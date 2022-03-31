@@ -12,6 +12,8 @@
 #include "RemoteTcpServer.h"
 #include "TcpHost.h"
 #include "TcpClient.h"
+#include "TypeConstructor.h"
+#include "SerializationGroup.h"
 
 namespace Data
 {
@@ -31,19 +33,37 @@ namespace Data
 // auto client_request = Create::ClientRequest();
 namespace Create
 {
-	// Data:: (from Communication.h)
-	std::unique_ptr<Data::ClientRequest> ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command);
-	std::unique_ptr<Data::ClientRequest> ClientRequest(Data::IContainer Serialization);
+	//
+	std::unique_ptr<Data::ClientRequest> 
+	ClientRequest
+	(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command);
 
-	std::unique_ptr<Data::ServerResponse> ServerResponse(Data::IContainer Serialization);
+	std::unique_ptr<Data::ClientRequest> 
+	ClientRequest
+	(Data::IContainer Serialization);
+	//
+	//
+	std::unique_ptr<Data::ServerResponse> 
+	ServerResponse
+	(Data::IContainer Serialization);
+	//
+	//
+	std::unique_ptr<Data::Status> 
+	Status
+	(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 
-	std::unique_ptr<Data::Status> Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
-	std::unique_ptr<Data::Status> Status(Data::IContainer Serialization);
+	std::unique_ptr<Data::Status> 
+	Status
+	(Data::IContainer Serialization);
+	//
+	//
+	std::unique_ptr<Data::Command> 
+	Command
+	(Data::IContainer Serialization);
 
-	std::unique_ptr<Data::Command> Command(Data::IContainer Serialization);
-	std::unique_ptr<Data::Command> Command(Data::CommandAction action);
-
-	//std::unique_ptr<Data::CommandBuilder> CommandBuilder();
+	std::unique_ptr<Data::Command> 
+	Command
+	(Data::CommandAction action);
 
 	// Comunicators:: (from Communication.h)
 	// To initialize:
