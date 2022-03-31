@@ -18,12 +18,6 @@
     <ClInclude Include="pch.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Create.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_packet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,6 +36,9 @@
     <ClInclude Include="CommandBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Create.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="IAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,6 +52,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICommandBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IPV4Address.h">
@@ -81,6 +81,9 @@
     <ClInclude Include="IStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ITypeConstructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="RemoteTcpServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,14 +108,11 @@
     <ClInclude Include="TcpHost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TypeConstructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Create.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="_packet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CommandBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Create.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IAnimation.cpp">
@@ -192,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TcpHost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeConstructor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

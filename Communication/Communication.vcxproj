@@ -152,6 +152,7 @@
     <ClInclude Include="IClientRequest.h" />
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="ICommandBuilder.h" />
+    <ClInclude Include="IContainer.h" />
     <ClInclude Include="IPV4Address.h" />
     <ClInclude Include="IRemoteResponder.h" />
     <ClInclude Include="IResponder.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="ISerializationGroup.h" />
     <ClInclude Include="IServerResponse.h" />
     <ClInclude Include="IStatus.h" />
+    <ClInclude Include="ITypeConstructor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RemoteTcpServer.h" />
     <ClInclude Include="rPtr.h" />
@@ -169,7 +171,7 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpHost.h" />
-    <ClInclude Include="_packet.h" />
+    <ClInclude Include="TypeConstructor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -200,7 +202,7 @@
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpHost.cpp" />
-    <ClCompile Include="_packet.cpp" />
+    <ClCompile Include="TypeConstructor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
