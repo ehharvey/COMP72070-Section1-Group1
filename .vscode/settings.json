@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.rh": "cpp",
         "functional": "cpp",
         "algorithm": "cpp",
         "any": "cpp",
