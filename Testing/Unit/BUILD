@@ -4,8 +4,8 @@ cc_test(
   srcs = ["ClientTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Client:Client",
-    "//Testing/Mocks:Mocks"
+    "//Client:CreateClient",
+    "//Testing/Mocks:Mocks",
   ],
 )
 
@@ -15,7 +15,7 @@ cc_test(
   srcs = ["CommunicationTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Communication:Communication",
+    "//Communication:CreateCommunication",
   ],
 )
 
@@ -25,7 +25,7 @@ cc_test(
   srcs = ["LoggerTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Logger:Logger",
+    "//Logger:CreateLogger",
   ],
 )
 
@@ -35,7 +35,7 @@ cc_test(
   srcs = ["ServerTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Server:Server",
+    "//Server:CreateServer",
   ],
 )
 
@@ -45,6 +45,6 @@ cc_test(
   srcs = ["TamagotchiTests.cpp"],
   deps = [
     "@com_google_googletest//:gtest_main",
-    "//Tamagotchi:Tamagotchi",
+    "//Tamagotchi:CreateTamagotchi",
   ],
 )
