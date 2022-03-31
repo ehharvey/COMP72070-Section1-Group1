@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <string>
-#include "..\Communication\Create.h"
 #include "Client.h"
 
 
@@ -41,5 +40,5 @@ inline void Client::Client::__setResponseParser(ResponseParser rp) {
 
 std::unique_ptr<Data::IServerResponse> Client::Client::SendCommand(std::unique_ptr<Data::IClientRequest> request)
 {
-    return Create::ServerResponse();
+    return std::nullptr_t();
 }

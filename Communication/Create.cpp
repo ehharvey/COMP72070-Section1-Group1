@@ -1,45 +1,35 @@
 #include "Create.h"
 
 // Data:: (from Communication.h)
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest()
+std::unique_ptr<Data::ClientRequest> Create::ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command)
 {
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest());
+	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
+	return Data::ClientRequest::New(authorization, command, func);
 }
 
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest(uint8_t authbyte, Data::CommandAction command)
+std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(authbyte, command));
+	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
+	return Data::ClientRequest::New(Serialization, func);
 }
 
-std::unique_ptr<Data::ClientRequest> Create::ClientRequest(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::ClientRequest>(Data::ClientRequest(Serialization));
-}
-
-std::unique_ptr<Data::ServerResponse> Create::ServerResponse()
-{
-	return std::make_unique<Data::ServerResponse>(Data::ServerResponse());
-}
-
-std::unique_ptr<Data::ServerResponse> Create::ServerResponse(const std::vector<uint8_t> Serialization)
-{
-	return std::make_unique<Data::ServerResponse>(Data::ServerResponse(Serialization));
+	return Data::ServerResponse::New(Serialization);
 }
 
 std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
 {
-	return std::make_unique<Data::Status>(Data::Status(Happiness, Alertness, Cleanliness, StomachLevel));
+	return Data::Status::New(Happiness, Alertness, Cleanliness, StomachLevel);
 }
 
-std::unique_ptr<Data::Status> Create::Status(uint16_t Payload)
+
+std::unique_ptr<Data::Status> Create::Status(Data::IContainer Serialization)
 {
-	return std::make_unique<Data::Status>(Data::Status(Payload));
+	return Data::Status::New(Serialization);
 }
 
-std::unique_ptr<Data::Status> Create::Status(const std::vector<uint8_t> Serialization)
-{
-	return std::make_unique<Data::Status>(Data::Status(Serialization));
-}
+
 
 // Comunicators:: (from Communication.h)
 // To initialize:
@@ -64,7 +54,7 @@ std::unique_ptr<Communicators::TcpClient> Create::TcpClient(Data::IPV4Address ad
 	return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
 }
 
-std::unique_ptr<Data::Command> Create::Command(const std::vector<uint8_t> Serialization)
+std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::Command>(Data::Command(Serialization));
 }

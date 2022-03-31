@@ -1,15 +1,35 @@
+#include <ctime>
+#include <random>
 #include "../../Communication/Create.h"
 #include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
-// Demonstrate some basic assertions.
-TEST(HelloTest, BasicAssertions) {
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "world");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
+TEST(AuthorizationTests, SerializationToByte)
+{
+  // Arrange
+  std::random_device rd;
+  std::mt19937 gen(rd());
 
-  auto client = Create::ClientRequest();
+  uint8_t byte =  (uint8_t) gen();
+
+  // Act
+  auto authorization = Data::Authorization::New(byte);
+
+  EXPECT_EQ(authorization->getAuthByte(), byte);
+}
+
+TEST(AuthorizationTests, SerializationToIContainer)
+{
+  // Arrange
+  std::random_device rd;
+  std::mt19937 gen(rd());
+
+  uint8_t byte =  (uint8_t) gen();
+
+  // Act
+  auto authorization = Data::Authorization::New(byte);
+
+  EXPECT_EQ(authorization->Serialize(), Data::IContainer(1, byte));
 }
 
 TEST(ClientRequestTests, Constructor)
@@ -27,14 +47,14 @@ TEST(ClientRequestTests, GettersAndParameters)
   auto client_request = Create::ClientRequest(authbyte, command);
 
   // Assert 
-  EXPECT_EQ(client_request->getAuthByte(), 120) << "Authbyte was not the same!";
-  EXPECT_EQ(client_request->getCommand(), command) << "Command was not the same!";
+  EXPECT_EQ(client_request->getAuthorization()->Serialize()[0], 120) << "Authbyte was not the same!";
+  EXPECT_EQ(client_request->getCommand()->getAction(), command) << "Command was not the same!";
 }
 
 TEST(ClientRequestTests, SerializationIsConsistent)
 {
   // Arrange
-  std::vector<uint8_t> serialization;
+  Data::IContainer serialization;
 
   for (auto i : {1, 2, 3, 4})
   {
@@ -56,7 +76,7 @@ TEST(ServerResponseTests, DefaultConstructor)
 TEST(ServerResponseTests, ConsistentSerialization)
 {
   // Arrange
-  std::vector<uint8_t> serialization;
+  Data::IContainer serialization;
 
   for (uint8_t i: {1, 2, 3, 4})
   {
@@ -107,7 +127,7 @@ TEST(StatusTests, ConstructorAndGettersTwo)
 TEST(StatusTests, Serialization)
 {
   // Arrange
-  std::vector<uint8_t> Serialization;
+  Data::IContainer Serialization;
 
   for (uint8_t i : {1,2,3,4})
   {
@@ -136,7 +156,7 @@ TEST(StatusTests, setAlertness)
 TEST(Command, Serialization)
 {
   // Arrange
-  const std::vector<uint8_t> Serialization{5};
+  Data::IContainer Serialization{5};
 
   // Act
   auto command = Create::Command(Serialization);
@@ -159,9 +179,9 @@ TEST(Command, CommandAction)
 
 TEST(TcpHostTests, Idles)
 {
-  auto response_function = [](std::vector<uint8_t> request)
+  auto response_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2, 3, 4};
+    return Data::IContainer{1, 2, 3, 4};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -177,9 +197,9 @@ TEST(TcpHostTests, Idles)
 
 TEST(TcpHostTests, Start)
 {
-  auto response_function = [](std::vector<uint8_t> request)
+  auto response_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2, 3, 4};
+    return Data::IContainer{1, 2, 3, 4};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -195,11 +215,11 @@ TEST(TcpHostTests, Start)
 
 TEST(TcpClientTests, Send)
 {
-  auto mock_responder = CreateMocks::RemoteResponderMock();
+  auto mock_responder = Mocks::RemoteResponderMock::New();
 
-  auto send_function = [](std::vector<uint8_t> request)
+  auto send_function = [](Data::IContainer request)
   {
-    return std::vector<uint8_t>{1, 2};
+    return Data::IContainer{1, 2};
   };
 
   Data::IPV4Address localhost{127, 0, 0, 1};
@@ -214,6 +234,8 @@ TEST(TcpClientTests, Send)
   auto tcp_client = Create::TcpClient(localhost, std::move(mock_responder));
 
   auto actual = tcp_client->Send({1, 2,3});
-  auto EXPECTED = std::vector<uint8_t>{1, 2};
+  auto EXPECTED = Data::IContainer(); //{1, 2}
+  EXPECTED.push_back(1);
+  EXPECTED.push_back(2);
   EXPECT_EQ(actual, EXPECTED);
 }

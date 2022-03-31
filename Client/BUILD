@@ -5,13 +5,12 @@ cc_library(
     srcs = ["Client.cpp"],
     hdrs = ["Client.h"],
     visibility = [
-        "//ClientCLI:__pkg__",
         "//Testing:__pkg__",
         "//Testing/Unit:__pkg__",
         "//Testing/Mocks:__pkg__",
         "//Client:__pkg__",
         ],
-    deps = [ "//Communication:CreateCommunication" ]
+    deps = [ "//Communication:Create" ]
 )
 
 cc_library(

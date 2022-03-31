@@ -12,6 +12,7 @@ cc_library(
         "//Testing/Unit:__pkg__",
         "//Testing/Mocks:__pkg__",
     ],
+    deps = ["//Communication:Create"],
 )
 
 cc_library(

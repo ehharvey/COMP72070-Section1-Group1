@@ -7,11 +7,11 @@
 // 
 // ...
 // auto a = Logger::action::Receive;
-// auto data = std::vector<uint8_t>();
+// auto data = Data::IContainer();
 // 
 // auto log = Create::Log(a, data);
 namespace Create
 {
 	// Logger:: (from Logger.h)
-	std::unique_ptr<Logger::Log> Log(Logger::action a, const std::vector<uint8_t> data);
+	std::unique_ptr<Logger::Log> Log(Logger::action a, Data::IContainer data);
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "..\Communication\Create.h"
 #include "..\Logger\Create.h"
 #include "..\Server\Create.h"

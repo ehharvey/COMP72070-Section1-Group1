@@ -1,6 +1,7 @@
 #pragma once
 #include <ctime>
 #include <vector>
+#include "../Communication/Create.h"
 
 namespace Logger {
 	enum action {
@@ -11,7 +12,7 @@ namespace Logger {
 	__interface ILog
 	{
 		std::time_t getTime();
-		const std::vector<uint8_t> getData();
+		Data::IContainer getData();
 		action getAction();
 	};
 
@@ -20,11 +21,11 @@ namespace Logger {
 	class Log : public ILog {
 	private:
 		action a;
-		std::vector<uint8_t> data;
+		Data::IContainer data;
 	public:
-		Log(action, const std::vector<uint8_t> data);
+		Log(action, Data::IContainer data);
 		std::time_t getTime();
-		const std::vector<uint8_t> getData();
+		Data::IContainer getData();
 		action getAction();
 	};
 }
