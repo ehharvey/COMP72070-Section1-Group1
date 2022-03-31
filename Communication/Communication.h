@@ -123,6 +123,7 @@ namespace Data {
 	public:
 		Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 		Status(uint16_t Payload);
+		Status(const std::vector<uint8_t> Serialization);
 		uint8_t getHappiness() { return Payload >> 12; };
 		uint8_t getAlertness() { return Payload << 4 >> 12; };
 		uint8_t getStomachLevel() { return Payload << 8 >> 12; };

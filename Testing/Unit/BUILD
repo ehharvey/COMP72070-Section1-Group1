@@ -16,6 +16,7 @@ cc_test(
   deps = [
     "@com_google_googletest//:gtest_main",
     "//Communication:CreateCommunication",
+    "//Testing/Mocks:Mocks"
   ],
 )
 

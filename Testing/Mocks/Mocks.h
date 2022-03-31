@@ -1,10 +1,10 @@
 #pragma once
-#include <gmock/gmock.h>
 #include "../../Client/Client.h"
 #include "../../Communication/Communication.h"
 #include "../../Logger/Logger.h"
 #include "../../Server/Server.h"
 #include "../../Tamagotchi/Tamagotchi.h"
+#include <gmock/gmock.h>
 
 // Client
 namespace Mocks {
@@ -16,14 +16,14 @@ namespace Mocks {
 	class ClientRequestMock : public Data::IClientRequest {
 	public:
 		MOCK_METHOD(uint8_t, getAuthByte, ());
-		MOCK_METHOD(Data::Command, getCommand, ());
+		MOCK_METHOD(Data::CommandAction, getCommand, ());
 		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
 	};
 
 	class ServerResponseMock : public Data::IServerResponse {
 	public:
 		MOCK_METHOD(bool, AuthSuccess, ());
-		MOCK_METHOD(std::optional<Data::Command>, getCurrentTamagotchiCommand, ());
+		MOCK_METHOD(std::optional<Data::CommandAction>, getCurrentTamagotchiCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getTamagotchiStatus, ());
 		MOCK_METHOD(std::optional<Data::Animation>, getAnimation, ());
 		MOCK_METHOD(const std::vector<uint8_t>, Serialize, ());
@@ -73,11 +73,19 @@ namespace Mocks {
 
 	class TamagotchiMock : public Tamagotchi::ITamagotchi {
 	public:
-		MOCK_METHOD(void, AddCommand, (Data::Command));
-		MOCK_METHOD(void, AddCommand_Immediate, (Data::Command));
-		MOCK_METHOD(Data::Command, GetCurrentCommand, ());
+		MOCK_METHOD(void, AddCommand, (Data::CommandAction));
+		MOCK_METHOD(void, AddCommand_Immediate, (Data::CommandAction));
+		MOCK_METHOD(Data::CommandAction, GetCurrentCommand, ());
 		MOCK_METHOD(std::unique_ptr<Data::IStatus>, getStatus, ());
 		MOCK_METHOD(void, adjustStat, (Data::Stat, signed int relativeChange));
+	};
+
+	class CommandMock : public Data::ICommand
+	{
+	public:
+		MOCK_METHOD(const std::vector<uint8_t>, Serialize,());
+		MOCK_METHOD(Data::CommandAction, getAction,());
+		static std::unique_ptr<CommandMock> New(const std::vector<uint8_t> Serialization);
 	};
 }
 

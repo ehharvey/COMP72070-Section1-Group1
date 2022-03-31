@@ -76,6 +76,11 @@ Data::Status::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, 
 	
 }
 
+Data::Status::Status(const std::vector<uint8_t> Serialization)
+{
+	
+}
+
 Data::Status::Status(uint16_t Payload)
 {
 
