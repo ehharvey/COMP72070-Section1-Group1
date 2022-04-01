@@ -1,5 +1,6 @@
 #pragma once
 #include "IContainer.h"
+#include <utility>
 #include <memory>
 #include "Animation.h"
 #include "Authorization.h"
@@ -25,6 +26,15 @@ namespace Data
 		stomachlevel
 	};
 }
+
+const std::vector<std::pair<std::type_index, Data::ISerializableConstructor>> deserializers 
+= { Data::authorization_type_constructor,
+	Data::command_type_pair };
+
+const auto serializationGroupConstructors = []()
+{
+	return Data::SerializationGroup::New(std::make_shared<Data::TypeConstructor>(deserializers));
+};
 
 // Example usage:
 // #include "../Communication/Create.h"
@@ -64,6 +74,8 @@ namespace Create
 	std::unique_ptr<Data::Command> 
 	Command
 	(Data::CommandAction action);
+
+
 
 	// Comunicators:: (from Communication.h)
 	// To initialize:

@@ -3,13 +3,22 @@
 #include <thread>
 #include <mutex>
 
-Data::TypeConstructor::TypeConstructor(std::vector<ISerializableConstructor> constructors)
-:   constructors(constructors)
-{ }
+static std::shared_ptr<Data::TypeConstructor> __singleton;
+
+Data::TypeConstructor::TypeConstructor
+(std::vector<std::pair<std::type_index, ISerializableConstructor>> types_and_constructors)
+{
+    size_t counter = 0;
+    for (auto const & c : types_and_constructors)
+    {
+        this->constructors.push_back(c.second);
+        this->type_identifier_map[c.first] = counter++;
+    }
+}
 
 std::shared_ptr<Data::TypeConstructor>  // Return type
 Data::TypeConstructor::New              // Function name
-(std::vector<ISerializableConstructor> constructors) // Parameters
+(std::vector<std::pair<std::type_index, ISerializableConstructor>> types_and_constructors)
 {
     static std::mutex new_mutex;
 
@@ -28,7 +37,7 @@ Data::TypeConstructor::New              // Function name
             }
             else
             {
-                __singleton = std::make_shared<TypeConstructor>(TypeConstructor(constructors));
+                __singleton = std::make_shared<TypeConstructor>(TypeConstructor(types_and_constructors));
                 new_mutex.unlock();
                 return __singleton;
             }
@@ -49,7 +58,7 @@ Data::TypeConstructor::getConstructor
 
 uint8_t
 Data::TypeConstructor::getTypeIdentifier 
-(const std::type_info& type_info) const
+(std::type_index ti) const
 {
-    return this->type_identifier_map.at(type_info);
+    return this->type_identifier_map.at(ti);
 }

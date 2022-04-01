@@ -3,14 +3,12 @@
 // Data:: (from Communication.h)
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command)
 {
-	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
-	return Data::ClientRequest::New(authorization, command, func);
+	return Data::ClientRequest::New(authorization, command, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Serialization)
 {
-	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
-	return Data::ClientRequest::New(Serialization, func);
+	return Data::ClientRequest::New(Serialization, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)

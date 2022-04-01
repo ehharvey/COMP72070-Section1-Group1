@@ -1,9 +1,31 @@
+#pragma once
 #include <ctime>
 #include <random>
 #include "../../Communication/Create.h"
-#include "../Mocks/Mocks.h"
+//#include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
+TEST(ClientRequest, Serialization)
+{
+    auto authorization = Data::Authorization::New(5);
+    auto command = Data::Command::New({1});
+
+  
+    auto client_request = Create::ClientRequest(std::move(authorization), std::move(command));
+
+    auto client_serialization = client_request->Serialize();
+
+    EXPECT_EQ(client_serialization, Data::IContainer({
+      0, 1, 5, // Authorization
+      1, 1, 1  // Command
+    }));
+
+    auto client_deserialized = Create::ClientRequest(client_serialization);
+    EXPECT_EQ(client_deserialized->getAuthorization().getAuthByte(), 5);
+}
+
+
+/* OLD
 TEST(AuthorizationTests, SerializationToByte)
 {
   // Arrange
@@ -239,3 +261,4 @@ TEST(TcpClientTests, Send)
   EXPECTED.push_back(2);
   EXPECT_EQ(actual, EXPECTED);
 }
+*/

@@ -25,6 +25,7 @@ namespace Tamagotchi
 		void RecalculateHappiness();
 
 	public:
+	
 		void AddCommand(Data::CommandAction); // This also needs durations? (We can also scrap durations)
 		void AddCommand_Immediate(Data::CommandAction); // ^^
 		Data::CommandAction GetCurrentCommand();

@@ -27,23 +27,20 @@ namespace Data
         SerializationGroup(Data::IContainer Serialization, std::shared_ptr<ITypeConstructor> type_constructor);
         SerializationGroup(std::shared_ptr<ITypeConstructor> type_constructor);
     public:
-        std::vector<std::unique_ptr<ISerializable>>::iterator begin();
-        std::vector<std::unique_ptr<ISerializable>>::iterator end();
+        std::unique_ptr<Data::ISerializable> getNext() override;
 
-        Data::ISerializationGroup&
+        Data::ISerializationGroup*
         Deserialize
         (IContainer Serialization);
 
         // Returns a map *items*
         // items[typeid(ClientRequest)] retrieves all ClientRequest objects contained
         
-        ISerializationGroup& add(std::unique_ptr<ISerializable> item); 
-        ISerializationGroup& add(const ISerializable& item);
+        ISerializationGroup* add(std::unique_ptr<ISerializable> item); 
+        ISerializationGroup* add(const ISerializable& item);
 
         Data::IContainer Serialize () const;
-
-        static std::unique_ptr<SerializationGroup> New();
-        
+      
 
         static std::unique_ptr<SerializationGroup> 
         New
