@@ -30,9 +30,7 @@ namespace Tamagotchi
 		Data::CommandAction GetCurrentCommand();
 		uint8_t getStat(Data::Stat);
 		void adjustStat(Data::Stat, signed int relativeChange);
-		
-		Tamagotchi(Data::Status s) {
-			Stats = std::make_unique<Data::Status>(s);
-		}
+		Tamagotchi();
+		Tamagotchi(Data::Status s);
 	};
 }

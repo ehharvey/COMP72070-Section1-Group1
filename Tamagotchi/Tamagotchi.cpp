@@ -1,4 +1,10 @@
 #include "Tamagotchi.h"
+Tamagotchi::Tamagotchi::Tamagotchi() {
+
+}
+Tamagotchi::Tamagotchi::Tamagotchi(Data::Status s) {
+	Stats = std::make_unique<Data::Status>(s);
+}
 
 void Tamagotchi::Tamagotchi::RecalculateHappiness()
 {
