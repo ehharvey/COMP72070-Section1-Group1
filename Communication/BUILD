@@ -137,6 +137,7 @@ cc_library(
 	"//Communication:IContainer", 
 	"//Communication:ISerializable", 
 	"//Communication:ICommand", 
+    "//Communication:IAuthorization"
 	]
 )
 
@@ -256,6 +257,7 @@ cc_library(
 	"//Communication:IAnimation", 
 	"//Communication:ISerializable", 
 	"//Communication:IStatus", 
+    "//Communication:CommandAction"
 	]
 )
 

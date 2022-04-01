@@ -14,8 +14,8 @@ namespace Data
 
         TypeConstructor(std::vector<ISerializableConstructor> constructors);
     public:
-        ISerializableConstructor getConstructor(uint8_t type_identifier); // For Deserialization: get constructor
-        uint8_t getTypeIdentifier(const std::type_info&); // For Serialization: get byte identifier
+        ISerializableConstructor getConstructor(uint8_t type_identifier) const; // For Deserialization: get constructor
+        uint8_t getTypeIdentifier(const std::type_info&) const; // For Serialization: get byte identifier
 
         void __setConstructor(ISerializableConstructor);
 

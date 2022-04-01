@@ -18,6 +18,6 @@ namespace Communicators
 			remote(std::move(remote))
 		{ }
 
-		Data::IContainer Send(Data::IContainer message);
+		Data::IContainer Send(Data::IContainer message) const;
 	};
 } // namespace Communicators

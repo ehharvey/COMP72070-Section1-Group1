@@ -42,14 +42,14 @@ Data::TypeConstructor::New              // Function name
 
 Data::ISerializableConstructor
 Data::TypeConstructor::getConstructor
-(uint8_t type_identifier)
+(uint8_t type_identifier) const
 {
     return this->constructors[type_identifier];
 }
 
 uint8_t
-Data::TypeConstructor::getTypeIdentifier
-(const std::type_info& type_info)
+Data::TypeConstructor::getTypeIdentifier 
+(const std::type_info& type_info) const
 {
-    return type_identifier_map[(std::type_index(type_info))];
+    return this->type_identifier_map.at(type_info);
 }

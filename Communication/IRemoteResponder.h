@@ -14,7 +14,7 @@ namespace Communicators
 		//		Data::IContainer payload = { 'h', 'e', 'l', 'l', 'o' };
 		//		auto server_response = send_function(payload);
 		// }
-		rPtr getSendFunction();
+		rPtr getSendFunction() const;
 	};
 
 } // namespace 

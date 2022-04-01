@@ -20,7 +20,7 @@ namespace Data
 		std::shared_ptr<ISerializable> getAuthorization();
 		std::shared_ptr<ICommand> getCommand();
 
-		Data::IContainer Serialize();
+		Data::IContainer Serialize () const;
 
 
 		// Use these "constructors"

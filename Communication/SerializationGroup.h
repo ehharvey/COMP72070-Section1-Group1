@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "IContainer.h"
 #include <deque>
 #include <typeindex>
@@ -37,10 +37,10 @@ namespace Data
         // Returns a map *items*
         // items[typeid(ClientRequest)] retrieves all ClientRequest objects contained
         
-        ISerializationGroup* add(std::unique_ptr<ISerializable> item); 
-        ISerializationGroup* add(std::shared_ptr<ISerializable> item);
+        ISerializationGroup& add(std::unique_ptr<ISerializable> item); 
+        ISerializationGroup& add(const ISerializable& item);
 
-        Data::IContainer Serialize();
+        Data::IContainer Serialize () const;
 
         static std::unique_ptr<SerializationGroup> New();
         

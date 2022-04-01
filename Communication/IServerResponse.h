@@ -1,4 +1,5 @@
 #pragma once
+#include "CommandAction.h"
 #include "IContainer.h"
 #include <memory>
 #include "IAnimation.h"
@@ -8,10 +9,11 @@ namespace Data
 {
 	__interface IServerResponse : public ISerializable
 	{
-		bool AuthSuccess();
-		std::shared_ptr<IStatus> getTamagotchiStatus();
-		std::shared_ptr<ISerializable> getAnimation();
-		std::shared_ptr<ISerializable> getResult();
+		bool AuthSuccess() const;
+		CommandAction getCurrentTamagotchiCommand() const;
+		IStatus& getTamagotchiStatus() const;
+		IAnimation& getAnimation() const;
+		ISerializable& getResult() const;
 	};
 
 }

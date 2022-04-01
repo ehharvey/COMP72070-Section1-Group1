@@ -24,10 +24,10 @@ namespace Data
 		ClientRequest(Data::IContainer Serialization, 
 			SerializationGroup_Constructor serialization_group_constructor);
 	public:
-		std::shared_ptr<ISerializable> getAuthorization();
-		std::shared_ptr<ICommand> getCommand();
+		IAuthorization& getAuthorization() const;
+		ICommand& getCommand() const;
 
-		Data::IContainer Serialize();
+		Data::IContainer Serialize () const;
 
 		// Use these "constructors"
 		static std::unique_ptr<ClientRequest> New(std::shared_ptr<IAuthorization> authorization, 

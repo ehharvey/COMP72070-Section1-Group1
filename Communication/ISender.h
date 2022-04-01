@@ -6,6 +6,6 @@ namespace Communicators
 {
     __interface ISender
 	{
-		Data::IContainer Send(Data::IContainer message); // Returns the received response
+		Data::IContainer Send(Data::IContainer message) const; // Returns the received response
 	};
 } // namespace Communicators

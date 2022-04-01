@@ -12,13 +12,15 @@ namespace Data
 	{
 	private:
 		CommandAction command_action;
+
+		
 	public:
 		Command();
 		Command(Data::IContainer Serialization);
 		Command(CommandAction action);
-
-		Data::IContainer Serialize();
-		CommandAction getAction();
+		
+		Data::IContainer Serialize () const;
+		CommandAction getAction() const;
 		
 		static std::unique_ptr<Command> New(Data::IContainer Serialization);
 	};

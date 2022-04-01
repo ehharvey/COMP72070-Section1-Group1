@@ -18,6 +18,6 @@ namespace Communicators
 		{ };
 
 		// Returns a function that you can use to connect to this server
-		rPtr getSendFunction();
+		rPtr getSendFunction() const;
 	};
 } // namespace Communicators
