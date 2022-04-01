@@ -4,16 +4,15 @@
 #include <memory>
 #include "IAnimation.h"
 #include "ISerializable.h"
+#include "IResult.h"
 #include "IStatus.h"
 namespace Data
 {
 	__interface IServerResponse : public ISerializable
 	{
-		bool AuthSuccess() const;
-		CommandAction getCurrentTamagotchiCommand() const;
 		IStatus& getTamagotchiStatus() const;
 		IAnimation& getAnimation() const;
-		ISerializable& getResult() const;
+		IResult& getResult() const;
 	};
 
 }

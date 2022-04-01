@@ -134,10 +134,10 @@ cc_library(
     hdrs = ["IClientRequest.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:IAuthorization", 
 	"//Communication:IContainer", 
 	"//Communication:ISerializable", 
 	"//Communication:ICommand", 
-    "//Communication:IAuthorization"
 	]
 )
 
@@ -214,6 +214,17 @@ cc_library(
 
 
 cc_library(
+    name = "IResult",
+    srcs = [],
+    hdrs = ["IResult.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	"//Communication:ISerializable",
+	]
+)
+
+
+cc_library(
     name = "ISender",
     srcs = ["ISender.cpp"],
     hdrs = ["ISender.h"],
@@ -237,7 +248,7 @@ cc_library(
 
 cc_library(
     name = "ISerializationGroup",
-    srcs = [],
+    srcs = ["ISerializationGroup.cpp"],
     hdrs = ["ISerializationGroup.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
@@ -253,11 +264,12 @@ cc_library(
     hdrs = ["IServerResponse.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
+	"//Communication:CommandAction", 
 	"//Communication:IContainer", 
 	"//Communication:IAnimation", 
 	"//Communication:ISerializable", 
+	"//Communication:IResult", 
 	"//Communication:IStatus", 
-    "//Communication:CommandAction"
 	]
 )
 
@@ -335,7 +347,7 @@ cc_library(
 	"//Communication:CommandAction", 
 	"//Communication:IAnimation", 
 	"//Communication:IServerResponse", 
-    "//Communication:ISerializationGroup",
+	"//Communication:ISerializationGroup", 
 	]
 )
 

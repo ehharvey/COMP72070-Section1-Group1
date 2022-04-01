@@ -11,11 +11,10 @@ namespace Communicators
 	{
 	private:
 		Data::IPV4Address address;
+		rPtr send_function;
 
 	public:
-		RemoteTcpServer(Data::IPV4Address address) :
-			address(address)
-		{ };
+		RemoteTcpServer(Data::IPV4Address address);
 
 		// Returns a function that you can use to connect to this server
 		rPtr getSendFunction() const;

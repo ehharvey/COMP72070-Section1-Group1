@@ -5,7 +5,19 @@
 //#include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
-TEST(ClientRequest, Serialization)
+
+// TODO
+TEST(ISerializables, SerializationAndDeserialization)
+{
+  std::vector<Data::ISerializable> testees = {};
+
+  for (auto & t: testees)
+  {
+    auto serialization = t.Serialize();
+  }
+}
+
+TEST(ClientRequest, SerializationIsCorrect)
 {
     auto authorization = Data::Authorization::New(5);
     auto command = Data::Command::New({1});
@@ -19,9 +31,6 @@ TEST(ClientRequest, Serialization)
       0, 1, 5, // Authorization
       1, 1, 1  // Command
     }));
-
-    auto client_deserialized = Create::ClientRequest(client_serialization);
-    EXPECT_EQ(client_deserialized->getAuthorization().getAuthByte(), 5);
 }
 
 
