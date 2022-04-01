@@ -11,7 +11,7 @@ namespace Tamagotchi
 		void AddCommand(Data::CommandAction); // This also needs durations? (We can also scrap durations)
 		void AddCommand_Immediate(Data::CommandAction); // ^^
 		Data:: CommandAction GetCurrentCommand();
-		std::unique_ptr<Data::IStatus> getStatus();
+		//std::unique_ptr<Data::IStatus> getStatus();
 		void adjustStat(Data::Stat, signed int relativeChange);
 	};
 	// -----------------------------------------------------------------------------
@@ -28,7 +28,11 @@ namespace Tamagotchi
 		void AddCommand(Data::CommandAction); // This also needs durations? (We can also scrap durations)
 		void AddCommand_Immediate(Data::CommandAction); // ^^
 		Data::CommandAction GetCurrentCommand();
-		std::unique_ptr<Data::IStatus> getStatus();
+		uint8_t getStat(Data::Stat);
 		void adjustStat(Data::Stat, signed int relativeChange);
+		
+		Tamagotchi(Data::Status s) {
+			Stats = std::make_unique<Data::Status>(s);
+		}
 	};
 }

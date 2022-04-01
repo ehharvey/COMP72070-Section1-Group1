@@ -4,6 +4,6 @@
 namespace Data
 {
     enum Stat {
-		alertness, stomach, cleanliness, happiness
+		alertness = 1, stomach = 2, cleanliness = 3, happiness = 4
 	};
 }
