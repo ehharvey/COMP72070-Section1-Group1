@@ -83,14 +83,6 @@ namespace Mocks
         GRANT_NEW(RemoteResponderMock);
 	};
 
-	class SenderMock : public Communicators::ISender
-	{
-	public:
-		MOCK_METHOD(Data::IContainer, Send, (Data::IContainer));
-
-        GRANT_NEW(SenderMock);
-	};
-
 	class ResponderMock : public Communicators::IResponder
 	{
 	public:

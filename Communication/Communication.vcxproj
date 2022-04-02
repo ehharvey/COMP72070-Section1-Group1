@@ -156,7 +156,7 @@
     <ClInclude Include="IPV4Address.h" />
     <ClInclude Include="IRemoteResponder.h" />
     <ClInclude Include="IResponder.h" />
-    <ClInclude Include="ISender.h" />
+    <ClInclude Include="IResult.h" />
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="ISerializationGroup.h" />
     <ClInclude Include="IServerResponse.h" />
@@ -169,7 +169,6 @@
     <ClInclude Include="ServerResponse.h" />
     <ClInclude Include="Stat.h" />
     <ClInclude Include="Status.h" />
-    <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpHost.h" />
     <ClInclude Include="TypeConstructor.h" />
   </ItemGroup>
@@ -189,7 +188,6 @@
     <ClCompile Include="IPV4Address.cpp" />
     <ClCompile Include="IRemoteResponder.cpp" />
     <ClCompile Include="IResponder.cpp" />
-    <ClCompile Include="ISender.cpp" />
     <ClCompile Include="ISerializable.cpp" />
     <ClCompile Include="ISerializationGroup.cpp" />
     <ClCompile Include="IServerResponse.cpp" />
@@ -200,7 +198,6 @@
     <ClCompile Include="ServerResponse.cpp" />
     <ClCompile Include="Stat.cpp" />
     <ClCompile Include="Status.cpp" />
-    <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpHost.cpp" />
     <ClCompile Include="TypeConstructor.cpp" />
   </ItemGroup>
