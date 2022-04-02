@@ -2,6 +2,10 @@
 #include "IContainer.h"
 #include "IPV4Address.h"
 #include "IResponder.h"
+#include <thread>
+#include <WinSock2.h>
+#pragma comment(lib, "Ws2_32.lib")
+
 
 namespace Communicators
 {
@@ -9,18 +13,14 @@ namespace Communicators
 	class TcpHost : public IResponder
 	{
 	private:
-		Data::IPV4Address address;
 		rPtr response_function;
+		SOCKET server_socket;
+		std::thread running_thread;
 	public:
-		TcpHost(Data::IPV4Address address, rPtr response_function) :
-			address(address),
-			response_function(response_function)
-		{ };
+		TcpHost(rPtr response_function);
 
 		void Start();
 		bool getIsRunning();
 		void Stop();
-		void RegisterResponse(rPtr response_function);
-
 	};
 } // namespace Communicators

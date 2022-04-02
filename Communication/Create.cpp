@@ -42,9 +42,9 @@ std::unique_ptr<Communicators::RemoteTcpServer> Create::RemoteTcpServer(Data::IP
 	return std::make_unique<Communicators::RemoteTcpServer>(Communicators::RemoteTcpServer(address));
 }
 
-std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Data::IPV4Address address, Communicators::rPtr response_function)
+std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Communicators::rPtr response_function)
 {
-	return std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(address, response_function));
+	return std::make_unique<Communicators::TcpHost>(response_function);
 }
 
 std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)

@@ -11,8 +11,6 @@ namespace Communicators
 		// The lambda should do a few things:
 		// - It should take in a Data::IContainer		<-- This will be the data that the client sent to the server as a [request]
 		// - It should return a Data::IContainer		<-- This will be the data that will sent *back* to the client as a [response]
-		void RegisterResponse(rPtr);
-
 		void Start();
 		void Stop();
 		bool getIsRunning();
