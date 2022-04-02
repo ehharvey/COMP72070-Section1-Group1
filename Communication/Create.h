@@ -14,6 +14,7 @@
 #include "TcpHost.h"
 #include "TypeConstructor.h"
 #include "SerializationGroup.h"
+#include "Result.h"
 
 namespace Data
 {

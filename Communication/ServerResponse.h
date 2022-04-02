@@ -17,6 +17,8 @@ namespace Data
 
 		// "Traditional" constructors: do not use!
 		ServerResponse(Data::IContainer Serialization);
+		ServerResponse(std::unique_ptr<IStatus> status, std::unique_ptr<IAnimation> animation,
+			std::unique_ptr<IResult> result);
 	public:		
 		IStatus& getTamagotchiStatus() const;
 		IAnimation& getAnimation() const;
@@ -26,5 +28,8 @@ namespace Data
 		// Our "constructors"
 		// TODO: More constructors, Result implementation
 		static std::unique_ptr<ServerResponse> New(Data::IContainer Serialization);
+		static std::unique_ptr<ServerResponse> New(std::unique_ptr<IStatus> status, std::unique_ptr<IAnimation> animation,
+			std::unique_ptr<IResult> result);
+
 	};
 } // namespace Data
