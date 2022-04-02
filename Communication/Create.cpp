@@ -11,9 +11,17 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Seri
 	return Data::ClientRequest::New(Serialization, serializationGroupConstructors);
 }
 
+std::unique_ptr<Data::ClientRequest> Create::DeserializeClientRequest(Data::IContainer Serialization) { return Create::ClientRequest(Serialization); }
+
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::IAnimation> animation,
+	std::unique_ptr<Data::IResult> result)
+{
+	return Data::ServerResponse::New(std::move(status), std::move(animation), std::move(result), serializationGroupConstructors);
+}
+
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {
-	return Data::ServerResponse::New(Serialization);
+	return Data::ServerResponse::New(Serialization, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)

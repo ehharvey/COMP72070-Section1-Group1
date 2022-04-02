@@ -7,12 +7,10 @@ namespace Server {
 		std::unique_ptr<Communicators::IResponder> responder;
 	public:
 		Server();
-		Server(std::unique_ptr<Communicators::IResponder> responder);
 		
 		void Start();
 		bool getIsRunning();
 		void Stop();
-		void RegisterResponse(Communicators::rPtr);
 	};
 
 }

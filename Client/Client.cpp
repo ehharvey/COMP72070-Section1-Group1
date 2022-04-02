@@ -24,20 +24,27 @@ Client::Client::Client()
 {
 	Data::IPV4Address localhost = { 127, 0, 0, 1 };
 	this->remote = Create::RemoteTcpServer(localhost);
-
 }
 
 Client::Client::Client(std::unique_ptr<Communicators::IRemoteResponder> remote)
 	: remote(std::move(remote))
+{ }
+
+inline void Client::Client::__setResponseParser(ResponseParser rp) 
 {
-
-}
-
-inline void Client::Client::__setResponseParser(ResponseParser rp) {
 	this->response_parser = rp;
 }
 
 std::unique_ptr<Data::IServerResponse> Client::Client::SendCommand(std::unique_ptr<Data::IClientRequest> request)
 {
-    return std::nullptr_t();
+    auto request_serialization = request->Serialize();
+	auto response_serialization = this->remote->GetResponse(request_serialization);
+	auto response = Create::ServerResponse(response_serialization);
+
+	return std::move(response);
+}
+
+std::unique_ptr<Client::Client> Client::Client::New()
+{
+	return std::make_unique<Client>();
 }

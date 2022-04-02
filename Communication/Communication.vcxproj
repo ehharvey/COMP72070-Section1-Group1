@@ -164,6 +164,7 @@
     <ClInclude Include="ITypeConstructor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RemoteTcpServer.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="rPtr.h" />
     <ClInclude Include="SerializationGroup.h" />
     <ClInclude Include="ServerResponse.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="IServerResponse.cpp" />
     <ClCompile Include="IStatus.cpp" />
     <ClCompile Include="RemoteTcpServer.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="rPtr.cpp" />
     <ClCompile Include="SerializationGroup.cpp" />
     <ClCompile Include="ServerResponse.cpp" />

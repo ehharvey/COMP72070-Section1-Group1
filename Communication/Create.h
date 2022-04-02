@@ -27,15 +27,6 @@ namespace Data
 	};
 }
 
-const std::vector<std::pair<std::type_index, Data::ISerializableConstructor>> deserializers 
-= { Data::authorization_type_constructor,
-	Data::command_type_pair };
-
-const auto serializationGroupConstructors = []()
-{
-	return Data::SerializationGroup::New(std::make_shared<Data::TypeConstructor>(deserializers));
-};
-
 // Example usage:
 // #include "../Communication/Create.h"
 // 
@@ -51,11 +42,20 @@ namespace Create
 	std::unique_ptr<Data::ClientRequest> 
 	ClientRequest
 	(Data::IContainer Serialization);
+
+	std::unique_ptr<Data::ClientRequest>
+		DeserializeClientRequest
+		(Data::IContainer Serialization);;
 	//
 	//
 	std::unique_ptr<Data::ServerResponse> 
 	ServerResponse
 	(Data::IContainer Serialization);
+
+	std::unique_ptr<Data::ServerResponse>
+	ServerResponse
+	(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::IAnimation> animation,
+		std::unique_ptr<Data::IResult> result);
 	//
 	//
 	std::unique_ptr<Data::Status> 
@@ -87,4 +87,23 @@ namespace Create
 	// - auto remote = Create::RemoteTcpServer({192, 168, 1, 100});
 	std::unique_ptr<Communicators::RemoteTcpServer> RemoteTcpServer(Data::IPV4Address address);
 	std::unique_ptr<Communicators::TcpHost> TcpHost(Communicators::rPtr response_function);
+
+	// This should be moved eventually
+	const auto client_type_constructor = 
+		std::make_pair<std::type_index, Data::ISerializableConstructor>
+		(std::type_index(typeid(Data::ClientRequest)), Create::DeserializeClientRequest);
+
+	const std::vector<std::pair<std::type_index, Data::ISerializableConstructor>> deserializers
+		= { Data::authorization_type_constructor,
+			Data::command_type_pair,
+			Data::animation_type_constructor,
+			client_type_constructor,
+			Data::status_type_constructor,
+			Data::result_type_constructor
+			};
+
+	const auto serializationGroupConstructors = []()
+	{
+		return Data::SerializationGroup::New(std::make_shared<Data::TypeConstructor>(deserializers));
+	};
 }
