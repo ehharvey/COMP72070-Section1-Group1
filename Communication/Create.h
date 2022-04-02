@@ -12,7 +12,6 @@
 #include "Status.h"
 #include "RemoteTcpServer.h"
 #include "TcpHost.h"
-#include "TcpClient.h"
 #include "TypeConstructor.h"
 #include "SerializationGroup.h"
 
@@ -87,5 +86,4 @@ namespace Create
 	// - auto remote = Create::RemoteTcpServer({192, 168, 1, 100});
 	std::unique_ptr<Communicators::RemoteTcpServer> RemoteTcpServer(Data::IPV4Address address);
 	std::unique_ptr<Communicators::TcpHost> TcpHost(Data::IPV4Address address, Communicators::rPtr response_function);
-	std::unique_ptr<Communicators::TcpClient> TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::IRemoteResponder> remote);
 }

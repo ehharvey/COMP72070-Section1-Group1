@@ -47,11 +47,6 @@ std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Data::IPV4Address addres
 	return std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(address, response_function));
 }
 
-std::unique_ptr<Communicators::TcpClient> Create::TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::IRemoteResponder> remote)
-{
-	return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
-}
-
 std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)
 {
 	return std::make_unique<Data::Command>(Data::Command(Serialization));

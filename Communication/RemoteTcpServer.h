@@ -3,6 +3,8 @@
 #include "rPtr.h"
 #include "IRemoteResponder.h"
 #include "IPV4Address.h"
+#include <windows.networking.sockets.h>
+#pragma comment(lib, "Ws2_32.lib")
 
 namespace Communicators
 {
@@ -11,12 +13,16 @@ namespace Communicators
 	{
 	private:
 		Data::IPV4Address address;
-		rPtr send_function;
 
+		SOCKET client_socket;
+
+		rPtr send_function;
 	public:
 		RemoteTcpServer(Data::IPV4Address address);
 
 		// Returns a function that you can use to connect to this server
-		rPtr getSendFunction() const;
+		Data::IContainer GetResponse(Data::IContainer request) const;
+
+		~RemoteTcpServer();
 	};
 } // namespace Communicators

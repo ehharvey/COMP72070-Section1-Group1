@@ -2,18 +2,46 @@
 #include <gmock/gmock.h>
 #include "../../Communication/Create.h"
 
+
 #define GRANT_NEW(Type) static std::unique_ptr<Type> New() { return std::make_unique<Type>(); }
 
 namespace Mocks
 {
-    class ClientRequestMock : public Data::IClientRequest {
+	class Serializable : public Data::ISerializable
+	{
 	public:
-		MOCK_METHOD(std::shared_ptr<Data::ISerializable>, getAuthorization, ());
-		MOCK_METHOD(std::shared_ptr<Data::ICommand>, getCommand, ());
+		MOCK_METHOD(Data::IContainer, Serialize, ());
+		GRANT_NEW(Serializable);
+	};
+
+	class Authorization : public Data::IAuthorization
+	{
+	public:
+		MOCK_METHOD(uint8_t, getAuthByte, ());
+
+		GRANT_NEW(Authorization);
+	};
+
+    class ClientRequest : public Data::IClientRequest {
+	public:
+		MOCK_METHOD(Data::IAuthorization&, getAuthorization, ());
+		MOCK_METHOD(Data::ICommand&, getCommand, ());
 		MOCK_METHOD(Data::IContainer, Serialize, ());
 
-        GRANT_NEW(ClientRequestMock);
+        GRANT_NEW(ClientRequest);
 	};
+
+	class Command : public Data::ICommand
+	{
+	public:
+		MOCK_METHOD(Data::IContainer, Serialize, ());
+		MOCK_METHOD(Data::CommandAction, getAction, ());
+	};
+
+	class SerializationGroup : public Data::ISerializationGroup
+	{
+		
+	}
 
 	class ServerResponseMock : public Data::IServerResponse {
 	public:
@@ -73,4 +101,4 @@ namespace Mocks
 
         GRANT_NEW(ResponderMock);
 	};
-}
+} // namespace Mocks

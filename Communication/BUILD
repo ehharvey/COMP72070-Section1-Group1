@@ -84,7 +84,7 @@ cc_library(
     name = "Create",
     srcs = ["Create.cpp"],
     hdrs = ["Create.h"],
-    visibility = ["//visibility:public"],
+    visibility = ["//Communication:__pkg__"],
     deps = [
 	"//Communication:IContainer", 
 	"//Communication:Animation", 
@@ -97,7 +97,6 @@ cc_library(
 	"//Communication:Status", 
 	"//Communication:RemoteTcpServer", 
 	"//Communication:TcpHost", 
-	"//Communication:TcpClient", 
 	"//Communication:TypeConstructor", 
 	"//Communication:SerializationGroup", 
 	]
@@ -220,17 +219,6 @@ cc_library(
     visibility = ["//Communication:__pkg__"],
     deps = [
 	"//Communication:ISerializable",
-	]
-)
-
-
-cc_library(
-    name = "ISender",
-    srcs = ["ISender.cpp"],
-    hdrs = ["ISender.h"],
-    visibility = ["//Communication:__pkg__"],
-    deps = [
-	"//Communication:IContainer",
 	]
 )
 
@@ -371,20 +359,6 @@ cc_library(
     deps = [
 	"//Communication:IContainer", 
 	"//Communication:IStatus", 
-	]
-)
-
-
-cc_library(
-    name = "TcpClient",
-    srcs = ["TcpClient.cpp"],
-    hdrs = ["TcpClient.h"],
-    visibility = ["//Communication:__pkg__"],
-    deps = [
-	"//Communication:IContainer", 
-	"//Communication:IPV4Address", 
-	"//Communication:IRemoteResponder", 
-	"//Communication:ISender", 
 	]
 )
 

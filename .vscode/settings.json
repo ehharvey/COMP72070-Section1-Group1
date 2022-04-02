@@ -83,6 +83,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "typeindex": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "shared_mutex": "cpp"
     }
 }
