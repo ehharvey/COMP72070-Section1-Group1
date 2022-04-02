@@ -83,6 +83,21 @@ void app(istream& input, ostream& output)
 
 int main()
 {
-    app(cin, cout);
+    auto server = Server::Server();
+    auto client = Client::Client::New();
+
+    auto auth = Data::Authorization::New(5);
+    auto command = Data::Command::New({ 1 });
+    auto client_request = Create::ClientRequest(std::move(auth), std::move(command));
+
+    server.Start();
+
+    auto response = client->SendCommand(std::move(client_request));
+
+    std::cout << response->getResult().AuthSuccess();
+
+    //app(cin, cout);
+
+    server.Stop();
     return 0;
 }

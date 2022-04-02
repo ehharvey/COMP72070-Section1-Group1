@@ -3,7 +3,7 @@
 #include "rPtr.h"
 #include "IRemoteResponder.h"
 #include "IPV4Address.h"
-#include <windows.networking.sockets.h>
+#include <WinSock2.h>
 #pragma comment(lib, "Ws2_32.lib")
 
 namespace Communicators

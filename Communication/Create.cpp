@@ -11,9 +11,17 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Seri
 	return Data::ClientRequest::New(Serialization, serializationGroupConstructors);
 }
 
+std::unique_ptr<Data::ClientRequest> Create::DeserializeClientRequest(Data::IContainer Serialization) { return Create::ClientRequest(Serialization); }
+
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::IAnimation> animation,
+	std::unique_ptr<Data::IResult> result)
+{
+	return Data::ServerResponse::New(std::move(status), std::move(animation), std::move(result), serializationGroupConstructors);
+}
+
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {
-	return Data::ServerResponse::New(Serialization);
+	return Data::ServerResponse::New(Serialization, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::Status> Create::Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel)
@@ -42,9 +50,9 @@ std::unique_ptr<Communicators::RemoteTcpServer> Create::RemoteTcpServer(Data::IP
 	return std::make_unique<Communicators::RemoteTcpServer>(Communicators::RemoteTcpServer(address));
 }
 
-std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Data::IPV4Address address, Communicators::rPtr response_function)
+std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Communicators::rPtr response_function)
 {
-	return std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(address, response_function));
+	return std::make_unique<Communicators::TcpHost>(response_function);
 }
 
 std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)

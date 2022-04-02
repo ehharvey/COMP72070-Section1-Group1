@@ -15,27 +15,36 @@
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
+Communicators::rPtr __response_function = [](Data::IContainer request)
+{
+    auto client_request = Create::ClientRequest(request);
+    // TODO
+
+    auto result = Data::Result::New(true);
+    auto status = Data::Status::New(10, 10, 10, 10);
+    auto animation = Data::Animation::New();
+    auto response = Create::ServerResponse(std::move(status), std::move(animation), std::move(result));
+
+    return response->Serialize();
+};
+
 Server::Server::Server()
 {
-}
-
-Server::Server::Server(std::unique_ptr<Communicators::IResponder> responder)
-{
+    this->responder = std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(__response_function));
 }
 
 void Server::Server::Start()
 {
+    this->responder->Start();
 }
 
 bool Server::Server::getIsRunning()
 {
-    return false;
+    return this->responder->getIsRunning();
 }
 
 void Server::Server::Stop()
 {
+    return this->responder->Stop();
 }
 
-void Server::Server::RegisterResponse(Communicators::rPtr)
-{
-}

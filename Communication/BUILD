@@ -99,6 +99,7 @@ cc_library(
 	"//Communication:TcpHost", 
 	"//Communication:TypeConstructor", 
 	"//Communication:SerializationGroup", 
+	"//Communication:Result", 
 	]
 )
 
@@ -296,6 +297,17 @@ cc_library(
 	"//Communication:rPtr", 
 	"//Communication:IRemoteResponder", 
 	"//Communication:IPV4Address", 
+	]
+)
+
+
+cc_library(
+    name = "Result",
+    srcs = ["Result.cpp"],
+    hdrs = ["Result.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	"//Communication:IResult",
 	]
 )
 

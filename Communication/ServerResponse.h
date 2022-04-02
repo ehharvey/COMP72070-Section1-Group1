@@ -16,7 +16,9 @@ namespace Data
 		std::shared_ptr<IAnimation> animation;
 
 		// "Traditional" constructors: do not use!
-		ServerResponse(Data::IContainer Serialization);
+		ServerResponse(Data::IContainer Serialization, Data::SerializationGroup_Constructor sgc);
+		ServerResponse(std::unique_ptr<IStatus> status, std::unique_ptr<IAnimation> animation,
+			std::unique_ptr<IResult> result, Data::SerializationGroup_Constructor sgc);
 	public:		
 		IStatus& getTamagotchiStatus() const;
 		IAnimation& getAnimation() const;
@@ -25,6 +27,9 @@ namespace Data
 
 		// Our "constructors"
 		// TODO: More constructors, Result implementation
-		static std::unique_ptr<ServerResponse> New(Data::IContainer Serialization);
+		static std::unique_ptr<ServerResponse> New(Data::IContainer Serialization, Data::SerializationGroup_Constructor sgc);
+		static std::unique_ptr<ServerResponse> New(std::unique_ptr<IStatus> status, std::unique_ptr<IAnimation> animation,
+			std::unique_ptr<IResult> result, Data::SerializationGroup_Constructor sgc);
+
 	};
 } // namespace Data

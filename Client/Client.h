@@ -8,7 +8,7 @@
 typedef std::function<std::unique_ptr<Data::IServerResponse>(Data::IContainer)> ResponseParser;
 
 namespace Client {
-	ResponseParser default_parser = [](Data::IContainer response_serialization)
+	const ResponseParser default_parser = [](Data::IContainer response_serialization)
 	{
 		return Create::ServerResponse(response_serialization);
 	};
