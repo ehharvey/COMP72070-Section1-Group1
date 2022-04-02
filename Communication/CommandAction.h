@@ -3,11 +3,11 @@
 
 namespace Data
 {
-    enum CommandAction
+    enum CommandAction : uint8_t
 	{
-		feed,
-		sleep,
-		clean,
-		idle
+		feed = 0,
+		sleep = 1,
+		clean = 2,
+		idle = 3,
 	};
 }

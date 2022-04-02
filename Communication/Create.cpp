@@ -3,14 +3,12 @@
 // Data:: (from Communication.h)
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(std::shared_ptr<Data::IAuthorization> authorization, std::shared_ptr<Data::ICommand> command)
 {
-	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
-	return Data::ClientRequest::New(authorization, command, func);
+	return Data::ClientRequest::New(authorization, command, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Serialization)
 {
-	std::unique_ptr<Data::SerializationGroup> (*func)() = Data::SerializationGroup::New;
-	return Data::ClientRequest::New(Serialization, func);
+	return Data::ClientRequest::New(Serialization, serializationGroupConstructors);
 }
 
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
@@ -47,11 +45,6 @@ std::unique_ptr<Communicators::RemoteTcpServer> Create::RemoteTcpServer(Data::IP
 std::unique_ptr<Communicators::TcpHost> Create::TcpHost(Data::IPV4Address address, Communicators::rPtr response_function)
 {
 	return std::make_unique<Communicators::TcpHost>(Communicators::TcpHost(address, response_function));
-}
-
-std::unique_ptr<Communicators::TcpClient> Create::TcpClient(Data::IPV4Address address, std::unique_ptr<Communicators::IRemoteResponder> remote)
-{
-	return std::make_unique<Communicators::TcpClient>(Communicators::TcpClient(address, std::move(remote)));
 }
 
 std::unique_ptr<Data::Command> Create::Command(Data::IContainer Serialization)

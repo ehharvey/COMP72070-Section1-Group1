@@ -5,6 +5,7 @@
 #include "CommandAction.h"
 #include "ICommand.h"
 
+// Right now, this class this needed
 namespace Data
 {
     class CommandBuilder : public ICommandBuilder

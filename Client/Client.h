@@ -21,12 +21,12 @@ namespace Client {
 
 	class Client : public IClient {
 	private:
-		std::unique_ptr<Communicators::ISender> sender;
+		std::unique_ptr<Communicators::IRemoteResponder> remote;
 		
 		ResponseParser response_parser;
 	public:
 		Client();
-		Client(std::unique_ptr<Communicators::ISender> sender);;
+		Client(std::unique_ptr<Communicators::IRemoteResponder> remote);;
 
 		void __setResponseParser(ResponseParser rp);
 

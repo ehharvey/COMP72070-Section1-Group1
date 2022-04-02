@@ -7,6 +7,6 @@ namespace Data
 {
     __interface ICommand : public ISerializable
 	{
-		CommandAction getAction();
+		CommandAction getAction() const;
 	};
 }

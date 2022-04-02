@@ -11,18 +11,17 @@ namespace Data
 	private:
 		Data::SerializationGroup_Constructor serialization_group_constructor;
 		
+		std::shared_ptr<IResult> result;
 		std::shared_ptr<IStatus> status;
 		std::shared_ptr<IAnimation> animation;
 
 		// "Traditional" constructors: do not use!
 		ServerResponse(Data::IContainer Serialization);
 	public:		
-		bool AuthSuccess();
-		std::shared_ptr<CommandAction> getCurrentTamagotchiCommand();
-		std::shared_ptr<IStatus> getTamagotchiStatus();
-		std::shared_ptr<ISerializable> getAnimation();
-		std::shared_ptr<ISerializable> getResult();
-		Data::IContainer Serialize();
+		IStatus& getTamagotchiStatus() const;
+		IAnimation& getAnimation() const;
+		IResult& getResult() const; // Contains authentication status and any commands
+		Data::IContainer Serialize () const;
 
 		// Our "constructors"
 		// TODO: More constructors, Result implementation

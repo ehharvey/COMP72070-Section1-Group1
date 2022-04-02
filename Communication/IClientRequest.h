@@ -1,4 +1,5 @@
 #pragma once
+#include "IAuthorization.h"
 #include "IContainer.h"
 #include "ISerializable.h"
 #include "ICommand.h"
@@ -8,7 +9,7 @@ namespace Data
 {
     __interface IClientRequest : public ISerializable
 	{
-		std::shared_ptr<ISerializable> getAuthorization();
-		std::shared_ptr<ICommand> getCommand();
+		ICommand & getCommand() const;
+		IAuthorization & getAuthorization() const;
 	};
 } // namespace Data

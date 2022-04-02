@@ -6,15 +6,8 @@ namespace Communicators
 {
     __interface IRemoteResponder
 	{
-		// To use:
-		// {
-		//		auto remote_responder = Create::MockRemoteResponder();
-		//		auto send_function = remote_responder.getSendFunction();
-		//
-		//		Data::IContainer payload = { 'h', 'e', 'l', 'l', 'o' };
-		//		auto server_response = send_function(payload);
-		// }
-		rPtr getSendFunction();
+		// Returns a function that you can use to connect to this server
+		Data::IContainer GetResponse(Data::IContainer request) const;
 	};
 
 } // namespace 

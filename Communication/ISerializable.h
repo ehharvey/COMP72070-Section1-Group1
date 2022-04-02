@@ -7,7 +7,7 @@ namespace Data
 {
     __interface ISerializable
 	{
-		Data::IContainer Serialize();
+		Data::IContainer Serialize () const;
 	};
 
 	typedef std::function<std::unique_ptr<ISerializable>(Data::IContainer)> ISerializableConstructor;

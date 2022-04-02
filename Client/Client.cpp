@@ -23,13 +23,12 @@
 Client::Client::Client()
 {
 	Data::IPV4Address localhost = { 127, 0, 0, 1 };
-	auto remote_host = Create::RemoteTcpServer(localhost);
-	this->sender = Create::TcpClient(localhost, std::move(remote_host));
+	this->remote = Create::RemoteTcpServer(localhost);
 
 }
 
-Client::Client::Client(std::unique_ptr<Communicators::ISender> sender)
-	: sender(std::move(sender))
+Client::Client::Client(std::unique_ptr<Communicators::IRemoteResponder> remote)
+	: remote(std::move(remote))
 {
 
 }
