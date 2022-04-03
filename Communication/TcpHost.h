@@ -13,6 +13,7 @@ namespace Communicators
 	class TcpHost : public IResponder
 	{
 	private:
+		bool is_active;
 		rPtr response_function;
 		SOCKET server_socket;
 		std::thread running_thread;

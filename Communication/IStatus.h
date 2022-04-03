@@ -4,6 +4,8 @@
 
 namespace Data
 {
+	const uint8_t MAX_STAT_LEVEL = 15;
+
     __interface IStatus : public ISerializable
 	{
 		uint8_t getHappiness() const;

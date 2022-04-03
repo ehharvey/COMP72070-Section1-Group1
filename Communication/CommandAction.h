@@ -9,5 +9,8 @@ namespace Data
 		sleep = 1,
 		clean = 2,
 		idle = 3,
+		help = 4,
+		quit = 5,
+		send = 6,
 	};
 }
