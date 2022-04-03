@@ -1,10 +1,13 @@
 // ClientCLI.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include "ClientCLI.h"
 #include <iostream>
 #include <queue>
 #include <optional>
-#include "ClientCLI.h"
+#include <winsock2.h> // MUST BE INCLUDED BEFORE WINDOWS.h
+#include <Windows.h>
+#pragma comment(lib, "winmm.lib")
 
 std::optional<uint8_t> getAuthByte(std::string auth_str)
 {
@@ -75,10 +78,27 @@ map<string, Data::CommandAction> getCommandMap() // Map user input to command
 	string_commands["exit"] = Data::CommandAction::quit;
     string_commands["send"] = Data::CommandAction::send;
     string_commands["Send"] = Data::CommandAction::send;
+    string_commands["music"] = Data::CommandAction::music;
+    string_commands["Music"] = Data::CommandAction::music;
+    string_commands["auth"] = Data::CommandAction::auth;
+    string_commands["Auth"] = Data::CommandAction::auth;
 
     return string_commands;
 }
 
+
+map<Data::CommandAction, string> getCommandString()
+{
+    map<Data::CommandAction, string> result;
+    result[Data::CommandAction::feed] = "Feeding";
+    result[Data::CommandAction::sleep] = "Sleeping";
+    result[Data::CommandAction::clean] = "Getting Washed";
+    result[Data::CommandAction::music] = "Toggle music";
+    result[Data::CommandAction::auth] = "Change Auth Code (This clears any pending commands";
+    result[Data::CommandAction::idle] = "Idle";
+
+    return result;
+}
 
 void app(istream& input, ostream& output)
 {
@@ -93,6 +113,7 @@ void app(istream& input, ostream& output)
     string command; // e.g Feed, Clean
 
     auto string_commands = getCommandMap();
+    auto command_strings = getCommandString();
 
     string auth;
     std::optional<uint8_t> auth_byte;
@@ -106,7 +127,9 @@ void app(istream& input, ostream& output)
 
     output << "Type 'Help' for help\n";
 
-    bool Quit;
+    bool music_playing = false;
+
+    bool Quit = false;
     do
     {
         output << "Tamagotchi> ";
@@ -131,6 +154,29 @@ void app(istream& input, ostream& output)
             output << "Clean command added" << endl;
             break;
         }
+        case Data::CommandAction::music:
+        {
+            if (music_playing)
+            {
+                PlaySound(NULL, NULL, SND_ASYNC);
+            }
+            else
+            {
+                requests.push_back(Create::ClientRequest(Data::Authorization::New(auth_byte.value()), Create::Command(Data::CommandAction::music)));
+            }
+            break;
+        }
+        case Data::CommandAction::auth:
+        {
+            requests.clear();
+            do
+            {
+                output << "Enter authorization sequence (1s and 0s): ";
+                input >> auth;
+                auth_byte = getAuthByte(auth);
+            } while (!auth_byte.has_value());
+            break;
+        }
         case Data::CommandAction::help:
         {
             help();
@@ -146,16 +192,37 @@ void app(istream& input, ostream& output)
             auto & last_response = responses.back();
 
             output << requests.size() << " commands sent" << endl;
-            output << "Result:" << endl;
-            output << "Authorization: " << (last_response->getResult().AuthSuccess() ? "Succcess" : "Failure") << endl;
-            output << "Tamagotchi Status: " << endl;
-            output << "\t" << "Happiness: " << last_response->getTamagotchiStatus().getHappiness() << "/" << Data::MAX_STAT_LEVEL << endl;
-            output << "\t" << "Alertness: " << last_response->getTamagotchiStatus().getAlertness() << "/" << Data::MAX_STAT_LEVEL << endl;
-            output << "\t" << "Cleaniness: " << last_response->getTamagotchiStatus().getCleaniness() << "/" << Data::MAX_STAT_LEVEL << endl;
-            output << "\t" << "Stomach Level: " << last_response->getTamagotchiStatus().getStomachLevel() << "/" << Data::MAX_STAT_LEVEL << endl;
+            if (last_response->getResult().has_value())
+                output << "Authorization: " << (last_response->getResult().value()->AuthSuccess() ? "Succcess" : "Failure") << endl;
+            if (last_response->getTamagotchiStatus().has_value())
+            {
+                output << "Tamagotchi Status: " << endl;
+                output << "\t" << "Happiness: " << last_response->getTamagotchiStatus().value()->getHappiness() << "/" << Data::MAX_STAT_LEVEL << endl;
+                output << "\t" << "Alertness: " << last_response->getTamagotchiStatus().value()->getAlertness() << "/" << Data::MAX_STAT_LEVEL << endl;
+                output << "\t" << "Cleaniness: " << last_response->getTamagotchiStatus().value()->getCleaniness() << "/" << Data::MAX_STAT_LEVEL << endl;
+                output << "\t" << "Stomach Level: " << last_response->getTamagotchiStatus().value()->getStomachLevel() << "/" << Data::MAX_STAT_LEVEL << endl;
+            }
+            if (last_response->getCurrentCommand().has_value())
+                output << "Tamagotchi is currently " << command_strings[last_response->getCurrentCommand().value()->getAction()] << endl;
+            if (last_response->getMusic().has_value())
+            {
+                fstream f;
+                f.open("music.mp3", std::ios::binary);
+                f.clear();
+
+                for (auto const& b : last_response->getMusic().value()->Serialize())
+                {
+                    f << b;
+                }
+                f.close();
+                PlaySound(TEXT("music.mp3"), NULL, SND_ASYNC | SND_LOOP);
+                music_playing = true;
+            }
+            
 
             responses.clear();
             requests.clear();
+            break;
         }
         case Data::CommandAction::quit:
         {
@@ -183,21 +250,10 @@ void app(istream& input, ostream& output)
 
 int main()
 {
-    auto server = Server::Server();
-    auto client = Client::Client::New();
+    app(std::cin, std::cout);
 
-    auto auth = Data::Authorization::New(5);
-    auto command = Data::Command::New({ 1 });
-    auto client_request = Create::ClientRequest(std::move(auth), std::move(command));
-
-    server.Start();
-
-    auto response = client->SendCommand(std::move(client_request));
-
-    std::cout << response->getResult().AuthSuccess();
 
     //app(cin, cout);
 
-    server.Stop();
     return 0;
 }

@@ -12,5 +12,7 @@ namespace Data
 		help = 4,
 		quit = 5,
 		send = 6,
+		music = 7,
+		auth = 8,
 	};
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <typeindex>
 #include "ITypeConstructor.h"
+#include "ErrorSerialization.h"
 
 namespace Data
 {

@@ -13,11 +13,22 @@ std::unique_ptr<Data::ClientRequest> Create::ClientRequest(Data::IContainer Seri
 
 std::unique_ptr<Data::ClientRequest> Create::DeserializeClientRequest(Data::IContainer Serialization) { return Create::ClientRequest(Serialization); }
 
-std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::IAnimation> animation,
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::ICommand> command,
 	std::unique_ptr<Data::IResult> result)
 {
-	return Data::ServerResponse::New(std::move(status), std::move(animation), std::move(result), serializationGroupConstructors);
+	return Data::ServerResponse::New(std::move(status), std::move(command), std::move(result), serializationGroupConstructors);
 }
+
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::Music> music)
+{
+	return Data::ServerResponse::New(std::move(music), serializationGroupConstructors);
+}
+
+std::unique_ptr<Data::ServerResponse> Create::ServerResponse(std::unique_ptr<Data::IResult> result)
+{
+	return Data::ServerResponse::New(std::move(result), serializationGroupConstructors);
+}
+
 
 std::unique_ptr<Data::ServerResponse> Create::ServerResponse(Data::IContainer Serialization)
 {

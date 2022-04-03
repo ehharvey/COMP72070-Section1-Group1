@@ -13,8 +13,11 @@
 #include "RemoteTcpServer.h"
 #include "TcpHost.h"
 #include "TypeConstructor.h"
+#include "ISerializationGroup.h"
 #include "SerializationGroup.h"
 #include "Result.h"
+#include "ErrorSerialization.h"
+#include "Music.h"
 
 namespace Data
 {
@@ -54,8 +57,16 @@ namespace Create
 
 	std::unique_ptr<Data::ServerResponse>
 	ServerResponse
-	(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::IAnimation> animation,
-		std::unique_ptr<Data::IResult> result);
+	(std::unique_ptr<Data::Music> music);
+
+	std::unique_ptr<Data::ServerResponse>
+		ServerResponse
+		(std::unique_ptr<Data::IResult> result);
+
+	std::unique_ptr<Data::ServerResponse>
+		ServerResponse
+		(std::unique_ptr<Data::IStatus> status, std::unique_ptr<Data::ICommand> command,
+			std::unique_ptr<Data::IResult> result);
 	//
 	//
 	std::unique_ptr<Data::Status> 
@@ -97,13 +108,15 @@ namespace Create
 		= { Data::authorization_type_constructor,
 			Data::command_type_pair,
 			Data::animation_type_constructor,
-			client_type_constructor,
+			client_type_constructor, //
 			Data::status_type_constructor,
-			Data::result_type_constructor
+			Data::result_type_constructor,
+			Data::error_type_constructor,
+			Data::music_type_constructor
 			};
 
 	const auto serializationGroupConstructors = []()
 	{
-		return Data::SerializationGroup::New(std::make_shared<Data::TypeConstructor>(deserializers));
+		return Data::SerializationGroup::New(Data::TypeConstructor::New(deserializers));
 	};
 }

@@ -1,18 +1,22 @@
 #pragma once
-#include "CommandAction.h"
+#include "ICommand.h"
 #include "IContainer.h"
-#include <memory>
 #include "IAnimation.h"
 #include "ISerializable.h"
 #include "IResult.h"
 #include "IStatus.h"
+#include "Music.h"
+#include <optional>
+
 namespace Data
 {
 	__interface IServerResponse : public ISerializable
 	{
-		IStatus& getTamagotchiStatus() const;
-		IAnimation& getAnimation() const;
-		IResult& getResult() const;
+		std::optional<IStatus*> getTamagotchiStatus() const; // optional does not work with aliases :(
+		std::optional<ICommand*> getCurrentCommand() const;
+		std::optional<IResult*> getResult() const; // Contains authentication status and any commands
+		Data::IContainer Serialize () const;
+		std::optional<Music*> getMusic() const;
 	};
 
 }
