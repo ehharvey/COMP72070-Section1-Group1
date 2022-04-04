@@ -9,19 +9,20 @@
 namespace Data
 {
     class Status : public IStatus {
-		// Payload format
-		// hhhh aaaa [happiness alertness]
-		// ssss cccc [stomach cleaniness]
-		std::array<uint8_t, 2> Payload; // 2 bytes
+		uint8_t Happiness;
+		uint8_t Alertness;
+		uint8_t Cleanliness;
+		uint8_t StomachLevel;
+
 
 		Status(uint8_t Happiness, uint8_t Alertness, uint8_t Cleanliness, uint8_t StomachLevel);
 		Status(Data::IContainer Serialization);
 
 	public:
-		uint8_t getHappiness() const { return Payload[0] >> 4; };
-		uint8_t getAlertness() const { return Payload[0] << 4 >> 4; };
-		uint8_t getStomachLevel() const { return Payload[1] >> 4; };
-		uint8_t getCleaniness() const { return Payload[1] << 4 >> 4; };
+		uint8_t getHappiness() const;
+		uint8_t getAlertness() const ;
+		uint8_t getStomachLevel() const;
+		uint8_t getCleaniness() const;
 
 		void setHappiness(uint8_t happiness);
 		void setAlertness(uint8_t alertness);

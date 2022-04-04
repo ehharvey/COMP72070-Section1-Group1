@@ -10,7 +10,7 @@ namespace Data
     class Music : public ISerializable
     {
     private:
-        std::fstream music_f;
+        std::ifstream music_f;
         Data::IContainer __serialized;
     public:
         Music();

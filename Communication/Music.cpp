@@ -4,10 +4,7 @@ Data::Music::Music()
 {
     this->music_f.open("music.mp3", std::ios::binary);
 
-    while (!music_f.eof())
-    {
-        __serialized.push_back(music_f.get());
-    }
+    std::copy(std::istream_iterator<uint8_t>(music_f), std::istream_iterator<uint8_t>(), std::back_inserter(__serialized));
 }
 
 Data::Music::Music(Data::IContainer Serialization)

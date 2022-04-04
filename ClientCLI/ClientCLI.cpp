@@ -43,7 +43,6 @@ std::optional<uint8_t> getAuthByte(std::string auth_str)
             }
             }
         }
-
         return result;
     }
 }
@@ -206,16 +205,14 @@ void app(istream& input, ostream& output)
                 output << "Tamagotchi is currently " << command_strings[last_response->getCurrentCommand().value()->getAction()] << endl;
             if (last_response->getMusic().has_value())
             {
-                fstream f;
-                f.open("music.mp3", std::ios::binary);
-                f.clear();
-
-                for (auto const& b : last_response->getMusic().value()->Serialize())
-                {
-                    f << b;
-                }
+                ofstream f;
+                f.open("playback.mp3", std::ios::out | std::ios::binary);
+                
+                auto serialization = last_response->getMusic().value()->Serialize();
+                std::copy(serialization.begin(), serialization.end(), ostream_iterator<uint8_t>(f));
+                
                 f.close();
-                PlaySound(TEXT("music.mp3"), NULL, SND_ASYNC | SND_LOOP);
+                PlaySound(TEXT("playback.mp3"), NULL, SND_ASYNC | SND_LOOP);
                 music_playing = true;
             }
             

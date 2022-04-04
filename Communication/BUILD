@@ -84,7 +84,7 @@ cc_library(
     name = "Create",
     srcs = ["Create.cpp"],
     hdrs = ["Create.h"],
-    visibility = ["//Communication:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
 	"//Communication:IContainer", 
 	"//Communication:Animation", 
@@ -98,6 +98,7 @@ cc_library(
 	"//Communication:RemoteTcpServer", 
 	"//Communication:TcpHost", 
 	"//Communication:TypeConstructor", 
+	"//Communication:ISerializationGroup", 
 	"//Communication:SerializationGroup", 
 	"//Communication:Result", 
 	"//Communication:ErrorSerialization", 

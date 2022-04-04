@@ -14,7 +14,6 @@ namespace Communicators
 	private:
 		Data::IPV4Address address;
 		rPtr send_function;
-		SOCKET client_socket;
 	public:
 		RemoteTcpServer(Data::IPV4Address address);
 
