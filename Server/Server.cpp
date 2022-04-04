@@ -31,8 +31,8 @@ Communicators::rPtr __response_function = [](Data::IContainer request)
         }
         else
         {
-            auto result = Data::Result::New(true);
             tamagotchi->AddCommand(client_request->getCommand().getAction());
+            auto result = Data::Result::New(true);
             auto status = tamagotchi->getStatusCopy();
             auto command = tamagotchi->GetCurrentCommand();
             auto response = Create::ServerResponse(std::move(status), std::move(command), std::move(result));

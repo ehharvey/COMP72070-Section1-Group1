@@ -2,20 +2,8 @@
 #include <ctime>
 #include <random>
 #include "../../Communication/Create.h"
-#include "../Mocks/Mocks.h"
 #include <gtest/gtest.h>
 
-
-// TODO
-TEST(ISerializables, SerializationAndDeserialization)
-{
-  std::vector<Data::ISerializable> testees = {};
-
-  for (auto & t: testees)
-  {
-    auto serialization = t.Serialize();
-  }
-}
 
 TEST(ClientRequest, SerializationIsCorrect)
 {
@@ -59,4 +47,88 @@ TEST(AuthorizationTests, SerializationToIContainer)
   auto authorization = Data::Authorization::New(byte);
 
   EXPECT_EQ(authorization->Serialize(), Data::IContainer(1, byte));
+}
+
+TEST(Status, constructor)
+{
+  // Arrange
+  uint8_t value = 5;
+
+  // Act
+  auto status = Create::Status(value, value, value, value);
+
+  // Assert
+  EXPECT_EQ(status->getAlertness(), value);
+  EXPECT_EQ(status->getHappiness(), value);
+  EXPECT_EQ(status->getCleaniness(), value);
+  EXPECT_EQ(status->getStomachLevel(), value);
+}
+
+TEST(Status, updater)
+{
+  // Arrange
+  uint8_t value = 5;
+
+  // Act
+  auto status = Create::Status(value, value, value, value);
+  status->setAlertness(value - 1);
+  status->setCleaniness(value - 1);
+  status->setHappiness(value - 1);
+  status->setStomachLevel(value - 1);
+
+  // Assert
+  EXPECT_EQ(status->getAlertness(), value - 1);
+  EXPECT_EQ(status->getCleaniness(), value - 1);
+  EXPECT_EQ(status->getStomachLevel(), value - 1);
+  EXPECT_EQ(status->getHappiness(), value - 1);
+}
+
+TEST(Status, serialization)
+{
+  // Arrange
+  uint8_t value = 5;
+
+  // Act
+  auto status = Create::Status(value, value, value, value);
+  auto serialization = status->Serialize();
+  auto copy = Create::Status(serialization);
+
+  // Assert
+  EXPECT_EQ(copy->getAlertness(), status->getAlertness());
+}
+
+TEST(Command, constructor_and_getter)
+{
+  // Arrange
+  auto command = Create::Command(Data::CommandAction::idle);
+
+  // Act
+  auto actual = command->getAction();
+
+  // Assert
+  EXPECT_EQ(command->getAction(), actual);
+}
+
+TEST(Command, Serialization)
+{
+  // Arrange
+  auto command = Create::Command(Data::CommandAction::idle);
+
+  // Act
+  auto actual = command->Serialize();
+  auto copy = Create::Command(actual);
+
+  // Assert
+  EXPECT_EQ(copy->getAction(), command->getAction());
+  EXPECT_EQ(copy->getAction(), Data::CommandAction::idle);
+}
+
+TEST(ServerResponse, serialization)
+{
+  auto result = Data::Result::New(false);
+  auto server_response = Create::ServerResponse(std::move(result));
+  auto serialization = server_response->Serialize();
+  auto copy = Create::ServerResponse(serialization);
+
+  EXPECT_EQ(copy->getResult().value()->AuthSuccess(), server_response->getResult().value()->AuthSuccess());
 }
