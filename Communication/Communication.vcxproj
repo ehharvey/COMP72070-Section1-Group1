@@ -147,6 +147,7 @@
     <ClInclude Include="CommandAction.h" />
     <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="Create.h" />
+    <ClInclude Include="ErrorSerialization.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="IAuthorization.h" />
     <ClInclude Include="IClientRequest.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="IServerResponse.h" />
     <ClInclude Include="IStatus.h" />
     <ClInclude Include="ITypeConstructor.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RemoteTcpServer.h" />
     <ClInclude Include="Result.h" />
@@ -181,6 +183,7 @@
     <ClCompile Include="CommandAction.cpp" />
     <ClCompile Include="CommandBuilder.cpp" />
     <ClCompile Include="Create.cpp" />
+    <ClCompile Include="ErrorSerialization.cpp" />
     <ClCompile Include="IAnimation.cpp" />
     <ClCompile Include="IAuthorization.cpp" />
     <ClCompile Include="IClientRequest.cpp" />
@@ -193,6 +196,7 @@
     <ClCompile Include="ISerializationGroup.cpp" />
     <ClCompile Include="IServerResponse.cpp" />
     <ClCompile Include="IStatus.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="RemoteTcpServer.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="rPtr.cpp" />

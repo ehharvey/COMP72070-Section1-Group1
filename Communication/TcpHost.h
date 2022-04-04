@@ -1,10 +1,14 @@
+#undef UNICODE
+
+#define WIN32_LEAN_AND_MEAN
+
 #pragma once
 #include "IContainer.h"
 #include "IPV4Address.h"
 #include "IResponder.h"
-#include <thread>
-#include <WinSock2.h>
-#pragma comment(lib, "Ws2_32.lib")
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
 
 
 namespace Communicators
@@ -14,13 +18,9 @@ namespace Communicators
 	{
 	private:
 		rPtr response_function;
-		SOCKET server_socket;
-		std::thread running_thread;
 	public:
 		TcpHost(rPtr response_function);
 
 		void Start();
-		bool getIsRunning();
-		void Stop();
 	};
 } // namespace Communicators

@@ -53,12 +53,28 @@ Data::ISerializableConstructor
 Data::TypeConstructor::getConstructor
 (uint8_t type_identifier) const
 {
-    return this->constructors[type_identifier];
+    if (type_identifier >= this->constructors.size())
+    {
+        return Data::ErrorSerialization::New;
+    }
+    else
+    {
+        return this->constructors[type_identifier];
+    }
 }
 
 uint8_t
 Data::TypeConstructor::getTypeIdentifier 
 (std::type_index ti) const
 {
-    return this->type_identifier_map.at(ti);
+    auto found = this->type_identifier_map.count(ti);
+
+    if (found > 0)
+    {
+        return this->type_identifier_map.at(ti);
+    }
+    else
+    {
+        return this->type_identifier_map.at(std::type_index(typeid(Data::ErrorSerialization))); // MUST exist
+    }
 }

@@ -84,7 +84,7 @@ cc_library(
     name = "Create",
     srcs = ["Create.cpp"],
     hdrs = ["Create.h"],
-    visibility = ["//Communication:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
 	"//Communication:IContainer", 
 	"//Communication:Animation", 
@@ -98,8 +98,22 @@ cc_library(
 	"//Communication:RemoteTcpServer", 
 	"//Communication:TcpHost", 
 	"//Communication:TypeConstructor", 
+	"//Communication:ISerializationGroup", 
 	"//Communication:SerializationGroup", 
 	"//Communication:Result", 
+	"//Communication:ErrorSerialization", 
+	"//Communication:Music", 
+	]
+)
+
+
+cc_library(
+    name = "ErrorSerialization",
+    srcs = ["ErrorSerialization.cpp"],
+    hdrs = ["ErrorSerialization.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	"//Communication:ISerializable",
 	]
 )
 
@@ -253,12 +267,13 @@ cc_library(
     hdrs = ["IServerResponse.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:CommandAction", 
+	"//Communication:ICommand", 
 	"//Communication:IContainer", 
 	"//Communication:IAnimation", 
 	"//Communication:ISerializable", 
 	"//Communication:IResult", 
 	"//Communication:IStatus", 
+	"//Communication:Music", 
 	]
 )
 
@@ -283,6 +298,18 @@ cc_library(
     deps = [
 	"//Communication:IContainer", 
 	"//Communication:ISerializable", 
+	]
+)
+
+
+cc_library(
+    name = "Music",
+    srcs = ["Music.cpp"],
+    hdrs = ["Music.h"],
+    visibility = ["//Communication:__pkg__"],
+    deps = [
+	"//Communication:ISerializable", 
+	"//Communication:IContainer", 
 	]
 )
 
@@ -344,10 +371,10 @@ cc_library(
     visibility = ["//Communication:__pkg__"],
     deps = [
 	"//Communication:IContainer", 
-	"//Communication:CommandAction", 
-	"//Communication:IAnimation", 
+	"//Communication:ICommand", 
 	"//Communication:IServerResponse", 
 	"//Communication:ISerializationGroup", 
+	"//Communication:Music", 
 	]
 )
 
@@ -394,6 +421,7 @@ cc_library(
     hdrs = ["TypeConstructor.h"],
     visibility = ["//Communication:__pkg__"],
     deps = [
-	"//Communication:ITypeConstructor",
+	"//Communication:ITypeConstructor", 
+	"//Communication:ErrorSerialization", 
 	]
 )
