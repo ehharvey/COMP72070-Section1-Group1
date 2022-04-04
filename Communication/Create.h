@@ -113,7 +113,7 @@ namespace Create
 			Data::result_type_constructor,
 			Data::error_type_constructor,
 			Data::music_type_constructor
-			};
+		};
 
 	const auto serializationGroupConstructors = []()
 	{

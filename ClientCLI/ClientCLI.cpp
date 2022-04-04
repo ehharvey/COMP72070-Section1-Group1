@@ -3,6 +3,7 @@
 
 #include "ClientCLI.h"
 #include <iostream>
+#include <format>
 #include <queue>
 #include <optional>
 #include <winsock2.h> // MUST BE INCLUDED BEFORE WINDOWS.h
@@ -195,11 +196,12 @@ void app(istream& input, ostream& output)
                 output << "Authorization: " << (last_response->getResult().value()->AuthSuccess() ? "Succcess" : "Failure") << endl;
             if (last_response->getTamagotchiStatus().has_value())
             {
+                std::string max_value = std::to_string(Data::MAX_STAT_LEVEL);
                 output << "Tamagotchi Status: " << endl;
-                output << "\t" << "Happiness: " << last_response->getTamagotchiStatus().value()->getHappiness() << "/" << Data::MAX_STAT_LEVEL << endl;
-                output << "\t" << "Alertness: " << last_response->getTamagotchiStatus().value()->getAlertness() << "/" << Data::MAX_STAT_LEVEL << endl;
-                output << "\t" << "Cleaniness: " << last_response->getTamagotchiStatus().value()->getCleaniness() << "/" << Data::MAX_STAT_LEVEL << endl;
-                output << "\t" << "Stomach Level: " << last_response->getTamagotchiStatus().value()->getStomachLevel() << "/" << Data::MAX_STAT_LEVEL << endl;
+                output << "\t" << "Happiness: " << std::to_string(last_response->getTamagotchiStatus().value()->getHappiness()) << "/" << max_value << endl;
+                output << "\t" << "Alertness: " << std::to_string(last_response->getTamagotchiStatus().value()->getAlertness()) << "/" << max_value << endl;
+                output << "\t" << "Cleaniness: " << std::to_string(last_response->getTamagotchiStatus().value()->getCleaniness()) << "/" << max_value << endl;
+                output << "\t" << "Stomach Level: " << std::to_string(last_response->getTamagotchiStatus().value()->getStomachLevel()) << "/" << max_value << endl;
             }
             if (last_response->getCurrentCommand().has_value())
                 output << "Tamagotchi is currently " << command_strings[last_response->getCurrentCommand().value()->getAction()] << endl;
