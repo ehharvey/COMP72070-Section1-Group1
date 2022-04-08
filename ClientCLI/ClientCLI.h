@@ -11,3 +11,5 @@
 using namespace std;
 
 std::optional<uint8_t> getAuthByte(std::string auth_str);
+
+// This is a test
